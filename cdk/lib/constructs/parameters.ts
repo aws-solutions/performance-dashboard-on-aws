@@ -30,3 +30,12 @@ export function exampleLanguageParameter(scope: Stack) {
         default: "english",
     });
 }
+
+export function domainNameParameter(scope: Stack) {
+    return new CfnParameter(scope, "domainName", {
+        type: "String",
+        description:
+            "Domain name of the public url (www.example.com). The certificate for the given domain must exists. Value can be empty if no domain required.",
+        default: "",
+    });
+}

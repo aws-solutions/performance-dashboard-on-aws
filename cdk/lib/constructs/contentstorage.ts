@@ -3,13 +3,19 @@
  *  SPDX-License-Identifier: Apache-2.0
  */
 
-import { Bucket, BucketAccessControl, BucketEncryption, HttpMethods } from "aws-cdk-lib/aws-s3";
+import {
+    IBucket,
+    Bucket,
+    BucketAccessControl,
+    BucketEncryption,
+    HttpMethods,
+} from "aws-cdk-lib/aws-s3";
 import { Effect, PolicyStatement, AnyPrincipal } from "aws-cdk-lib/aws-iam";
 import { Construct } from "constructs";
 
 interface Props {
     contentBucketName: string;
-    serverAccessLogsBucket: Bucket;
+    serverAccessLogsBucket: IBucket;
 }
 
 export class ContentStorage extends Construct {

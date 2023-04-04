@@ -49,7 +49,6 @@ function ViewDashboardAdmin() {
     const [activeWidgetId, setActiveWidgetId] = useState("");
     const [activeTabId, setActiveTabId] = useState("");
     const [isOpenCopyModal, setIsOpenCopyModal] = useState(false);
-
     const draftOrPublishPending = versions.find(
         (v) => v.state === DashboardState.Draft || v.state === DashboardState.PublishPending,
     );

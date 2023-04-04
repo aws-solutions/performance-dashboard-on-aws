@@ -13,9 +13,9 @@ import { Function } from "aws-cdk-lib/aws-lambda";
 import { Table } from "aws-cdk-lib/aws-dynamodb";
 import { RestApi } from "aws-cdk-lib/aws-apigateway";
 import { Construct } from "constructs";
-import { authenticationRequiredParameter } from "./constructs/parameters";
-import { Bucket } from "aws-cdk-lib/aws-s3";
-import { ServerAccessLogsStorage } from "./constructs/serveraccesslogstorage";
+import { authenticationRequiredParameter, domainNameParameter } from "./constructs/parameters";
+import { IBucket, Bucket } from "aws-cdk-lib/aws-s3";
+import { Secret } from "aws-cdk-lib/aws-secretsmanager";
 
 interface BackendStackProps extends StackProps {
     userPool: {
@@ -25,6 +25,7 @@ interface BackendStackProps extends StackProps {
     datasetsBucketName: string;
     contentBucketName: string;
     serverAccessLogsBucketName: string;
+    distributionDomainName: string;
 }
 
 export class BackendStack extends Stack {
@@ -35,7 +36,7 @@ export class BackendStack extends Stack {
     public readonly auditTrailTable: Table;
     public readonly restApi: RestApi;
     public readonly datasetsBucketArn: string;
-    public readonly serverAccessLogsBucket: Bucket;
+    public readonly serverAccessLogsBucket: IBucket;
 
     constructor(scope: Construct, id: string, props: BackendStackProps) {
         super(scope, id, props);
@@ -46,23 +47,39 @@ export class BackendStack extends Stack {
             expression: Fn.conditionEquals(authenticationRequired, "yes"),
         });
 
-        const serveraccesslogStorage = new ServerAccessLogsStorage(
+        const domainName = domainNameParameter(this);
+
+        const domainNameIsEmptyCond = new CfnCondition(this, "DomainNameIsEmptyCond", {
+            expression: Fn.conditionEquals(domainName, ""),
+        });
+
+        const cookiesSecret = new Secret(this, "CookiesSecret");
+        const csrfSecret = new Secret(this, "CSRFSecret");
+
+        const serveraccesslogStorage = Bucket.fromBucketName(
             this,
             "ServerAccessLogsStorage",
-            {
-                bucketName: props.serverAccessLogsBucketName,
-            },
+            props.serverAccessLogsBucketName,
         );
 
         const dataStorage = new DatasetStorage(this, "DatasetStorage", {
             datasetsBucketName: props.datasetsBucketName,
-            serverAccessLogsBucket: serveraccesslogStorage.serverAccessLogsBucket,
+            serverAccessLogsBucket: serveraccesslogStorage,
         });
 
         const contentStorage = new ContentStorage(this, "ContentStorage", {
             contentBucketName: props.contentBucketName,
-            serverAccessLogsBucket: serveraccesslogStorage.serverAccessLogsBucket,
+            serverAccessLogsBucket: serveraccesslogStorage,
         });
+
+        const frontendOrigin = [
+            `https://${props.distributionDomainName}`,
+            `https://${Fn.conditionIf(
+                domainNameIsEmptyCond.logicalId,
+                props.distributionDomainName,
+                domainName.valueAsString,
+            ).toString()}`,
+        ];
 
         const database = new Database(this, "Database");
         const lambdas = new LambdaFunctions(this, "Functions", {
@@ -72,6 +89,9 @@ export class BackendStack extends Stack {
             contentBucketArn: contentStorage.contentBucket.bucketArn,
             userPool: props.userPool,
             authenticationRequired: authenticationRequired.valueAsString,
+            csrfSecret: csrfSecret.secretValue.toString(),
+            cookiesSecret: cookiesSecret.secretValue.toString(),
+            frontendOrigin: frontendOrigin,
         });
 
         const backendApi = new BackendApi(this, "Api", {
@@ -79,6 +99,7 @@ export class BackendStack extends Stack {
             apiFunction: lambdas.apiHandler,
             publicApiFunction: lambdas.publicApiHandler,
             authenticationRequiredCond,
+            frontendOrigin: frontendOrigin,
         });
 
         /**
@@ -90,7 +111,7 @@ export class BackendStack extends Stack {
         this.mainTable = database.mainTable;
         this.restApi = backendApi.api;
         this.datasetsBucketArn = dataStorage.datasetsBucket.bucketArn;
-        this.serverAccessLogsBucket = serveraccesslogStorage.serverAccessLogsBucket;
+        this.serverAccessLogsBucket = serveraccesslogStorage;
 
         new CfnOutput(this, "ApiGatewayEndpoint", {
             value: this.restApi.url,

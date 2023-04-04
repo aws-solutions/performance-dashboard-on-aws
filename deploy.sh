@@ -94,7 +94,13 @@ deploy_frontend() {
 
     cd $CDK_DIR
     echo "Deploying frontend stack"
-    npm run cdk -- deploy Frontend --require-approval never --parameters authenticationRequired=$authenticationRequired
+    npm run cdk -- deploy Frontend --require-approval never
+}
+
+deploy_frontendConfig() {
+    cd $CDK_DIR
+    echo "Deploying frontendConfig stack"
+    npm run cdk -- deploy FrontendConfig --require-approval never --parameters authenticationRequired=$authenticationRequired
 }
 
 deploy_examples() {
@@ -123,7 +129,8 @@ create_build_directories
 build_cdk
 deploy_auth
 deploy_authz
-deploy_backend
 deploy_frontend
+deploy_backend
+deploy_frontendConfig
 deploy_examples
 deploy_ops

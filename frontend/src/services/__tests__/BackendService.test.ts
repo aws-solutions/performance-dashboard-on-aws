@@ -13,6 +13,21 @@ jest.mock("@aws-amplify/auth");
 
 let windowSpy: any;
 
+function mockCsrfToken() {
+    API.get = jest.fn().mockReturnValueOnce({ token: "csrf-token-value" });
+}
+
+function expectedAuthenticatedRequest(obj: any = {}) {
+    return expect.objectContaining({
+        headers: {
+            Authorization: "Bearer eyJhbGciOiJIUzI1NiIsInR5c",
+            "x-csrf-token": "csrf-token-value",
+        },
+        withCredentials: true,
+        ...obj,
+    });
+}
+
 beforeEach(() => {
     const getJwtToken = jest.fn().mockReturnValue("eyJhbGciOiJIUzI1NiIsInR5c");
     const getIdToken = jest.fn().mockReturnValue({ getJwtToken });
@@ -29,6 +44,15 @@ beforeEach(() => {
 
 afterEach(() => {
     windowSpy.mockRestore();
+});
+
+test("fetchCsrfToken makes a GET request", async () => {
+    mockCsrfToken();
+    await BackendService.fetchCsrfToken();
+    expect(API.get).toHaveBeenCalledWith("BackendApi", "public/csrf-token", {
+        headers: {},
+        withCredentials: true,
+    });
 });
 
 test("fetchDashboardById makes a GET request to dashboard API", async () => {
@@ -74,6 +98,7 @@ test("fetchPublicHomepageWithQuery(empty query) makes a GET request to homepage 
 });
 
 test("createDashboard should make a POST request with payload", async () => {
+    mockCsrfToken();
     const name = "One Pretty Dashboard";
     const description = "Alexa, how is the weather?";
     const topicAreaId = "xyz";
@@ -83,7 +108,7 @@ test("createDashboard should make a POST request with payload", async () => {
     expect(API.post).toHaveBeenCalledWith(
         "BackendApi",
         "dashboard",
-        expect.objectContaining({
+        expectedAuthenticatedRequest({
             body: {
                 name,
                 topicAreaId,
@@ -94,6 +119,7 @@ test("createDashboard should make a POST request with payload", async () => {
 });
 
 test("editDashboard should make a PUT request with payload", async () => {
+    mockCsrfToken();
     const dashboardId = "123";
     const name = "One Pretty Dashboard";
     const description = "Alexa, how is the weather?";
@@ -114,7 +140,7 @@ test("editDashboard should make a PUT request with payload", async () => {
     expect(API.put).toHaveBeenCalledWith(
         "BackendApi",
         `dashboard/${dashboardId}`,
-        expect.objectContaining({
+        expectedAuthenticatedRequest({
             body: {
                 name,
                 topicAreaId,
@@ -127,6 +153,7 @@ test("editDashboard should make a PUT request with payload", async () => {
 });
 
 test("publishDashboard should make a PUT request with payload", async () => {
+    mockCsrfToken();
     const dashboardId = "123";
     const updatedAt = new Date("2020-09-17T21:01:00.780Z");
     const releaseNotes = "Made changes to the revenue metrics";
@@ -137,7 +164,7 @@ test("publishDashboard should make a PUT request with payload", async () => {
     expect(API.put).toHaveBeenCalledWith(
         "BackendApi",
         `dashboard/${dashboardId}/publish`,
-        expect.objectContaining({
+        expectedAuthenticatedRequest({
             body: {
                 updatedAt,
                 releaseNotes,
@@ -148,13 +175,19 @@ test("publishDashboard should make a PUT request with payload", async () => {
 });
 
 test("deleteDashboards makes a DELETE request to dashboard API", async () => {
+    mockCsrfToken();
     const dashboardIds = ["123", "456"];
 
     await BackendService.deleteDashboards(dashboardIds);
-    expect(API.del).toHaveBeenCalledWith("BackendApi", `dashboard?ids=123,456`, expect.anything());
+    expect(API.del).toHaveBeenCalledWith(
+        "BackendApi",
+        `dashboard?ids=123,456`,
+        expectedAuthenticatedRequest(),
+    );
 });
 
 test("createTopicArea should make a POST request with payload", async () => {
+    mockCsrfToken();
     const name = "Topic Area 1";
 
     await BackendService.createTopicArea(name);
@@ -162,7 +195,7 @@ test("createTopicArea should make a POST request with payload", async () => {
     expect(API.post).toHaveBeenCalledWith(
         "BackendApi",
         "topicarea",
-        expect.objectContaining({
+        expectedAuthenticatedRequest({
             body: {
                 name,
             },
@@ -171,10 +204,14 @@ test("createTopicArea should make a POST request with payload", async () => {
 });
 
 test("deleteTopicArea makes a DELETE request to dashboard API", async () => {
+    mockCsrfToken();
     const topicAreaId = "123";
-
     await BackendService.deleteTopicArea(topicAreaId);
-    expect(API.del).toHaveBeenCalledWith("BackendApi", `topicarea/123`, expect.anything());
+    expect(API.del).toHaveBeenCalledWith(
+        "BackendApi",
+        `topicarea/123`,
+        expectedAuthenticatedRequest(),
+    );
 });
 
 test("fetchWidgetById makes a GET request to widget API", async () => {
@@ -190,6 +227,7 @@ test("fetchWidgetById makes a GET request to widget API", async () => {
 });
 
 test("deleteWidget makes a DELETE request to widget API", async () => {
+    mockCsrfToken();
     const dashboardId = "123";
     const widgetId = "abc";
 
@@ -197,11 +235,12 @@ test("deleteWidget makes a DELETE request to widget API", async () => {
     expect(API.del).toHaveBeenCalledWith(
         "BackendApi",
         `dashboard/${dashboardId}/widget/${widgetId}`,
-        expect.anything(),
+        expectedAuthenticatedRequest(),
     );
 });
 
 test("setWidgetOrder makes a PUT request to widget API", async () => {
+    mockCsrfToken();
     const dashboardId = "123";
     const updatedAt = new Date("2020-09-17T21:01:00.780Z");
     const widgets: Array<Widget> = [
@@ -221,7 +260,7 @@ test("setWidgetOrder makes a PUT request to widget API", async () => {
     expect(API.put).toHaveBeenCalledWith(
         "BackendApi",
         `dashboard/${dashboardId}/widgetorder`,
-        expect.objectContaining({
+        expectedAuthenticatedRequest({
             body: {
                 widgets: [
                     {
@@ -262,6 +301,7 @@ test("fetchHomepage makes a GET request to widget API", async () => {
 });
 
 test("editHomepage should make a PUT request with payload", async () => {
+    mockCsrfToken();
     const title = "123";
     const description = "description test";
     const updatedAt = new Date("2020-09-17T21:01:00.780Z");
@@ -271,7 +311,7 @@ test("editHomepage should make a PUT request with payload", async () => {
     expect(API.put).toHaveBeenCalledWith(
         "BackendApi",
         "settings/homepage",
-        expect.objectContaining({
+        expectedAuthenticatedRequest({
             body: {
                 title,
                 description,
@@ -301,18 +341,20 @@ test("fetchPublicDashboard(authenticationRequired) makes a GET request to public
 });
 
 test("createDraft makes a POST request to dashboard API", async () => {
+    mockCsrfToken();
     await BackendService.createDraft("123");
-    expect(API.post).toBeCalledWith("BackendApi", "dashboard/123", expect.anything());
+    expect(API.post).toBeCalledWith("BackendApi", "dashboard/123", expectedAuthenticatedRequest());
 });
 
 test("publishPending makes a PUT request to dashboard API", async () => {
+    mockCsrfToken();
     const lastUpdatedAt = new Date();
     const releaseNotes = "Lorem ipsum";
     await BackendService.publishPending("123", lastUpdatedAt, releaseNotes);
     expect(API.put).toBeCalledWith(
         "BackendApi",
         "dashboard/123/publishpending",
-        expect.objectContaining({
+        expectedAuthenticatedRequest({
             body: {
                 updatedAt: lastUpdatedAt,
                 releaseNotes: releaseNotes,
@@ -322,6 +364,7 @@ test("publishPending makes a PUT request to dashboard API", async () => {
 });
 
 test("publishPending returns the updated dashboard", async () => {
+    mockCsrfToken();
     const lastUpdatedAt = new Date();
     const updatedDashboard = {};
     API.put = jest.fn().mockReturnValueOnce(updatedDashboard);
@@ -331,12 +374,13 @@ test("publishPending returns the updated dashboard", async () => {
 });
 
 test("moveToDraft makes a PUT request to dashboard API", async () => {
+    mockCsrfToken();
     const lastUpdatedAt = new Date();
     await BackendService.moveToDraft("123", lastUpdatedAt);
     expect(API.put).toBeCalledWith(
         "BackendApi",
         "dashboard/123/draft",
-        expect.objectContaining({
+        expectedAuthenticatedRequest({
             body: {
                 updatedAt: lastUpdatedAt,
             },
@@ -360,13 +404,14 @@ test("fetchTopicAreaById makes a GET request to topicarea API", async () => {
 });
 
 test("renameTopicArea makes a PUT request to topicarea API", async () => {
+    mockCsrfToken();
     const topicAreaId = "123";
     const newName = "My New Name";
     await BackendService.renameTopicArea(topicAreaId, newName);
     expect(API.put).toHaveBeenCalledWith(
         "BackendApi",
         `topicarea/${topicAreaId}`,
-        expect.objectContaining({
+        expectedAuthenticatedRequest({
             body: {
                 name: newName,
             },
@@ -375,6 +420,7 @@ test("renameTopicArea makes a PUT request to topicarea API", async () => {
 });
 
 test("updateSetting makes a PUT request to settings API", async () => {
+    mockCsrfToken();
     const settingKey = "publishingGuidance";
     const settingValue = "foo=bar";
     const now = new Date();
@@ -382,7 +428,7 @@ test("updateSetting makes a PUT request to settings API", async () => {
     expect(API.put).toHaveBeenCalledWith(
         "BackendApi",
         `settings`,
-        expect.objectContaining({
+        expectedAuthenticatedRequest({
             body: {
                 updatedAt: now,
                 publishingGuidance: "foo=bar",
@@ -441,11 +487,12 @@ test("fetchUsers makes a GET request to users API", async () => {
 });
 
 test("addUsers makes a POST request to users API", async () => {
+    mockCsrfToken();
     await BackendService.addUsers("Admin", ["test1@example.com", "test2@example.com"]);
     expect(API.post).toHaveBeenCalledWith(
         "BackendApi",
         "user",
-        expect.objectContaining({
+        expectedAuthenticatedRequest({
             body: {
                 role: "Admin",
                 emails: "test1@example.com,test2@example.com",
@@ -455,11 +502,12 @@ test("addUsers makes a POST request to users API", async () => {
 });
 
 test("resendInvite makes a POST request to users API", async () => {
+    mockCsrfToken();
     await BackendService.resendInvite(["test1@example.com", "test2@example.com"]);
     expect(API.post).toHaveBeenCalledWith(
         "BackendApi",
         "user/invite",
-        expect.objectContaining({
+        expectedAuthenticatedRequest({
             body: {
                 emails: "test1@example.com,test2@example.com",
             },
@@ -468,11 +516,12 @@ test("resendInvite makes a POST request to users API", async () => {
 });
 
 test("changeRole makes a POST request to users API", async () => {
+    mockCsrfToken();
     await BackendService.changeRole("Admin", ["test1", "test2"]);
     expect(API.put).toHaveBeenCalledWith(
         "BackendApi",
         "user/role",
-        expect.objectContaining({
+        expectedAuthenticatedRequest({
             body: {
                 role: "Admin",
                 usernames: ["test1", "test2"],
@@ -487,11 +536,12 @@ test("fetchDashboardHistory makes a GET request to dashboard API", async () => {
 });
 
 test("removeUsers makes a DELETE request to the users API", async () => {
+    mockCsrfToken();
     await BackendService.removeUsers(["Bob", "Alice"]);
     expect(API.del).toBeCalledWith(
         "BackendApi",
         "user",
-        expect.objectContaining({
+        expectedAuthenticatedRequest({
             body: {
                 usernames: ["Bob", "Alice"],
             },
@@ -500,19 +550,24 @@ test("removeUsers makes a DELETE request to the users API", async () => {
 });
 
 test("copyDashboard makes a COPY request to dashboard API", async () => {
+    mockCsrfToken();
     const dashboardId = "123";
-
     await BackendService.copyDashboard(dashboardId);
-    expect(API.post).toHaveBeenCalledWith("BackendApi", `dashboard/123/copy`, expect.anything());
+    expect(API.post).toHaveBeenCalledWith(
+        "BackendApi",
+        `dashboard/123/copy`,
+        expectedAuthenticatedRequest(),
+    );
 });
 
 test("archive makes a PUT request to dashboard API", async () => {
+    mockCsrfToken();
     const dashboardId = "id";
     await BackendService.archive(dashboardId, new Date());
     expect(API.put).toBeCalledWith(
         "BackendApi",
         `dashboard/${dashboardId}/archive`,
-        expect.anything(),
+        expectedAuthenticatedRequest(),
     );
 });
 
@@ -525,6 +580,7 @@ test("fetchWidgets makes a GET request to dashboard API", async () => {
 });
 
 test("createWidget makes a POST request to dashboard API", async () => {
+    mockCsrfToken();
     const dashboardId = "id";
     const widget = {
         name: "widget",
@@ -542,11 +598,12 @@ test("createWidget makes a POST request to dashboard API", async () => {
     expect(API.post).toBeCalledWith(
         "BackendApi",
         `dashboard/${dashboardId}/widget`,
-        expect.anything(),
+        expectedAuthenticatedRequest(),
     );
 });
 
 test("editWidget makes a PUT request to dashboard API", async () => {
+    mockCsrfToken();
     const dashboardId = "id";
     const widget = {
         widgetId: "widget-id",
@@ -567,11 +624,12 @@ test("editWidget makes a PUT request to dashboard API", async () => {
     expect(API.put).toBeCalledWith(
         "BackendApi",
         `dashboard/${dashboardId}/widget/${widget.widgetId}`,
-        expect.anything(),
+        expectedAuthenticatedRequest(),
     );
 });
 
 test("duplicateWidget makes a PUT request to dashboard API", async () => {
+    mockCsrfToken();
     const dashboardId = "id";
     const widget = {
         widgetId: "widget-id",
@@ -590,7 +648,7 @@ test("duplicateWidget makes a PUT request to dashboard API", async () => {
     expect(API.post).toBeCalledWith(
         "BackendApi",
         `dashboard/${dashboardId}/widget/${widget.widgetId}`,
-        expect.anything(),
+        expectedAuthenticatedRequest(),
     );
 });
 
@@ -600,8 +658,9 @@ test("fetchDatasets makes a GET request to dashboard API", async () => {
 });
 
 test("createDataset makes a POST request to dashboard API", async () => {
+    mockCsrfToken();
     await BackendService.createDataset("filename", { raw: "", json: "" });
-    expect(API.post).toBeCalledWith("BackendApi", "dataset", expect.anything());
+    expect(API.post).toBeCalledWith("BackendApi", "dataset", expectedAuthenticatedRequest());
 });
 
 test("fetchDashboards makes a GET request to dashboard API", async () => {
@@ -620,6 +679,7 @@ test("fetchSettings makes a GET request to dashboard API", async () => {
 });
 
 test("editSettings makes a PUT request to dashboard API", async () => {
+    mockCsrfToken();
     await BackendService.editSettings("publishingGuidance", new Date());
-    expect(API.put).toBeCalledWith("BackendApi", "settings", expect.anything());
+    expect(API.put).toBeCalledWith("BackendApi", "settings", expectedAuthenticatedRequest());
 });

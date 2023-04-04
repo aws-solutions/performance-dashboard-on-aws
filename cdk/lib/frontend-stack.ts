@@ -3,7 +3,7 @@
  *  SPDX-License-Identifier: Apache-2.0
  */
 
-import { CfnOutput, CfnParameter, CustomResource, Duration, Stack, StackProps } from "aws-cdk-lib";
+import { CfnCondition, CfnOutput, Duration, Fn, Stack, StackProps } from "aws-cdk-lib";
 import {
     CfnDistribution,
     Distribution,
@@ -21,51 +21,48 @@ import {
 } from "aws-cdk-lib/aws-s3";
 import { BucketDeployment, Source } from "aws-cdk-lib/aws-s3-deployment";
 import { Construct } from "constructs";
-import { Code, Function, Runtime } from "aws-cdk-lib/aws-lambda";
-import { RetentionDays } from "aws-cdk-lib/aws-logs";
 import { AnyPrincipal, Effect, PolicyStatement } from "aws-cdk-lib/aws-iam";
-import { Provider } from "aws-cdk-lib/custom-resources";
 import { S3Origin } from "aws-cdk-lib/aws-cloudfront-origins";
-import { authenticationRequiredParameter } from "./constructs/parameters";
-
-interface Props extends StackProps {
-    datasetsBucket: string;
-    contentBucket: string;
-    userPoolId: string;
-    identityPoolId: string;
-    appClientId: string;
-    backendApiUrl: string;
-    adminEmail: string;
-    serverAccessLogsBucket: Bucket;
-}
+import { ServerAccessLogsStorage } from "./constructs/serveraccesslogstorage";
+import { authenticationRequiredParameter, domainNameParameter } from "./constructs/parameters";
 
 export class FrontendStack extends Stack {
-    private readonly frontendBucket: Bucket;
+    public readonly reactBucketName: string;
+    public readonly distributionDomainName: string;
+    public readonly serverAccessLogsBucketName: string;
 
-    constructor(scope: Construct, id: string, props: Props) {
+    constructor(scope: Construct, id: string, props: StackProps) {
         super(scope, id, props);
 
-        const authenticationRequired = authenticationRequiredParameter(this);
+        authenticationRequiredParameter(this);
+
+        const domainName = domainNameParameter(this);
+
+        const domainNameIsEmptyCond = new CfnCondition(this, "DomainNameIsEmptyCond", {
+            expression: Fn.conditionEquals(domainName, ""),
+        });
+
+        const serveraccesslogStorage = new ServerAccessLogsStorage(this, "ServerAccessLogsStorage");
 
         /**
          * S3 Bucket
          * Hosts the React application code.
          */
-        this.frontendBucket = new Bucket(this, "ReactApp", {
+        const frontendBucket = new Bucket(this, "ReactApp", {
             encryption: BucketEncryption.S3_MANAGED,
-            serverAccessLogsBucket: props.serverAccessLogsBucket,
+            serverAccessLogsBucket: serveraccesslogStorage.serverAccessLogsBucket,
             serverAccessLogsPrefix: "reactapp_bucket/",
             accessControl: BucketAccessControl.LOG_DELIVERY_WRITE,
             blockPublicAccess: BlockPublicAccess.BLOCK_ALL,
             versioned: true,
         });
 
-        this.frontendBucket.addToResourcePolicy(
+        frontendBucket.addToResourcePolicy(
             new PolicyStatement({
                 effect: Effect.DENY,
                 actions: ["s3:*"],
                 principals: [new AnyPrincipal()],
-                resources: [this.frontendBucket.arnForObjects("*")],
+                resources: [frontendBucket.arnForObjects("*")],
                 conditions: {
                     Bool: {
                         "aws:SecureTransport": false,
@@ -74,7 +71,7 @@ export class FrontendStack extends Stack {
             }),
         );
 
-        this.frontendBucket.addLifecycleRule({
+        frontendBucket.addLifecycleRule({
             enabled: true,
             noncurrentVersionExpiration: Duration.days(90),
         });
@@ -115,7 +112,7 @@ export class FrontendStack extends Stack {
          * Fronts the S3 bucket as CDN to provide caching and HTTPS.
          */
         const originAccess = new OriginAccessIdentity(this, "CloudFrontOriginAccess");
-        this.frontendBucket.grantRead(originAccess);
+        frontendBucket.grantRead(originAccess);
 
         const distribution = new Distribution(this, "CloudFrontDistribution", {
             defaultRootObject: "index.html",
@@ -127,7 +124,7 @@ export class FrontendStack extends Stack {
                 },
             ],
             defaultBehavior: {
-                origin: new S3Origin(this.frontendBucket, {
+                origin: new S3Origin(frontendBucket, {
                     originAccessIdentity: originAccess,
                     originPath: "",
                 }),
@@ -135,6 +132,11 @@ export class FrontendStack extends Stack {
                 allowedMethods: AllowedMethods.ALLOW_GET_HEAD_OPTIONS,
                 viewerProtocolPolicy: ViewerProtocolPolicy.REDIRECT_TO_HTTPS,
             },
+            domainNames: Fn.conditionIf(
+                domainNameIsEmptyCond.logicalId,
+                [],
+                [domainName.valueAsString],
+            ) as any,
         });
 
         const cfnDist: CfnDistribution = distribution.node.defaultChild as CfnDistribution;
@@ -157,18 +159,17 @@ export class FrontendStack extends Stack {
          * S3 Deploy
          * Uploads react built code to the S3 bucket and invalidates CloudFront
          */
-        const frontendDeploy = new BucketDeployment(this, "Deploy-Frontend", {
+        new BucketDeployment(this, "Deploy-Frontend", {
             sources: [Source.asset("../frontend/build")],
-            destinationBucket: this.frontendBucket,
+            destinationBucket: frontendBucket,
             memoryLimit: 2048,
             prune: false,
             distribution,
         });
 
-        const deployConfig = this.deployEnvironmentConfig(props, authenticationRequired);
-        // Make sure env.js gets deployed after the React code so
-        // it doesn't get overwritten.
-        deployConfig.node.addDependency(frontendDeploy);
+        this.reactBucketName = frontendBucket.bucketName;
+        this.distributionDomainName = distribution.distributionDomainName;
+        this.serverAccessLogsBucketName = serveraccesslogStorage.serverAccessLogsBucket.bucketName;
 
         /**
          * Stack Outputs
@@ -177,62 +178,7 @@ export class FrontendStack extends Stack {
             value: distribution.distributionDomainName,
         });
         new CfnOutput(this, "ReactAppBucketName", {
-            value: this.frontendBucket.bucketName,
-        });
-    }
-
-    private deployEnvironmentConfig(
-        props: Props,
-        authenticationRequired: CfnParameter,
-    ): CustomResource {
-        // This CustomResource is a Lambda function that generates the `env.js`
-        // with environment values. This file is uploaded to the bucket where
-        // the React code is deployed.
-
-        const lambdaFunction = new Function(this, "EnvConfig", {
-            runtime: Runtime.NODEJS_16_X,
-            description: "Deploys env.js file on S3 with environment configuration",
-            code: Code.fromAsset("build/lib/envconfig"),
-            handler: "index.handler",
-            timeout: Duration.seconds(60),
-            memorySize: 128,
-            logRetention: RetentionDays.TEN_YEARS,
-            reservedConcurrentExecutions: 1,
-            environment: {
-                FRONTEND_BUCKET: this.frontendBucket.bucketName,
-                REGION: Stack.of(this).region,
-                BACKEND_API: props.backendApiUrl,
-                USER_POOL_ID: props.userPoolId,
-                APP_CLIENT_ID: props.appClientId,
-                DATASETS_BUCKET: props.datasetsBucket,
-                CONTENT_BUCKET: props.contentBucket,
-                IDENTITY_POOL_ID: props.identityPoolId,
-                CONTACT_EMAIL: props.adminEmail,
-                BRAND_NAME: "Performance Dashboard",
-                TOPIC_AREA_LABEL: "Topic area",
-                TOPIC_AREAS_LABEL: "Topic areas",
-                FRONTEND_DOMAIN: "",
-                COGNITO_DOMAIN: "",
-                SAML_PROVIDER: "",
-                ENTERPRISE_LOGIN_LABEL: "Enterprise Sign-In",
-                AUTHENTICATION_REQUIRED: authenticationRequired.valueAsString,
-            },
-        });
-
-        lambdaFunction.addToRolePolicy(
-            new PolicyStatement({
-                effect: Effect.ALLOW,
-                resources: [this.frontendBucket.arnForObjects("*")],
-                actions: ["s3:PutObject"],
-            }),
-        );
-
-        const provider = new Provider(this, "EnvConfigProvider", {
-            onEventHandler: lambdaFunction,
-        });
-
-        return new CustomResource(this, "EnvConfigDeployment", {
-            serviceToken: provider.serviceToken,
+            value: frontendBucket.bucketName,
         });
     }
 }

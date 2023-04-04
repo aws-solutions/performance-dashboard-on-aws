@@ -115,6 +115,9 @@ export class PipelineStack extends Stack {
                 AUTH: {
                     value: "no",
                 },
+                CNAME: {
+                    value: "gamma.badger.wwps.aws.dev",
+                },
             },
             buildSpec: BuildSpec.fromSourceFilename("buildspec.deploy.yml"),
         });
@@ -136,6 +139,9 @@ export class PipelineStack extends Stack {
                 },
                 AUTH: {
                     value: "yes",
+                },
+                CNAME: {
+                    value: "gamma-secure.badger.wwps.aws.dev",
                 },
             },
             buildSpec: BuildSpec.fromSourceFilename("buildspec.deploy.yml"),

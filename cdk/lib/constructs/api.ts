@@ -26,7 +26,7 @@ interface ApiProps {
     publicApiFunction: Function;
     cognitoUserPoolArn: string;
     authenticationRequiredCond: CfnCondition;
-    frontendOrigin: string[];
+    frontendOrigin: string;
 }
 
 export class BackendApi extends Construct {
@@ -95,7 +95,7 @@ export class BackendApi extends Construct {
                 accessLogDestination: new LogGroupLogDestination(apigatewayLogGroup),
             },
             defaultCorsPreflightOptions: {
-                allowOrigins: props.frontendOrigin,
+                allowOrigins: [props.frontendOrigin],
                 allowMethods: Cors.ALL_METHODS,
                 allowCredentials: true,
                 allowHeaders: [

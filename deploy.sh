@@ -35,6 +35,14 @@ else
     exit 0
 fi
 
+cname=${4:-}
+if [ "$authenticationRequired" != "" ]; then
+    echo "CNAME = $cname"
+    export CNAME=$cname
+else
+    echo "No CNAME passed"
+fi
+
 verify_prereqs() {
     # Verify necessary commands
     echo "node version"
@@ -84,7 +92,7 @@ deploy_backend() {
 
     cd $CDK_DIR
     echo "Deploying backend stack"
-    npm run cdk -- deploy Backend --require-approval never --outputs-file outputs-backend.json --parameters authenticationRequired=$authenticationRequired
+    npm run cdk -- deploy Backend --require-approval never --outputs-file outputs-backend.json --parameters authenticationRequired=$authenticationRequired --parameters PerformanceDash-${environment}-Backend:domainName=$cname
 }
 
 deploy_frontend() {
@@ -94,7 +102,7 @@ deploy_frontend() {
 
     cd $CDK_DIR
     echo "Deploying frontend stack"
-    npm run cdk -- deploy Frontend --require-approval never
+    npm run cdk -- deploy Frontend --require-approval never  --parameters PerformanceDash-${environment}-Frontend:domainName=$cname
 }
 
 deploy_frontendConfig() {

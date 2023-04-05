@@ -72,14 +72,11 @@ export class BackendStack extends Stack {
             serverAccessLogsBucket: serveraccesslogStorage,
         });
 
-        const frontendOrigin = [
-            `https://${props.distributionDomainName}`,
-            `https://${Fn.conditionIf(
-                domainNameIsEmptyCond.logicalId,
-                props.distributionDomainName,
-                domainName.valueAsString,
-            ).toString()}`,
-        ];
+        const frontendOrigin = `https://${Fn.conditionIf(
+            domainNameIsEmptyCond.logicalId,
+            props.distributionDomainName,
+            domainName.valueAsString,
+        ).toString()}`;
 
         const database = new Database(this, "Database");
         const lambdas = new LambdaFunctions(this, "Functions", {

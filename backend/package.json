@@ -29,7 +29,7 @@
     "typescript": "^3.9.5"
   },
   "dependencies": {
-    "aws-sdk": "^2.1055.0",
+    "aws-sdk": "^2.1354.0",
     "aws-serverless-express": "^3.3.8",
     "aws-xray-sdk": "^3.1.0",
     "cors": "^2.8.5",

@@ -70,8 +70,8 @@ This software includes third party software subject to the following copyrights:
 aws-amplify@4.3.43 under the Apache-2.0
 aws-cdk-lib@2.72.1 under the Apache-2.0
 aws-cdk@2.72.1 under the Apache-2.0
-aws-sdk@2.1271.0 under the Apache-2.0
 aws-sdk@2.1281.0 under the Apache-2.0
+aws-sdk@2.1354.0 under the Apache-2.0
 aws-serverless-express@3.4.0 under the Apache-2.0
 aws-xray-sdk@3.3.7 under the Apache-2.0
 aws-xray-sdk@3.4.0 under the Apache-2.0

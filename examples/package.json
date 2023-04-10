@@ -23,7 +23,7 @@
     "@types/prompt": "^1.1.1",
     "@types/prompts": "^2.0.14",
     "@types/uuid": "^8.3.1",
-    "aws-sdk": "^2.1055.0",
+    "aws-sdk": "^2.1354.0",
     "jest": "^27.3.1",
     "prettier": "^2.4.1",
     "ts-jest": "^27.0.7",

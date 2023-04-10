@@ -52,7 +52,7 @@
         "performance-dashboard-backend": "file:../backend",
         "prompts": "^2.4.2",
         "yargs": "^17.2.1",
-        "aws-sdk": "^2.1270.0",
+        "aws-sdk": "^2.1354.0",
         "aws-serverless-express": "^3.3.8",
         "aws-xray-sdk": "^3.1.0",
         "cors": "^2.8.5",

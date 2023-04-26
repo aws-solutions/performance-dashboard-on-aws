@@ -3,7 +3,7 @@
  *  SPDX-License-Identifier: Apache-2.0
  */
 
-import { Bucket, BucketAccessControl, BucketEncryption, HttpMethods } from "aws-cdk-lib/aws-s3";
+import { Bucket, BucketEncryption, HttpMethods, ObjectOwnership } from "aws-cdk-lib/aws-s3";
 import { Effect, PolicyStatement, AnyPrincipal } from "aws-cdk-lib/aws-iam";
 import { Construct } from "constructs";
 
@@ -16,7 +16,7 @@ export class ServerAccessLogsStorage extends Construct {
         this.serverAccessLogsBucket = new Bucket(scope, "ServerAccessLogsBucket", {
             encryption: BucketEncryption.S3_MANAGED,
             versioned: true,
-            accessControl: BucketAccessControl.LOG_DELIVERY_WRITE,
+            objectOwnership: ObjectOwnership.OBJECT_WRITER,
             /**
              * CORS policy taken from Amplify Docs.
              * This bucket policy allows file uploads from the web browser.

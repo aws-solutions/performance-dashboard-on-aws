@@ -15,7 +15,7 @@ import { Artifact, Pipeline } from "aws-cdk-lib/aws-codepipeline";
 import { CodeBuildAction, S3SourceAction, S3Trigger } from "aws-cdk-lib/aws-codepipeline-actions";
 import { CfnNotificationRule } from "aws-cdk-lib/aws-codestarnotifications";
 import { Effect, PolicyStatement, ServicePrincipal } from "aws-cdk-lib/aws-iam";
-import { Bucket } from "aws-cdk-lib/aws-s3";
+import { Bucket, ObjectOwnership } from "aws-cdk-lib/aws-s3";
 import { Topic } from "aws-cdk-lib/aws-sns";
 import { Construct } from "constructs";
 import { GitHubIntegration } from "./constructs/github-integration";
@@ -44,6 +44,7 @@ export class PipelineStack extends Stack {
 
         const artifactsBucket = new Bucket(this, "ArtifactsBucket", {
             versioned: true,
+            objectOwnership: ObjectOwnership.OBJECT_WRITER,
         });
         new CfnOutput(this, "ArtifactsBucketARN", {
             description: "ARN of the artifact's bucket",

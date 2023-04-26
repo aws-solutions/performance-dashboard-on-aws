@@ -6,7 +6,7 @@
 import { CfnOutput, CustomResource, Duration, Stack, StackProps } from "aws-cdk-lib";
 import { ExampleDashboardLambda } from "./constructs/exampledashboardlambda";
 import { Function } from "aws-cdk-lib/aws-lambda";
-import { BlockPublicAccess, Bucket, BucketEncryption } from "aws-cdk-lib/aws-s3";
+import { BlockPublicAccess, Bucket, BucketEncryption, ObjectOwnership } from "aws-cdk-lib/aws-s3";
 import { Construct } from "constructs";
 import { BucketDeployment, Source } from "aws-cdk-lib/aws-s3-deployment";
 import { Provider } from "aws-cdk-lib/custom-resources";
@@ -43,6 +43,7 @@ export class DashboardExamplesStack extends Stack {
             serverAccessLogsBucket: serveraccesslogStorage,
             serverAccessLogsPrefix: "example_bucket/",
             versioned: true,
+            objectOwnership: ObjectOwnership.OBJECT_WRITER,
         });
 
         exampleBucket.addToResourcePolicy(

@@ -13,12 +13,7 @@ import {
     AllowedMethods,
     ViewerProtocolPolicy,
 } from "aws-cdk-lib/aws-cloudfront";
-import {
-    BlockPublicAccess,
-    Bucket,
-    BucketAccessControl,
-    BucketEncryption,
-} from "aws-cdk-lib/aws-s3";
+import { BlockPublicAccess, Bucket, BucketEncryption, ObjectOwnership } from "aws-cdk-lib/aws-s3";
 import { BucketDeployment, Source } from "aws-cdk-lib/aws-s3-deployment";
 import { Construct } from "constructs";
 import { AnyPrincipal, Effect, PolicyStatement } from "aws-cdk-lib/aws-iam";
@@ -52,9 +47,9 @@ export class FrontendStack extends Stack {
             encryption: BucketEncryption.S3_MANAGED,
             serverAccessLogsBucket: serveraccesslogStorage.serverAccessLogsBucket,
             serverAccessLogsPrefix: "reactapp_bucket/",
-            accessControl: BucketAccessControl.LOG_DELIVERY_WRITE,
             blockPublicAccess: BlockPublicAccess.BLOCK_ALL,
             versioned: true,
+            objectOwnership: ObjectOwnership.OBJECT_WRITER,
         });
 
         frontendBucket.addToResourcePolicy(

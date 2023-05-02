@@ -12,7 +12,7 @@ import lambda = require("@aws-cdk/aws-lambda");
 import iam = require("@aws-cdk/aws-iam");
 import logs = require("@aws-cdk/aws-logs");
 import { HttpHeaders } from "@cloudcomponents/cdk-lambda-at-edge-pattern";
-import { BucketAccessControl } from "@aws-cdk/aws-s3";
+import { ObjectOwnership } from "@aws-cdk/aws-s3";
 
 interface Props extends cdk.StackProps {
   datasetsBucket: string;
@@ -40,7 +40,7 @@ export class FrontendStack extends cdk.Stack {
       websiteErrorDocument: "index.html",
       encryption: s3.BucketEncryption.S3_MANAGED,
       serverAccessLogsPrefix: "access_logs/",
-      accessControl: BucketAccessControl.LOG_DELIVERY_WRITE,
+      objectOwnership: ObjectOwnership.OBJECT_WRITER,
     });
 
     const httpHeaders = new HttpHeaders(this, "HttpHeaders", {

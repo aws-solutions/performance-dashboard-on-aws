@@ -7,6 +7,7 @@ import * as cdk from "@aws-cdk/core";
 import * as lambda from "@aws-cdk/aws-lambda";
 import s3Deploy = require("@aws-cdk/aws-s3-deployment");
 import * as s3 from "@aws-cdk/aws-s3";
+import { ObjectOwnership } from "@aws-cdk/aws-s3";
 import { ExampleDashboardLambda } from "./constructs/exampledashboardlambda";
 import customResource = require("@aws-cdk/custom-resources");
 
@@ -35,6 +36,7 @@ export class DashboardExamplesStack extends cdk.Stack {
     const exampleBucket = new s3.Bucket(this, "ExampleBucket", {
       encryption: s3.BucketEncryption.S3_MANAGED,
       versioned: false,
+      objectOwnership: ObjectOwnership.OBJECT_WRITER,
     });
 
     const lambdas = new ExampleDashboardLambda(

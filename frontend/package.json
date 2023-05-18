@@ -51,7 +51,6 @@
         "react-csv": "^2.0.3",
         "react-datepicker": "^3.7.0",
         "react-dom": "^16.14.0",
-        "react-excel-renderer": "^1.1.0",
         "react-ga": "^3.3.1",
         "react-helmet": "^6.1.0",
         "react-hook-form": "^6.3.1",
@@ -69,6 +68,7 @@
         "sass": "^1.54.9",
         "uswds": "^2.11.2",
         "uuid": "^8.2.0",
+        "xlsx": "https://cdn.sheetjs.com/xlsx-0.19.3/xlsx-0.19.3.tgz",
         "yup": "^0.32.11"
     },
     "overrides": {

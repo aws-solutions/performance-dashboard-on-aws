@@ -117,7 +117,6 @@ react-beautiful-dnd@13.1.1 under the Apache-2.0
 react-csv@2.2.2 under the MIT
 react-datepicker@3.8.0 under the MIT
 react-dom@16.14.0 under the MIT
-react-excel-renderer@1.1.0 under the MIT
 react-ga@3.3.1 under the Apache-2.0
 react-helmet@6.1.0 under the MIT
 react-hook-form@6.15.8 under the MIT
@@ -142,5 +141,6 @@ ts-node@8.10.2 under the MIT
 typescript@4.8.4 under the Apache-2.0
 uswds@2.13.3 under the SEE LICENSE IN LICENSE.md
 uuid@8.3.2 under the MIT
+xlsx@0.19.3 under the Apache-2.0
 yargs@17.6.2 under the MIT
 yup@0.32.11 under the MIT

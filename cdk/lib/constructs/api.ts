@@ -122,7 +122,7 @@ export class BackendApi extends Construct {
         this.addPrivateEndpoints(apiIntegration, authorizer);
         this.addPublicEndpoints(publicApiIntegration, authorizer, props.authenticationRequiredCond);
 
-        this.api.addApiKey("PerfDashIngestApiKey");
+        const key = this.api.addApiKey("PerfDashIngestApiKey");
         const plan = this.api.addUsagePlan("PerfDashIngestUsagePlan", {
             name: "PerfDashIngestUsagePlan",
             throttle: {
@@ -130,6 +130,7 @@ export class BackendApi extends Construct {
                 burstLimit: 50,
             },
         });
+        plan.addApiKey(key);
 
         plan.addApiStage({
             api: this.api,

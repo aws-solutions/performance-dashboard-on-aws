@@ -36,13 +36,15 @@ app.get("/public/csrf-token", (req, res) => {
     });
 });
 
+// the ingest api goes before doubleCsrfProtection.
+app.use("/ingestapi", ingestapi);
+
 app.use(doubleCsrfProtection);
 app.use(csrfErrorHandler);
 
 app.use("/dashboard", dashboard);
 app.use("/topicarea", topicarea);
 app.use("/dataset", dataset);
-app.use("/ingestapi", ingestapi);
 app.use("/public", publicapi);
 app.use("/settings", settingsapi);
 app.use("/user", userapi);

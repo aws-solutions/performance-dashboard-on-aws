@@ -73,7 +73,8 @@
     },
     "overrides": {
         "d3-interpolate": "$d3-interpolate",
-        "d3-scale": "$d3-scale"
+        "d3-scale": "$d3-scale",
+        "@aws-sdk/client-sts": "3.347.1"
     },
     "scripts": {
         "start": "react-scripts start",

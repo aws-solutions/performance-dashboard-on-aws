@@ -1,6 +1,6 @@
 {
     "info": {
-        "_postman_id": "6ebe8eaa-0ad9-43f6-9516-6cc5c0df1f2f",
+        "_postman_id": "ff4b8154-5e31-44bd-bb42-ba6b7abed15d",
         "name": "Performance Dashboard API",
         "description": "This API defines the endpoints available in the Performance Dashboard on AWS Rest API. It includes public endpoints and private endpoints that require authentication",
         "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
@@ -54,7 +54,7 @@
                             "variable": [
                                 {
                                     "key": "id",
-                                    "value": "1dcde43a-9700-41d3-b651-ceee60f7bdf8"
+                                    "value": "00016eaf-9b6c-4a3a-af01-38c5f94e263b"
                                 }
                             ]
                         }
@@ -63,12 +63,27 @@
                 },
                 {
                     "name": "Create Dashboard",
+                    "event": [
+                        {
+                            "listen": "prerequest",
+                            "script": {
+                                "exec": [""],
+                                "type": "text/javascript"
+                            }
+                        }
+                    ],
                     "request": {
                         "method": "POST",
-                        "header": [],
+                        "header": [
+                            {
+                                "key": "x-csrf-token",
+                                "value": "{{csrfToken}}",
+                                "type": "default"
+                            }
+                        ],
                         "body": {
                             "mode": "raw",
-                            "raw": "{\n    \"name\": \"{{$randomProductName}}\",\n    \"topicAreaId\": \"3ffdb1ef-081d-4534-97e9-b69cdbb687d0\",\n    \"description\": \"{{$randomLoremParagraph}}\"\n}",
+                            "raw": "{\n    \"name\": \"{{$randomProductName}}\",\n    \"topicAreaId\": \"b2bf61d1-7e0c-405f-9aa2-56cb2deacd4d\",\n    \"description\": \"{{$randomLoremParagraph}}\"\n}",
                             "options": {
                                 "raw": {
                                     "language": "json"
@@ -87,7 +102,13 @@
                     "name": "Create Draft from Published",
                     "request": {
                         "method": "POST",
-                        "header": [],
+                        "header": [
+                            {
+                                "key": "x-csrf-token",
+                                "value": "{{csrfToken}}",
+                                "type": "default"
+                            }
+                        ],
                         "body": {
                             "mode": "raw",
                             "raw": "{\n    \"name\": \"Triet Lu\",\n    \"topicAreaId\": \"30f1a179-4df9-4f49-aece-0ab81152d875\"\n}",
@@ -155,7 +176,13 @@
                             ]
                         },
                         "method": "PUT",
-                        "header": [],
+                        "header": [
+                            {
+                                "key": "x-csrf-token",
+                                "value": "{{csrfToken}}",
+                                "type": "default"
+                            }
+                        ],
                         "body": {
                             "mode": "raw",
                             "raw": "{\n    \"name\": \"COVID-19\",\n    \"topicAreaId\": \"df402dce-b434-4a12-8802-7d67d5f4b2de\",\n    \"displayTableOfContents\": false,\n    \"description\": \"You can add **markdown** here\",\n    \"updatedAt\": \"\"\n}",
@@ -194,7 +221,13 @@
                             ]
                         },
                         "method": "PUT",
-                        "header": [],
+                        "header": [
+                            {
+                                "key": "x-csrf-token",
+                                "value": "{{csrfToken}}",
+                                "type": "default"
+                            }
+                        ],
                         "body": {
                             "mode": "raw",
                             "raw": "{\n    \"updatedAt\": \"2020-10-16T00:25:24.576Z\"\n}",
@@ -232,7 +265,13 @@
                             ]
                         },
                         "method": "PUT",
-                        "header": [],
+                        "header": [
+                            {
+                                "key": "x-csrf-token",
+                                "value": "{{csrfToken}}",
+                                "type": "default"
+                            }
+                        ],
                         "body": {
                             "mode": "raw",
                             "raw": "{\n    \"updatedAt\": \"2020-10-16T00:25:24.576Z\"\n}",
@@ -270,7 +309,13 @@
                             ]
                         },
                         "method": "POST",
-                        "header": [],
+                        "header": [
+                            {
+                                "key": "x-csrf-token",
+                                "value": "{{csrfToken}}",
+                                "type": "default"
+                            }
+                        ],
                         "body": {
                             "mode": "raw",
                             "raw": "{\n    \"updatedAt\": \"2020-10-16T00:25:24.576Z\"\n}",
@@ -308,7 +353,13 @@
                             ]
                         },
                         "method": "PUT",
-                        "header": [],
+                        "header": [
+                            {
+                                "key": "x-csrf-token",
+                                "value": "{{csrfToken}}",
+                                "type": "default"
+                            }
+                        ],
                         "body": {
                             "mode": "raw",
                             "raw": "{\n    \"updatedAt\": \"2020-10-16T00:25:24.576Z\"\n}",
@@ -346,7 +397,13 @@
                             ]
                         },
                         "method": "PUT",
-                        "header": [],
+                        "header": [
+                            {
+                                "key": "x-csrf-token",
+                                "value": "{{csrfToken}}",
+                                "type": "default"
+                            }
+                        ],
                         "body": {
                             "mode": "raw",
                             "raw": "{\n    \"updatedAt\": \"2020-10-16T00:25:24.576Z\"\n}",
@@ -384,7 +441,13 @@
                             ]
                         },
                         "method": "DELETE",
-                        "header": [],
+                        "header": [
+                            {
+                                "key": "x-csrf-token",
+                                "value": "{{csrfToken}}",
+                                "type": "default"
+                            }
+                        ],
                         "url": {
                             "raw": "{{baseUrl}}/dashboard/:id",
                             "host": ["{{baseUrl}}"],
@@ -392,12 +455,28 @@
                             "variable": [
                                 {
                                     "key": "id",
-                                    "value": "25575268-e1c1-40e8-88f2-237d36a7bfe6"
+                                    "value": ""
                                 }
                             ]
                         }
                     },
                     "response": []
+                }
+            ],
+            "event": [
+                {
+                    "listen": "prerequest",
+                    "script": {
+                        "type": "text/javascript",
+                        "exec": [""]
+                    }
+                },
+                {
+                    "listen": "test",
+                    "script": {
+                        "type": "text/javascript",
+                        "exec": [""]
+                    }
                 }
             ]
         },
@@ -418,7 +497,13 @@
                             ]
                         },
                         "method": "POST",
-                        "header": [],
+                        "header": [
+                            {
+                                "key": "x-csrf-token",
+                                "value": "{{csrfToken}}",
+                                "type": "default"
+                            }
+                        ],
                         "body": {
                             "mode": "raw",
                             "raw": "{\n    \"name\": \"{{$randomProductAdjective}} {{$randomJobArea}}\"\n}",
@@ -463,7 +548,13 @@
                     "name": "Update Topic Area",
                     "request": {
                         "method": "PUT",
-                        "header": [],
+                        "header": [
+                            {
+                                "key": "x-csrf-token",
+                                "value": "{{csrfToken}}",
+                                "type": "default"
+                            }
+                        ],
                         "body": {
                             "mode": "raw",
                             "raw": "{\n    \"name\": \"Home\"\n}",
@@ -492,7 +583,13 @@
                     "name": "Delete Topic Area",
                     "request": {
                         "method": "DELETE",
-                        "header": [],
+                        "header": [
+                            {
+                                "key": "x-csrf-token",
+                                "value": "{{csrfToken}}",
+                                "type": "default"
+                            }
+                        ],
                         "url": {
                             "raw": "{{baseUrl}}/topicarea/:id",
                             "host": ["{{baseUrl}}"],
@@ -546,7 +643,13 @@
                             ]
                         },
                         "method": "POST",
-                        "header": [],
+                        "header": [
+                            {
+                                "key": "x-csrf-token",
+                                "value": "{{csrfToken}}",
+                                "type": "default"
+                            }
+                        ],
                         "body": {
                             "mode": "raw",
                             "raw": "{\n    \"name\": \"{{$randomProductName}}\",\n    \"widgetType\": \"Text\",\n    \"content\": {\n        \"text\": \"{{$randomLoremParagraph}}\"\n    }\n}",
@@ -585,7 +688,13 @@
                             ]
                         },
                         "method": "POST",
-                        "header": [],
+                        "header": [
+                            {
+                                "key": "x-csrf-token",
+                                "value": "{{csrfToken}}",
+                                "type": "default"
+                            }
+                        ],
                         "body": {
                             "mode": "raw",
                             "raw": "{\n    \"name\": \"COVID Chart\",\n    \"widgetType\": \"Chart\",\n    \"content\": {\n        \"title\": \"Correlation of COVID cases to deaths\",\n        \"chartType\": \"LineChart\",\n        \"datasetId\": \"7f24b2ad-fc7d-443a-8b23-b62c6212aee2\",\n        \"fileName\": \"MyData.csv\",\n        \"s3Key\": {\n            \"raw\": \"123.csv\",\n            \"json\": \"123.json\"\n        }\n    }\n}",
@@ -617,7 +726,13 @@
                             ]
                         },
                         "method": "POST",
-                        "header": [],
+                        "header": [
+                            {
+                                "key": "x-csrf-token",
+                                "value": "{{csrfToken}}",
+                                "type": "default"
+                            }
+                        ],
                         "body": {
                             "mode": "raw",
                             "raw": "{\n    \"name\": \"COVID Table\",\n    \"widgetType\": \"Table\",\n    \"content\": {\n        \"title\": \"COVID cases to by state\",\n        \"datasetId\": \"7f24b2ad-fc7d-443a-8b23-b62c6212aee2\",\n        \"fileName\": \"MyData.csv\",\n        \"s3Key\": {\n            \"raw\": \"123.csv\",\n            \"json\": \"123.json\"\n        }\n    }\n}",
@@ -649,7 +764,13 @@
                             ]
                         },
                         "method": "POST",
-                        "header": [],
+                        "header": [
+                            {
+                                "key": "x-csrf-token",
+                                "value": "{{csrfToken}}",
+                                "type": "default"
+                            }
+                        ],
                         "body": {
                             "mode": "raw",
                             "raw": "{\n    \"name\": \"{{$randomAdjective}} {{$randomProductName}}\",\n    \"widgetType\": \"Metrics\",\n    \"content\": {\n        \"title\": \"{{$randomProductName}}\",\n        \"datasetId\": \"7f24b2ad-fc7d-443a-8b23-b62c6212aee2\",\n        \"s3Key\": {\n            \"json\": \"123.json\",\n            \"raw\": \"123.json\"\n        }\n    }\n}",
@@ -687,7 +808,13 @@
                             ]
                         },
                         "method": "POST",
-                        "header": [],
+                        "header": [
+                            {
+                                "key": "x-csrf-token",
+                                "value": "{{csrfToken}}",
+                                "type": "default"
+                            }
+                        ],
                         "body": {
                             "mode": "raw",
                             "raw": "{\n    \"name\": \"{{$randomProductName}}\",\n    \"widgetType\": \"Image\",\n    \"content\": {\n        \"title\": \"{{$randomProductName}}\",\n        \"summary\": \"{{$randomLoremParagraph}}\",\n        \"summaryBelow\": false,\n        \"imageAltText\": \"{{$randomWord}}\",\n        \"fileName\": \"123.png\",\n        \"scalePct\": \"75%\",\n        \"s3Key\": {\n            \"raw\": \"123.png\"\n        }\n    }\n}",
@@ -715,7 +842,13 @@
                     "name": "Delete widget",
                     "request": {
                         "method": "DELETE",
-                        "header": [],
+                        "header": [
+                            {
+                                "key": "x-csrf-token",
+                                "value": "{{csrfToken}}",
+                                "type": "default"
+                            }
+                        ],
                         "url": {
                             "raw": "{{baseUrl}}/dashboard/:id/widget/:widgetId",
                             "host": ["{{baseUrl}}"],
@@ -740,7 +873,13 @@
                     "name": "Set Widget Order",
                     "request": {
                         "method": "PUT",
-                        "header": [],
+                        "header": [
+                            {
+                                "key": "x-csrf-token",
+                                "value": "{{csrfToken}}",
+                                "type": "default"
+                            }
+                        ],
                         "body": {
                             "mode": "raw",
                             "raw": "{\n    \"widgets\": [\n        {\n            \"id\": \"070bc674-1139-4944-851f-7439f99a5f99\",\n            \"order\": 3,\n            \"updatedAt\": \"2020-09-17T01:39:02.602Z\"\n        },\n        {\n            \"id\": \"6154341a-9d40-44b2-9651-a4e83d90ae9a\",\n            \"order\": 2,\n            \"updatedAt\": \"2020-09-17T01:39:02.602Z\"\n        },\n        {\n            \"id\": \"bede2e72-39ec-4b31-804a-1dff1f537b90\",\n            \"order\": 1,\n            \"updatedAt\": \"2020-09-17T01:39:02.602Z\"\n        }\n    ]\n}",
@@ -795,9 +934,15 @@
                             }
                         },
                         "url": {
-                            "raw": "{{baseUrl}}/dataset",
+                            "raw": "{{baseUrl}}/dataset?x-csrf-token={{csrfToken}}",
                             "host": ["{{baseUrl}}"],
-                            "path": ["dataset"]
+                            "path": ["dataset"],
+                            "query": [
+                                {
+                                    "key": "x-csrf-token",
+                                    "value": "{{csrfToken}}"
+                                }
+                            ]
                         }
                     },
                     "response": []
@@ -854,7 +999,7 @@
                             "variable": [
                                 {
                                     "key": "id",
-                                    "value": "b2028eb0-d846-4e50-aeec-1e3788681244"
+                                    "value": "28da8b1b-a37a-4db0-a0dc-ad34fd559678"
                                 }
                             ]
                         },
@@ -888,7 +1033,7 @@
                             "variable": [
                                 {
                                     "key": "friendlyURL",
-                                    "value": "san-diego-dogs-in-adoption"
+                                    "value": "example-dashboard"
                                 }
                             ]
                         }
@@ -917,9 +1062,15 @@
                         "method": "GET",
                         "header": [],
                         "url": {
-                            "raw": "{{baseUrl}}/public/search?q=",
+                            "raw": "{{baseUrl}}/public/search/?q=Example",
                             "host": ["{{baseUrl}}"],
-                            "path": ["public", "search", "?q="],
+                            "path": ["public", "search", ""],
+                            "query": [
+                                {
+                                    "key": "q",
+                                    "value": "Example"
+                                }
+                            ],
                             "variable": [
                                 {
                                     "key": "q",
@@ -983,9 +1134,15 @@
                             }
                         },
                         "url": {
-                            "raw": "{{baseUrl}}/settings",
+                            "raw": "{{baseUrl}}/settings?x-csrf-token={{csrfToken}}",
                             "host": ["{{baseUrl}}"],
-                            "path": ["settings"]
+                            "path": ["settings"],
+                            "query": [
+                                {
+                                    "key": "x-csrf-token",
+                                    "value": "{{csrfToken}}"
+                                }
+                            ]
                         }
                     },
                     "response": []
@@ -1005,9 +1162,15 @@
                             }
                         },
                         "url": {
-                            "raw": "{{baseUrl}}/settings/homepage",
+                            "raw": "{{baseUrl}}/settings/homepage?x-csrf-token={{csrfToken}}",
                             "host": ["{{baseUrl}}"],
-                            "path": ["settings", "homepage"]
+                            "path": ["settings", "homepage"],
+                            "query": [
+                                {
+                                    "key": "x-csrf-token",
+                                    "value": "{{csrfToken}}"
+                                }
+                            ]
                         }
                     },
                     "response": []
@@ -1037,6 +1200,11 @@
                             "type": "apikey",
                             "apikey": [
                                 {
+                                    "key": "key",
+                                    "value": "x-api-key",
+                                    "type": "string"
+                                },
+                                {
                                     "key": "in",
                                     "value": "header",
                                     "type": "string"
@@ -1044,11 +1212,6 @@
                                 {
                                     "key": "value",
                                     "value": "{{apiKey}}",
-                                    "type": "string"
-                                },
-                                {
-                                    "key": "key",
-                                    "value": "x-api-key",
                                     "type": "string"
                                 }
                             ]
@@ -1303,9 +1466,15 @@
                             }
                         },
                         "url": {
-                            "raw": "{{baseUrl}}/user",
+                            "raw": "{{baseUrl}}/user?x-csrf-token={{csrfToken}}",
                             "host": ["{{baseUrl}}"],
-                            "path": ["user"]
+                            "path": ["user"],
+                            "query": [
+                                {
+                                    "key": "x-csrf-token",
+                                    "value": "{{csrfToken}}"
+                                }
+                            ]
                         }
                     },
                     "response": []
@@ -1335,9 +1504,15 @@
                             }
                         },
                         "url": {
-                            "raw": "{{baseUrl}}/user/invite",
+                            "raw": "{{baseUrl}}/user/invite?x-csrf-token={{csrfToken}}",
                             "host": ["{{baseUrl}}"],
-                            "path": ["user", "invite"]
+                            "path": ["user", "invite"],
+                            "query": [
+                                {
+                                    "key": "x-csrf-token",
+                                    "value": "{{csrfToken}}"
+                                }
+                            ]
                         }
                     },
                     "response": []
@@ -1367,9 +1542,15 @@
                             }
                         },
                         "url": {
-                            "raw": "{{baseUrl}}/user/role",
+                            "raw": "{{baseUrl}}/user/role?x-csrf-token={{csrfToken}}",
                             "host": ["{{baseUrl}}"],
-                            "path": ["user", "role"]
+                            "path": ["user", "role"],
+                            "query": [
+                                {
+                                    "key": "x-csrf-token",
+                                    "value": "{{csrfToken}}"
+                                }
+                            ]
                         }
                     },
                     "response": []
@@ -1392,7 +1573,23 @@
             "listen": "prerequest",
             "script": {
                 "type": "text/javascript",
-                "exec": [""]
+                "exec": [
+                    "const csrfRequest = {",
+                    "  url: `${pm.variables.get(\"baseUrl\")}/public/csrf-token`,",
+                    "  method: 'GET',",
+                    "  header: {",
+                    "    'Content-Type': 'application/json',",
+                    "    'Authorization': `Bearer ${pm.variables.get(\"token\")}`",
+                    "  }",
+                    "};",
+                    "pm.sendRequest(csrfRequest, (error, response) => {",
+                    "  if (error) {",
+                    "    console.log(error);",
+                    "  } else {",
+                    "  pm.variables.set(\"csrfToken\", response.json().token);",
+                    "  }",
+                    "});"
+                ]
             }
         },
         {
@@ -1406,7 +1603,7 @@
     "variable": [
         {
             "key": "baseUrl",
-            "value": "http://localhost:8080"
+            "value": ""
         },
         {
             "key": "token",

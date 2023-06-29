@@ -9,14 +9,15 @@ This software includes third party software subject to the following copyrights:
 
 ******************************
 
-@aws-amplify/api@4.0.61 under the Apache-2.0
-@aws-amplify/auth@4.6.14 under the Apache-2.0
-@aws-amplify/core@4.7.12 under the Apache-2.0
-@aws-amplify/interactions@4.1.9 under the Apache-2.0
-@aws-amplify/storage@4.5.14 under the Apache-2.0
+@aws-amplify/api@4.0.64 under the Apache-2.0
+@aws-amplify/auth@4.6.17 under the Apache-2.0
+@aws-amplify/core@4.7.15 under the Apache-2.0
+@aws-amplify/interactions@4.1.12 under the Apache-2.0
+@aws-amplify/storage@4.5.17 under the Apache-2.0
 @aws-amplify/ui-components@1.9.40 under the Apache-2.0
 @aws-amplify/ui-react@1.2.26 under the n/a
 @aws-cdk/aws-servicecatalogappregistry-alpha@2.60.0-alpha.0 under the Apache-2.0
+@babel/plugin-proposal-private-property-in-object@7.21.11 under the MIT
 @cloudscape-design/components@3.0.159 under the Apache-2.0
 @cloudscape-design/global-styles@1.0.6 under the Apache-2.0
 @commitlint/cli@17.3.0 under the MIT
@@ -67,14 +68,13 @@ This software includes third party software subject to the following copyrights:
 @typescript-eslint/eslint-plugin@5.45.1 under the MIT
 @typescript-eslint/eslint-plugin@5.46.0 under the MIT
 @typescript-eslint/eslint-plugin@5.47.0 under the MIT
-aws-amplify@4.3.43 under the Apache-2.0
-aws-cdk-lib@2.72.1 under the Apache-2.0
-aws-cdk@2.72.1 under the Apache-2.0
+aws-amplify@4.3.46 under the Apache-2.0
+aws-cdk-lib@2.86.0 under the Apache-2.0
+aws-cdk@2.86.0 under the Apache-2.0
 aws-sdk@2.1354.0 under the Apache-2.0
 aws-sdk@2.1393.0 under the Apache-2.0
 aws-serverless-express@3.4.0 under the Apache-2.0
-aws-xray-sdk@3.3.7 under the Apache-2.0
-aws-xray-sdk@3.4.0 under the Apache-2.0
+aws-xray-sdk@3.5.0 under the Apache-2.0
 cdk-nag@2.21.43 under the Apache-2.0
 commitizen@4.2.6 under the MIT
 constructs@10.1.198 under the Apache-2.0
@@ -93,7 +93,7 @@ eslint-plugin-import@2.26.0 under the MIT
 eslint-plugin-n@15.6.0 under the MIT
 eslint-plugin-prettier@4.2.1 under the MIT
 eslint-plugin-promise@6.1.1 under the ISC
-eslint-plugin-react@7.31.11 under the MIT
+eslint-plugin-react@7.32.2 under the MIT
 eslint@8.29.0 under the MIT
 eslint@8.30.0 under the MIT
 express@4.18.1 under the MIT

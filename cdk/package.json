@@ -27,7 +27,7 @@
         "@types/aws-sdk": "^2.7.0",
         "@types/node": "^16.11.7",
         "@typescript-eslint/eslint-plugin": "^5.45.1",
-        "aws-cdk": "^2.72.1",
+        "aws-cdk": "^2.86.0",
         "eslint": "^8.29.0",
         "eslint-config-prettier": "^8.5.0",
         "eslint-config-standard-with-typescript": "^23.0.0",
@@ -42,7 +42,7 @@
     },
     "dependencies": {
         "@aws-cdk/aws-servicecatalogappregistry-alpha": "^2.60.0-alpha.0",
-        "aws-cdk-lib": "^2.72.1",
+        "aws-cdk-lib": "^2.86.0",
         "aws-sdk": "^2.1270.0",
         "cdk-nag": "^2.21.43",
         "constructs": "^10.1.196",

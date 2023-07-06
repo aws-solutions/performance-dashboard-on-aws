@@ -5,7 +5,9 @@
 
 import { Dashboard, DashboardState, DASHBOARD_ITEM_TYPE } from "../../models/dashboard";
 import AuditLogFactory from "../auditlog-factory";
-import { DashboardAuditLogItem, ItemEvent } from "../../models/auditlog";
+import { AuditLogItem, DashboardAuditLogItem, ItemEvent } from "../../models/auditlog";
+import { ItemNotFound } from "../../../lib/errors";
+import { GetItemOutput } from "aws-sdk/clients/dynamodb";
 
 const timestamp = new Date();
 
@@ -171,5 +173,12 @@ describe("fromItem", () => {
                 },
             ],
         });
+    });
+
+    it("throws ItemNotFound when instance is not type of AuditLogItem", () => {
+        const result: GetItemOutput = {};
+        expect(() => {
+            AuditLogFactory.fromItem(result.Item as unknown as AuditLogItem);
+        }).toThrowError(ItemNotFound);
     });
 });

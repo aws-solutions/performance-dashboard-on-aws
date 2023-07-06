@@ -6,6 +6,8 @@
 import { DatasetItem, SourceType, DatasetSchema } from "../../models/dataset";
 import * as uuid from "uuid";
 import DatasetFactory from "../dataset-factory";
+import { ItemNotFound } from "../../../lib/errors";
+import { GetItemOutput } from "aws-sdk/clients/dynamodb";
 
 jest.mock("uuid");
 jest.spyOn(uuid, "v4").mockReturnValue("123");
@@ -137,5 +139,12 @@ describe("fromItem", () => {
 
         const dataset = DatasetFactory.fromItem(item);
         expect(dataset.schema).toEqual(DatasetSchema.None);
+    });
+
+    it("throws ItemNotFound when instance is not type of DatasetItem", () => {
+        const result: GetItemOutput = {};
+        expect(() => {
+            DatasetFactory.fromItem(result.Item as unknown as DatasetItem);
+        }).toThrowError(ItemNotFound);
     });
 });

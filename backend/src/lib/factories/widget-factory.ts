@@ -16,19 +16,20 @@ import {
     ImageWidget,
     SectionWidget,
 } from "../models/widget";
+import { ItemNotFound } from "../errors";
 
 export const WIDGET_ITEM_TYPE = "Widget";
 export const WIDGET_PREFIX = "Widget#";
 export const DASHBOARD_PREFIX = "Dashboard#";
 
-type CreateWidgetInfo = {
+interface CreateWidgetInfo {
     name: string;
     dashboardId: string;
     widgetType: WidgetType;
     showTitle?: boolean;
     content: any;
     section?: string;
-};
+}
 
 function createWidget(widgetInfo: CreateWidgetInfo): Widget {
     const widget: Widget = {
@@ -79,6 +80,9 @@ function createFromWidget(dashboardId: string, widget: Widget): Widget {
 }
 
 function fromItem(item: WidgetItem): Widget {
+    if (!item) {
+        throw new ItemNotFound();
+    }
     const id = item.sk.substring(WIDGET_PREFIX.length);
     const dashboardId = item.pk.substring(DASHBOARD_PREFIX.length);
     const updatedAt = item.updatedAt ? new Date(item.updatedAt) : new Date();
@@ -210,7 +214,7 @@ function fromSectionItem(widget: Widget): SectionWidget {
     };
 }
 
-function fromItems(items: Array<WidgetItem>): Array<Widget> {
+function fromItems(items: WidgetItem[]): Widget[] {
     return items.map((item) => fromItem(item));
 }
 
@@ -379,7 +383,7 @@ function createMetricsWidget(widget: Widget): MetricsWidget {
         throw new Error("Metrics widget must have `content.datasetId` field");
     }
 
-    if (!widget.content.s3Key || !widget.content.s3Key.json) {
+    if (!widget.content.s3Key?.json) {
         throw new Error("Metrics widget must have `content.s3Key.json` field");
     }
 

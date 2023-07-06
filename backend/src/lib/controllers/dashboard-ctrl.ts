@@ -170,7 +170,7 @@ async function updateDashboard(req: Request, res: Response) {
         topicAreaId,
         topicArea.name,
         displayTableOfContents,
-        tableOfContents,
+        tableOfContents ?? {},
         description,
         updatedAt,
         user,

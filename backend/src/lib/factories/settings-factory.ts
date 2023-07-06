@@ -4,6 +4,7 @@
  */
 
 import { Settings, PublicSettings, SettingsItem } from "../models/settings";
+import { ItemNotFound } from "../errors";
 
 function getDefaultSettings(): Settings {
     return {
@@ -31,6 +32,9 @@ function getDefaultSettings(): Settings {
 }
 
 function fromItem(item: SettingsItem): Settings {
+    if (!item) {
+        throw new ItemNotFound();
+    }
     const defaults = getDefaultSettings();
     return {
         updatedAt: item.updatedAt ? new Date(item.updatedAt) : defaults.updatedAt,

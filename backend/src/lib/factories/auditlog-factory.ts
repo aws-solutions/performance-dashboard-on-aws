@@ -13,6 +13,7 @@ import {
 } from "../models/auditlog";
 import { Dashboard, DASHBOARD_ITEM_TYPE } from "../models/dashboard";
 import DashboardFactory from "./dashboard-factory";
+import { ItemNotFound } from "../errors";
 
 /**
  * Builds an AuditLog dynamodb item that corresponds to the
@@ -61,6 +62,9 @@ function buildDashboardAuditLogFromEvent(
  * type depending on the item type, i.e. DashboardAuditLogItem for a Dashboard item.
  */
 function fromItem(auditLogItem: AuditLogItem): AuditLog | null {
+    if (!auditLogItem) {
+        throw new ItemNotFound();
+    }
     if (auditLogItem.type === DASHBOARD_ITEM_TYPE) {
         const dashboardAuditLogItem = auditLogItem as DashboardAuditLogItem;
         return {

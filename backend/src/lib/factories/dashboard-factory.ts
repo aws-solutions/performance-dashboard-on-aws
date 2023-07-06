@@ -16,6 +16,7 @@ import {
     DASHBOARD_ITEM_TYPE,
 } from "../models/dashboard";
 import { Widget } from "../models/widget";
+import { ItemNotFound } from "../errors";
 
 function createNew(
     name: string,
@@ -144,6 +145,9 @@ function toItem(dashboard: Dashboard): DashboardItem {
 }
 
 function fromItem(item: DashboardItem): Dashboard {
+    if (!item) {
+        throw new ItemNotFound();
+    }
     const id = dashboardIdFromPk(item.pk);
     const dashboard: Dashboard = {
         id,

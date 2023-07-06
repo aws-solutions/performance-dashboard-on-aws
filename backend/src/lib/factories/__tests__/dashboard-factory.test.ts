@@ -6,7 +6,8 @@
 import factory from "../dashboard-factory";
 import { Dashboard, DashboardItem, DashboardState } from "../../models/dashboard";
 import { User } from "../../models/user";
-import { convertCompilerOptionsFromJson } from "typescript";
+import { ItemNotFound } from "../../../lib/errors";
+import { GetItemOutput } from "aws-sdk/clients/dynamodb";
 
 const user: User = {
     userId: "johndoe",
@@ -163,6 +164,13 @@ describe("fromItem", () => {
         expect(dashboard.parentDashboardId).toEqual("123");
         expect(dashboard.releaseNotes).toEqual("release note test");
         expect(dashboard.friendlyURL).toEqual("bananas-in-pyjamas");
+    });
+
+    it("throws ItemNotFound when instance is not type of DashboardItem", () => {
+        const result: GetItemOutput = {};
+        expect(() => {
+            factory.fromItem(result.Item as unknown as DashboardItem);
+        }).toThrowError(ItemNotFound);
     });
 });
 

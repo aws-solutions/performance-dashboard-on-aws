@@ -5,6 +5,8 @@
 
 import { SettingsItem, Settings } from "../../models/settings";
 import SettingsFactory from "../settings-factory";
+import { ItemNotFound } from "../../../lib/errors";
+import { GetItemOutput } from "aws-sdk/clients/dynamodb";
 
 describe("getDefaultSettings", () => {
     it("returns default values", () => {
@@ -125,6 +127,13 @@ describe("fromItem", () => {
             contactUsContent: undefined,
             analyticsTrackingId: undefined,
         });
+    });
+
+    it("throws ItemNotFound when instance is not type of SettingsFactory", () => {
+        const result: GetItemOutput = {};
+        expect(() => {
+            SettingsFactory.fromItem(result.Item as unknown as SettingsItem);
+        }).toThrowError(ItemNotFound);
     });
 });
 

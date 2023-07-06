@@ -5,10 +5,11 @@
 
 import { v4 as uuidv4 } from "uuid";
 import { Dataset, DatasetItem, SourceType, DatasetSchema } from "../models/dataset";
+import { ItemNotFound } from "../errors";
 
 const DATASET_ITEM_TYPE = "Dataset";
 
-type DatasetInfo = {
+interface DatasetInfo {
     fileName: string;
     createdBy: string;
     s3Key: {
@@ -17,7 +18,7 @@ type DatasetInfo = {
     };
     sourceType: SourceType;
     schema?: string;
-};
+}
 
 function createNew(info: DatasetInfo): Dataset {
     const schema = info.schema ? (info.schema as DatasetSchema) : DatasetSchema.None;
@@ -37,8 +38,11 @@ function createNew(info: DatasetInfo): Dataset {
 }
 
 function fromItem(item: DatasetItem): Dataset {
+    if (!item) {
+        throw new ItemNotFound();
+    }
     const id = item.pk.substring(8);
-    let dataset: Dataset = {
+    const dataset: Dataset = {
         id,
         fileName: item.fileName,
         createdBy: item.createdBy,

@@ -111,13 +111,8 @@ async function resendInvite(req: Request, res: Response) {
     }
 
     const repo = UserRepository.getInstance();
-    try {
-        await repo.resendInvite(userEmails.map((email) => email.split("@")[0]));
-        return res.send();
-    } catch (error) {
-        logger.error("error", error);
-        res.status(500).send("Internal Server Error");
-    }
+    await repo.resendInvite(userEmails.map((email) => email.split("@")[0]));
+    return res.send();
 }
 
 async function changeRole(req: Request, res: Response) {
@@ -149,14 +144,8 @@ async function changeRole(req: Request, res: Response) {
     }
 
     const repo = UserRepository.getInstance();
-    try {
-        await repo.changeRole(usernames, role);
-        return res.send();
-    } catch (error) {
-        // Don't return error which may reveal that user doesn't exists
-        logger.error("error", error);
-        res.status(400).send("Bad Request");
-    }
+    await repo.changeRole(usernames, role);
+    return res.send();
 }
 
 /**

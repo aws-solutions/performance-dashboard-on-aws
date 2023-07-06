@@ -17,6 +17,8 @@ import {
     ColumnDataType,
     SectionWidget,
 } from "../../models/widget";
+import { ItemNotFound } from "../../../lib/errors";
+import { GetItemOutput } from "aws-sdk/clients/dynamodb";
 
 const dummyWidgetName = "Some widget";
 const dashboardId = "123";
@@ -603,6 +605,13 @@ describe("fromItem", () => {
             expect(widget.name).toEqual("Random name");
             expect(widget.dashboardId).toEqual("abc");
         }).not.toThrowError();
+    });
+
+    it("throws ItemNotFound when instance is not type of WidgetItem", () => {
+        const result: GetItemOutput = {};
+        expect(() => {
+            WidgetFactory.fromItem(result.Item as unknown as WidgetItem);
+        }).toThrowError(ItemNotFound);
     });
 });
 

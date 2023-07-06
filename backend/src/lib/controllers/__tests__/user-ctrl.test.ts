@@ -123,16 +123,6 @@ describe("resendInvite", () => {
         expect(res.send).toBeCalledWith("Invalid email: &lt;script&gt;temp&lt;/script&gt;");
     });
 
-    it("returns 500 internal server error when underline error", async () => {
-        repository.resendInvite = jest.fn().mockImplementationOnce(() => {
-            throw new Error();
-        });
-
-        await UserCtrl.resendInvite(req, res);
-        expect(res.status).toBeCalledWith(500);
-        expect(res.send).toBeCalledWith(expect.stringContaining("Internal Server Error"));
-    });
-
     it("resend invite", async () => {
         await UserCtrl.resendInvite(req, res);
         expect(repository.resendInvite).toBeCalledWith(["test1", "test2"]);
@@ -169,16 +159,6 @@ describe("changeRole", () => {
         await UserCtrl.changeRole(req, res);
         expect(res.status).toBeCalledWith(400);
         expect(res.send).toBeCalledWith("Missing required body `usernames`");
-    });
-
-    it("returns 400 bad request error when underline error", async () => {
-        repository.changeRole = jest.fn().mockImplementationOnce(() => {
-            throw new Error();
-        });
-
-        await UserCtrl.changeRole(req, res);
-        expect(res.status).toBeCalledWith(400);
-        expect(res.send).toBeCalledWith(expect.stringContaining("Bad Request"));
     });
 
     it("change role", async () => {

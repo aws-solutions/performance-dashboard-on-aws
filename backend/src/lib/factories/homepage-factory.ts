@@ -4,6 +4,7 @@
  */
 
 import { Homepage, HomepageItem } from "../models/homepage";
+import { ItemNotFound } from "../errors";
 
 function getDefaultHomepage(): Homepage {
     return {
@@ -17,6 +18,9 @@ function getDefaultHomepage(): Homepage {
 }
 
 function fromItem(item: HomepageItem): Homepage {
+    if (!item) {
+        throw new ItemNotFound();
+    }
     return {
         title: item.title,
         description: item.description,

@@ -4,8 +4,10 @@
  */
 
 import factory from "../topicarea-factory";
-import { TopicArea } from "../../models/topicarea";
+import { TopicArea, TopicAreaItem } from "../../models/topicarea";
 import { User } from "../../models/user";
+import { ItemNotFound } from "../../../lib/errors";
+import { GetItemOutput } from "aws-sdk/clients/dynamodb";
 
 const user: User = {
     userId: "johndoe",
@@ -55,5 +57,14 @@ describe("TopicAreaFactory.toItem", () => {
         const item = factory.toItem(topicarea);
         expect(item.name).toEqual("Banana");
         expect(item.createdBy).toEqual(user.userId);
+    });
+});
+
+describe("fromItem", () => {
+    it("throws ItemNotFound when instance is not type of TopicAreaItem", () => {
+        const result: GetItemOutput = {};
+        expect(() => {
+            factory.fromItem(result.Item as unknown as TopicAreaItem);
+        }).toThrowError(ItemNotFound);
     });
 });

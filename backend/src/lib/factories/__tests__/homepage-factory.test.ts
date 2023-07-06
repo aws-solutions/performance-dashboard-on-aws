@@ -5,6 +5,8 @@
 
 import { HomepageItem } from "../../models/homepage";
 import HomepageFactory from "../homepage-factory";
+import { ItemNotFound } from "../../../lib/errors";
+import { GetItemOutput } from "aws-sdk/clients/dynamodb";
 
 describe("getDefaultHomepage", () => {
     it("returns default values", () => {
@@ -47,5 +49,12 @@ describe("fromItem", () => {
         const homepage = HomepageFactory.fromItem(item);
         expect(homepage.title).toEqual("Kingdom of Wakanda");
         expect(homepage.description).toEqual("Welcome to Wakanda");
+    });
+
+    it("throws ItemNotFound when instance is not type of HomepageItem", () => {
+        const result: GetItemOutput = {};
+        expect(() => {
+            HomepageFactory.fromItem(result.Item as unknown as HomepageItem);
+        }).toThrowError(ItemNotFound);
     });
 });

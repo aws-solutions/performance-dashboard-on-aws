@@ -6,6 +6,7 @@
 import { v4 as uuidv4 } from "uuid";
 import { TopicArea, TopicAreaItem } from "../models/topicarea";
 import { User } from "../models/user";
+import { ItemNotFound } from "../errors";
 
 const TOPICAREA: string = "TopicArea";
 
@@ -34,6 +35,9 @@ function toItem(topicArea: TopicArea): TopicAreaItem {
  * Converts a DynamoDB item into a TopicArea object
  */
 function fromItem(item: TopicAreaItem): TopicArea {
+    if (!item) {
+        throw new ItemNotFound();
+    }
     const id = item.pk.substring(10);
     return {
         id,

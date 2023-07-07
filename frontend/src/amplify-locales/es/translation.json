@@ -21,5 +21,7 @@
     "VERIFY_CONTACT_EMAIL_LABEL": "Correo electrónico",
     "VERIFY_CONTACT_HEADER_TEXT": "La recuperación de la cuenta requiere información de contacto verificada",
     "VERIFY_CONTACT_SUBMIT_LABEL": "Enviar",
-    "VERIFY_CONTACT_VERIFY_LABEL": "Verificar"
+    "VERIFY_CONTACT_VERIFY_LABEL": "Verificar",
+    "INVALID_USERNAME_PASSWORD": "Nombre de usuario o contraseña no válidos",
+    "PASSWORD_REQUIREMENTS": "La contraseña no puede empezar ni terminar con espacios en blanco y debe contener al menos 2 caracteres que no sean espacios en blanco"
 }

@@ -1,0 +1,4 @@
+{
+    "INVALID_USERNAME_PASSWORD": "Invalid username or password",
+    "PASSWORD_REQUIREMENTS": "Password cannot start or end with whitespace and must contains at least 2 non-whitespace characters"
+}

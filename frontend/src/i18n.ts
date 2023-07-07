@@ -27,10 +27,20 @@ export default function init(defaultLanguage?: string) {
             },
         });
 
+    // Error messages returned by AWS Cognito.
+    const cognitoDict = {
+        INVALID_USERNAME_PASSWORD:
+            "2 validation errors detected: Value at 'userAlias' failed to satisfy constraint: Member must satisfy regular expression pattern: [\\p{L}\\p{M}\\p{S}\\p{N}\\p{P}]+; Value at 'userName' failed to satisfy constraint: Member must satisfy regular expression pattern: [\\p{L}\\p{M}\\p{S}\\p{N}\\p{P}]+",
+        PASSWORD_REQUIREMENTS:
+            "1 validation error detected: Value at 'password' failed to satisfy constraint: Member must satisfy regular expression pattern: ^[\\S]+.*[\\S]+$",
+    };
     const dict: any = {};
-    ["es", "pt"].forEach((locale) => {
+    ["en", "es", "pt"].forEach((locale) => {
         let jsonFile = require(`./amplify-locales/${locale}/translation.json`);
-        let translations: any = {};
+        let translations: any = {
+            [cognitoDict.INVALID_USERNAME_PASSWORD]: [jsonFile.INVALID_USERNAME_PASSWORD],
+            [cognitoDict.PASSWORD_REQUIREMENTS]: [jsonFile.PASSWORD_REQUIREMENTS],
+        };
         Object.entries(jsonFile).forEach(([key, value]) => {
             key = Translations[key as keyof typeof Translations];
             if (key) {

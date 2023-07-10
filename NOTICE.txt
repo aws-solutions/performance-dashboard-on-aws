@@ -20,7 +20,7 @@ This software includes third party software subject to the following copyrights:
 @babel/plugin-proposal-private-property-in-object@7.21.11 under the MIT
 @cloudscape-design/components@3.0.159 under the Apache-2.0
 @cloudscape-design/global-styles@1.0.6 under the Apache-2.0
-@commitlint/cli@17.3.0 under the MIT
+@commitlint/cli@17.6.6 under the MIT
 @commitlint/config-conventional@17.3.0 under the MIT
 @fortawesome/fontawesome-svg-core@1.2.36 under the MIT
 @fortawesome/free-solid-svg-icons@5.15.4 under the (CC-BY-4.0 AND MIT)
@@ -76,7 +76,7 @@ aws-sdk@2.1393.0 under the Apache-2.0
 aws-serverless-express@3.4.0 under the Apache-2.0
 aws-xray-sdk@3.5.0 under the Apache-2.0
 cdk-nag@2.21.43 under the Apache-2.0
-commitizen@4.2.6 under the MIT
+commitizen@4.3.0 under the MIT
 constructs@10.1.198 under the Apache-2.0
 cookie-parser@1.4.6 under the MIT
 cors@2.8.5 under the MIT

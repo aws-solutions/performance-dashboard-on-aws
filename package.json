@@ -24,5 +24,9 @@
     "dependencies": {
         "license-checker": "^25.0.1",
         "license-report": "^6.3.0"
+    },
+    "overrides": {
+        "semver": "7.5.2",
+        "word-wrap" : "npm:@aashutoshrathi/word-wrap@1.2.5"
     }
 }

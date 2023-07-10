@@ -5,6 +5,18 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.9.0] - 2023-07-14
+
+### Added
+
+- Migration from AWS CDK v1 to AWS CDK v2.
+- Ability to ask credentials to users on public part of the app.
+- Improvements to meet WCAG accessibility requirements.
+
+### Fixed
+
+- Dependency libraries to address potential security vulnerabilities.
+
 ## [1.8.1] - 2023-05-01
 
 - Update our CDK code in PDoA v1.8 to turn on S3 ACLs.  They are [no longer on by default](https://aws.amazon.com/it/about-aws/whats-new/2022/12/amazon-s3-automatically-enable-block-public-access-disable-access-control-lists-buckets-april-2023/) as of April 2023

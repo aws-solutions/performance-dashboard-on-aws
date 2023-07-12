@@ -47,5 +47,8 @@
         "cdk-nag": "^2.21.43",
         "constructs": "^10.1.196",
         "source-map-support": "^0.5.21"
+    },
+    "overrides": {
+        "semver": "7.5.2"
     }
 }

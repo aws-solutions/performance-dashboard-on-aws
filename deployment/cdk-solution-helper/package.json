@@ -1,6 +1,8 @@
 {
     "name": "cdk-solution-helper",
+    "license": "Apache-2.0",
     "version": "0.1.0",
+    "description": "A lightweight helper function that cleans-up synthesized templates from the AWS Cloud Development Kit (CDK) and prepares them for use with the AWS Solutions publishing pipeline.",
     "devDependencies": {
         "fs": "0.0.1-security"
     },

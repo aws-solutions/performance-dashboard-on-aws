@@ -3,6 +3,10 @@
     "version": "1.9.0",
     "description": "Performance Dashboard on AWS Backend",
     "license": "Apache-2.0",
+    "author": {
+        "name": "Amazon Web Services",
+        "url": "https://aws.amazon.com/solutions"
+    },
     "awssdkUserAgent": "AwsSolution/SO0157/v",
     "scripts": {
         "test": "LOG_LEVEL=SILENT jest --coverage --watchAll",

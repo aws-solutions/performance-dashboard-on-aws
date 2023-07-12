@@ -77,6 +77,11 @@ echo "cp $source_template_dir/../.gitignore $dist_dir"
 cp $source_template_dir/../.gitignore $dist_dir
 echo "cp $source_template_dir/../test.sh $dist_dir"
 cp $source_template_dir/../test.sh $dist_dir
+echo "cp -r $source_dir/.github/ $dist_dir"
+cp -r "$source_dir/.github/" $dist_dir
+echo "rm -r $dist_dir/.github/workflows"
+rm -r "$dist_dir/.github/workflows"
+
 
 echo "------------------------------------------------------------------------------"
 echo "[Packing] Clean build, node_modules and coverage folders"

@@ -1,3 +1,71 @@
+@import "../styles/base";
+
 .usa-breadcrumb {
-  background-color: transparent !important;
+    background-color: transparent !important;
+    @include u-padding-bottom($theme-breadcrumb-padding-bottom);
+    @include u-padding-top($theme-breadcrumb-padding-top);
+}
+
+// Breadcrumb wrap
+.usa-breadcrumb--wrap {
+    @include u-line-height($theme-breadcrumb-font-family, 4);
+}
+.usa-breadcrumb__list-item {
+    @include u-white-space("wrap");
+
+    // If parent link only, only show parent of current link
+    &:nth-last-child(2) {
+        @include not-sr-only;
+
+        .usa-breadcrumb__link {
+            @include button-unstyled;
+            @include exdent-icon;
+            @include place-icon(
+                $icon-breadcrumb-back,
+                "before",
+                0,
+                baseline,
+                $theme-breadcrumb-background-color
+            );
+
+            // Override link colors from button-unstyled()
+            @include set-link-from-bg(
+                $theme-breadcrumb-background-color,
+                $theme-breadcrumb-link-color,
+                $context: $breadcrumb-context
+            );
+
+            @include u-display("inline-block");
+            @include u-padding-bottom($theme-breadcrumb-padding-bottom);
+            @include u-padding-top($theme-breadcrumb-padding-top);
+
+            &:before {
+                bottom: $icon-vertical-spacer;
+                // Magic number to center icon
+                height: $breadcrumb-icon-display-height;
+                position: relative;
+            }
+
+            // Prevent underline that extends beyond text
+            &,
+            &:hover,
+            &:active {
+                @include u-text("no-underline");
+            }
+            span {
+                @include u-text("underline");
+            }
+        }
+
+        // Override icon spacing from place-icon() with non-token value
+        .usa-breadcrumb__link::before {
+            margin-right: $breadcrumb-icon-spacing;
+        }
+    }
+    &:not(:last-child)::after {
+        display: none !important;
+    }
+    &:not(:nth-last-child(2)) {
+        display: none !important;
+    }
 }

@@ -16,34 +16,34 @@ jest.mock("../../services/BackendService");
 const history = createMemoryHistory();
 
 describe("CreateTopicAreaForm", () => {
-  beforeEach(async () => {
-    // Mocks
-    jest.spyOn(history, "push");
-    BackendService.createTopicArea = jest.fn().mockReturnValue({ id: "123" });
+    beforeEach(async () => {
+        // Mocks
+        jest.spyOn(history, "push");
+        BackendService.createTopicArea = jest.fn().mockReturnValue({ id: "123" });
 
-    render(
-      <Router history={history}>
-        <CreateTopicArea />
-      </Router>
-    );
-  });
+        render(
+            <Router history={history}>
+                <CreateTopicArea />
+            </Router>,
+        );
+    });
 
-  test("submits form with the entered values", async () => {
-    fireEvent.input(screen.getByLabelText("Topic area name*"), {
-      target: {
-        value: "AWS Topic Area",
-      },
+    test("submits form with the entered values", async () => {
+        fireEvent.input(screen.getByLabelText("Topic area name"), {
+            target: {
+                value: "AWS Topic Area",
+            },
+        });
+        await act(async () => {
+            fireEvent.submit(screen.getByTestId("CreateTopicAreaForm"));
+        });
+        expect(BackendService.createTopicArea).toBeCalledWith("AWS Topic Area");
     });
-    await act(async () => {
-      fireEvent.submit(screen.getByTestId("CreateTopicAreaForm"));
-    });
-    expect(BackendService.createTopicArea).toBeCalledWith("AWS Topic Area");
-  });
 
-  test("invokes cancel function when use clicks cancel", async () => {
-    await act(async () => {
-      fireEvent.click(screen.getByRole("button", { name: "Cancel" }));
+    test("invokes cancel function when use clicks cancel", async () => {
+        await act(async () => {
+            fireEvent.click(screen.getByRole("button", { name: "Cancel" }));
+        });
+        expect(history.push).toHaveBeenCalledWith("/admin/settings/topicarea");
     });
-    expect(history.push).toHaveBeenCalledWith("/admin/settings/topicarea");
-  });
 });

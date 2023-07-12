@@ -3,161 +3,177 @@
  *  SPDX-License-Identifier: Apache-2.0
  */
 
-import * as cdk from "@aws-cdk/core";
-import * as lambda from "@aws-cdk/aws-lambda";
-import * as iam from "@aws-cdk/aws-iam";
-import * as dynamodb from "@aws-cdk/aws-dynamodb";
-import * as s3 from "@aws-cdk/aws-s3";
-import { DynamoEventSource } from "@aws-cdk/aws-lambda-event-sources";
-import logs = require("@aws-cdk/aws-logs");
+import { Table } from "aws-cdk-lib/aws-dynamodb";
+import { DynamoEventSource } from "aws-cdk-lib/aws-lambda-event-sources";
+import { Bucket } from "aws-cdk-lib/aws-s3";
+import { Construct } from "constructs";
+import { Code, Function, Runtime, StartingPosition, Tracing } from "aws-cdk-lib/aws-lambda";
+import { Duration } from "aws-cdk-lib";
+import { RetentionDays } from "aws-cdk-lib/aws-logs";
+import { Effect, PolicyStatement } from "aws-cdk-lib/aws-iam";
 
 interface Props {
-  mainTable: dynamodb.Table;
-  auditTrailTable: dynamodb.Table;
-  datasetsBucket: s3.Bucket;
-  contentBucket: s3.Bucket;
-  userPool: {
-    id: string;
-    arn: string;
-  };
-  authenticationRequired: boolean;
+    mainTable: Table;
+    auditTrailTable: Table;
+    datasetsBucketArn: string;
+    contentBucketArn: string;
+    userPool: {
+        id: string;
+        arn: string;
+    };
+    authenticationRequired: string;
+    csrfSecret: string;
+    cookiesSecret: string;
+    frontendOrigin: string;
 }
 
-export class LambdaFunctions extends cdk.Construct {
-  public readonly apiHandler: lambda.Function;
-  public readonly publicApiHandler: lambda.Function;
-  public readonly ddbStreamProcessor: lambda.Function;
+export class LambdaFunctions extends Construct {
+    public readonly apiHandler: Function;
+    public readonly publicApiHandler: Function;
+    public readonly ddbStreamProcessor: Function;
 
-  constructor(scope: cdk.Construct, id: string, props: Props) {
-    super(scope, id);
+    constructor(scope: Construct, id: string, props: Props) {
+        super(scope, id);
 
-    this.apiHandler = new lambda.Function(this, "PrivateApi", {
-      runtime: lambda.Runtime.NODEJS_16_X,
-      description: "Handles API Gateway traffic from admin users",
-      code: lambda.Code.fromAsset("../backend/build"),
-      handler: "src/lambda/api.handler",
-      tracing: lambda.Tracing.ACTIVE,
-      memorySize: 256,
-      timeout: cdk.Duration.seconds(10),
-      reservedConcurrentExecutions: 25,
-      logRetention: logs.RetentionDays.TEN_YEARS,
-      environment: {
-        MAIN_TABLE: props.mainTable.tableName,
-        AUDIT_TRAIL_TABLE: props.auditTrailTable.tableName,
-        DATASETS_BUCKET: props.datasetsBucket.bucketName,
-        CONTENT_BUCKET: props.contentBucket.bucketName,
-        USER_POOL_ID: props.userPool.id,
-        LOG_LEVEL: "info",
-        AUTHENTICATION_REQUIRED: props.authenticationRequired.toString(),
-      },
-    });
+        const datasetsBucket = Bucket.fromBucketArn(
+            this,
+            "DatasetsBucket",
+            props.datasetsBucketArn,
+        );
 
-    // This function handles traffic coming from the public.
-    // It provides flexibility to define specific throttling limits
-    // between this lambda vs the one that handles private traffic.
-    this.publicApiHandler = new lambda.Function(this, "PublicApi", {
-      runtime: lambda.Runtime.NODEJS_14_X,
-      description: "Handles API Gateway traffic from public users",
-      code: lambda.Code.fromAsset("../backend/build"),
-      handler: "src/lambda/api.handler",
-      tracing: lambda.Tracing.ACTIVE,
-      memorySize: 256,
-      timeout: cdk.Duration.seconds(10),
-      logRetention: logs.RetentionDays.TEN_YEARS,
-      environment: {
-        MAIN_TABLE: props.mainTable.tableName,
-        DATASETS_BUCKET: props.datasetsBucket.bucketName,
-        CONTENT_BUCKET: props.contentBucket.bucketName,
-        LOG_LEVEL: "info",
-        AUTHENTICATION_REQUIRED: props.authenticationRequired.toString(),
-      },
-    });
+        const contentBucket = Bucket.fromBucketArn(this, "ContentBucket", props.contentBucketArn);
 
-    // The DynamoDB Stream processor is a Lambda function that triggers
-    // based on the stream from the Main table. Its primary function is to
-    // write updates to the Audit Trail table.
-    this.ddbStreamProcessor = new lambda.Function(
-      this,
-      "DynamoDBStreamProcessor",
-      {
-        runtime: lambda.Runtime.NODEJS_14_X,
-        description: "Handles messages from the main table's DynamoDB stream",
-        code: lambda.Code.fromAsset("../backend/build"),
-        handler: "src/lambda/streams.handler",
-        tracing: lambda.Tracing.ACTIVE,
-        memorySize: 256,
-        timeout: cdk.Duration.seconds(10),
-        // You may need to increase the lambda concurrent qouta of your AWS account
-        // https://{aws-region}.console.aws.amazon.com/servicequotas/home/services/lambda/quotas/L-B99A9384
-        reservedConcurrentExecutions: 10,
-        logRetention: logs.RetentionDays.TEN_YEARS,
-        environment: {
-          AUDIT_TRAIL_TABLE: props.auditTrailTable.tableName,
-          LOG_LEVEL: "info",
-        },
-      }
-    );
+        this.apiHandler = new Function(this, "PrivateApi", {
+            runtime: Runtime.NODEJS_16_X,
+            description: "Handles API Gateway traffic from admin users",
+            code: Code.fromAsset("../backend/build"),
+            handler: "src/lambda/api.handler",
+            tracing: Tracing.ACTIVE,
+            memorySize: 256,
+            timeout: Duration.seconds(10),
+            reservedConcurrentExecutions: 25,
+            logRetention: RetentionDays.TEN_YEARS,
+            environment: {
+                MAIN_TABLE: props.mainTable.tableName,
+                AUDIT_TRAIL_TABLE: props.auditTrailTable.tableName,
+                DATASETS_BUCKET: datasetsBucket.bucketName,
+                CONTENT_BUCKET: contentBucket.bucketName,
+                USER_POOL_ID: props.userPool.id,
+                LOG_LEVEL: "info",
+                AUTHENTICATION_REQUIRED: props.authenticationRequired,
+                CSRF_SECRET: props.csrfSecret,
+                COOKIES_SECRET: props.cookiesSecret,
+                CORS_ORIGIN: props.frontendOrigin,
+            },
+        });
 
-    // Connect the Lambda function to the DynamoDB Stream of the main table
-    this.ddbStreamProcessor.addEventSource(
-      new DynamoEventSource(props.mainTable, {
-        startingPosition: lambda.StartingPosition.TRIM_HORIZON,
-        enabled: true,
-        batchSize: 1,
-        bisectBatchOnError: false,
-        retryAttempts: 10,
-      })
-    );
+        // This function handles traffic coming from the public.
+        // It provides flexibility to define specific throttling limits
+        // between this lambda vs the one that handles private traffic.
+        this.publicApiHandler = new Function(this, "PublicApi", {
+            runtime: Runtime.NODEJS_16_X,
+            description: "Handles API Gateway traffic from public users",
+            code: Code.fromAsset("../backend/build"),
+            handler: "src/lambda/api.handler",
+            tracing: Tracing.ACTIVE,
+            memorySize: 256,
+            timeout: Duration.seconds(10),
+            logRetention: RetentionDays.TEN_YEARS,
+            environment: {
+                MAIN_TABLE: props.mainTable.tableName,
+                AUDIT_TRAIL_TABLE: props.auditTrailTable.tableName,
+                DATASETS_BUCKET: datasetsBucket.bucketName,
+                CONTENT_BUCKET: contentBucket.bucketName,
+                USER_POOL_ID: props.userPool.id,
+                LOG_LEVEL: "info",
+                AUTHENTICATION_REQUIRED: props.authenticationRequired,
+                CSRF_SECRET: props.csrfSecret,
+                COOKIES_SECRET: props.cookiesSecret,
+                CORS_ORIGIN: props.frontendOrigin,
+            },
+        });
 
-    const dynamodbPolicy = new iam.PolicyStatement({
-      effect: iam.Effect.ALLOW,
-      resources: [
-        // Grant permissions to tables themselves
-        props.mainTable.tableArn,
-        props.auditTrailTable.tableArn,
-        // Grant permissions to the GSI indexes
-        props.mainTable.tableArn.concat("/index/*"),
-        props.auditTrailTable.tableArn.concat("/index/*"),
-      ],
-      actions: [
-        "dynamodb:PutItem",
-        "dynamodb:GetItem",
-        "dynamodb:DeleteItem",
-        "dynamodb:BatchGetItem",
-        "dynamodb:BatchWriteItem",
-        "dynamodb:ConditionCheckItem",
-        "dynamodb:GetRecords",
-        "dynamodb:GetShardIterator",
-        "dynamodb:Query",
-        "dynamodb:Scan",
-        "dynamodb:UpdateItem",
-      ],
-    });
+        // The DynamoDB Stream processor is a Lambda function that triggers
+        // based on the stream from the Main table. Its primary function is to
+        // write updates to the Audit Trail table.
+        this.ddbStreamProcessor = new Function(this, "DynamoDBStreamProcessor", {
+            runtime: Runtime.NODEJS_16_X,
+            description: "Handles messages from the main table's DynamoDB stream",
+            code: Code.fromAsset("../backend/build"),
+            handler: "src/lambda/streams.handler",
+            tracing: Tracing.ACTIVE,
+            memorySize: 256,
+            timeout: Duration.seconds(10),
+            // You may need to increase the lambda concurrent qouta of your AWS account
+            // https://{aws-region}.console.aws.amazon.com/servicequotas/home/services/lambda/quotas/L-B99A9384
+            reservedConcurrentExecutions: 10,
+            logRetention: RetentionDays.TEN_YEARS,
+            environment: {
+                AUDIT_TRAIL_TABLE: props.auditTrailTable.tableName,
+                LOG_LEVEL: "info",
+            },
+        });
 
-    const s3Policy = new iam.PolicyStatement({
-      effect: iam.Effect.ALLOW,
-      resources: [props.datasetsBucket.arnForObjects("*")],
-      actions: ["s3:GetObject", "s3:PutObject", "s3:DeleteObject"],
-    });
+        // Connect the Lambda function to the DynamoDB Stream of the main table
+        this.ddbStreamProcessor.addEventSource(
+            new DynamoEventSource(props.mainTable, {
+                startingPosition: StartingPosition.TRIM_HORIZON,
+                enabled: true,
+                batchSize: 1,
+                bisectBatchOnError: false,
+                retryAttempts: 10,
+            }),
+        );
 
-    const cognitoPolicy = new iam.PolicyStatement({
-      effect: iam.Effect.ALLOW,
-      resources: [props.userPool.arn],
-      actions: [
-        "cognito-idp:ListUsers",
-        "cognito-idp:AdminCreateUser",
-        "cognito-idp:AdminDeleteUser",
-        "cognito-idp:AdminUpdateUserAttributes",
-      ],
-    });
+        const dynamodbPolicy = new PolicyStatement({
+            effect: Effect.ALLOW,
+            resources: [
+                // Grant permissions to tables themselves
+                props.mainTable.tableArn,
+                props.auditTrailTable.tableArn,
+                // Grant permissions to the GSI indexes
+                props.mainTable.tableArn.concat("/index/*"),
+                props.auditTrailTable.tableArn.concat("/index/*"),
+            ],
+            actions: [
+                "dynamodb:PutItem",
+                "dynamodb:GetItem",
+                "dynamodb:DeleteItem",
+                "dynamodb:BatchGetItem",
+                "dynamodb:BatchWriteItem",
+                "dynamodb:ConditionCheckItem",
+                "dynamodb:GetRecords",
+                "dynamodb:GetShardIterator",
+                "dynamodb:Query",
+                "dynamodb:Scan",
+                "dynamodb:UpdateItem",
+            ],
+        });
 
-    this.apiHandler.addToRolePolicy(dynamodbPolicy);
-    this.apiHandler.addToRolePolicy(s3Policy);
-    this.apiHandler.addToRolePolicy(cognitoPolicy);
+        const s3Policy = new PolicyStatement({
+            effect: Effect.ALLOW,
+            resources: [datasetsBucket.arnForObjects("*")],
+            actions: ["s3:GetObject", "s3:PutObject", "s3:DeleteObject"],
+        });
 
-    this.publicApiHandler.addToRolePolicy(dynamodbPolicy);
-    this.publicApiHandler.addToRolePolicy(s3Policy);
+        const cognitoPolicy = new PolicyStatement({
+            effect: Effect.ALLOW,
+            resources: [props.userPool.arn],
+            actions: [
+                "cognito-idp:ListUsers",
+                "cognito-idp:AdminCreateUser",
+                "cognito-idp:AdminDeleteUser",
+                "cognito-idp:AdminUpdateUserAttributes",
+            ],
+        });
 
-    this.ddbStreamProcessor.addToRolePolicy(dynamodbPolicy);
-  }
+        this.apiHandler.addToRolePolicy(dynamodbPolicy);
+        this.apiHandler.addToRolePolicy(s3Policy);
+        this.apiHandler.addToRolePolicy(cognitoPolicy);
+
+        this.publicApiHandler.addToRolePolicy(dynamodbPolicy);
+        this.publicApiHandler.addToRolePolicy(s3Policy);
+
+        this.ddbStreamProcessor.addToRolePolicy(dynamodbPolicy);
+    }
 }

@@ -6,17 +6,17 @@
 import DynamoDBService from "../services/dynamodb";
 
 abstract class BaseRepository {
-  protected dynamodb: DynamoDBService;
-  protected tableName: string;
+    protected dynamodb: DynamoDBService;
+    protected tableName: string;
 
-  constructor() {
-    if (!process.env.MAIN_TABLE) {
-      throw new Error("Environment variable MAIN_TABLE not found");
+    constructor() {
+        if (!process.env.MAIN_TABLE) {
+            throw new Error("Environment variable MAIN_TABLE not found");
+        }
+
+        this.dynamodb = DynamoDBService.getInstance();
+        this.tableName = process.env.MAIN_TABLE;
     }
-
-    this.dynamodb = DynamoDBService.getInstance();
-    this.tableName = process.env.MAIN_TABLE;
-  }
 }
 
 export default BaseRepository;

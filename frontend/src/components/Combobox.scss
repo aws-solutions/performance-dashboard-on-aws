@@ -1,0 +1,105 @@
+@import "../styles/base";
+
+.usa-combo-box__list-option[data-value="#005ea2"]::after {
+    @include u-bg("blue-60v");
+    color: color("blue-60v");
+    margin: 5px;
+    border-radius: 4px;
+    content: "pla";
+}
+
+.usa-combo-box__list-option[data-value="#54278f"]::after {
+    @include u-bg("violet-70v");
+    color: color("violet-70v");
+    margin: 5px;
+    border-radius: 4px;
+    content: "pla";
+}
+
+.usa-combo-box__list-option[data-value="#8c471c"]::after {
+    @include u-bg("orange-60v");
+    color: color("orange-60v");
+    margin: 5px;
+    border-radius: 4px;
+    content: "pla";
+}
+
+.usa-combo-box__list-option[data-value="#002d3f"]::after {
+    @include u-bg("blue-cool-80v");
+    color: color("blue-cool-80v");
+    margin: 5px;
+    border-radius: 4px;
+    content: "pla";
+}
+
+.usa-combo-box__list-option[data-value="#286846"]::after {
+    @include u-bg("mint-60");
+    color: color("mint-60");
+    margin: 5px;
+    border-radius: 4px;
+    content: "pla";
+}
+
+.usa-combo-box__list-option[data-value="#776017"]::after {
+    @include u-bg("yellow-60v");
+    color: color("yellow-60v");
+    margin: 5px;
+    border-radius: 4px;
+    content: "pla";
+}
+
+.usa-combo-box__list-option[data-value="#ab2165"]::after {
+    @include u-bg("magenta-60v");
+    color: color("magenta-60v");
+    margin: 5px;
+    border-radius: 4px;
+    content: "pla";
+}
+
+.usa-combo-box__list-option[data-value="#3e4ded"]::after {
+    @include u-bg("indigo-cool-60v");
+    color: color("indigo-cool-60v");
+    margin: 5px;
+    border-radius: 4px;
+    content: "pla";
+}
+
+.usa-combo-box__list-option[data-value="#154C21"]::after {
+    @include u-bg("green-cool-70v");
+    color: color("green-cool-70v");
+    margin: 5px;
+    border-radius: 4px;
+    content: "pla";
+}
+
+.usa-combo-box__list-option[data-value="#8b0a03"]::after {
+    @include u-bg("red-70v");
+    color: color("red-70v");
+    margin: 5px;
+    border-radius: 4px;
+    content: "pla";
+}
+
+.usa-combo-box__list-option[data-value="#e52207"]::after {
+    @include u-bg("red-50v");
+    color: color("red-50v");
+    margin: 5px;
+    border-radius: 4px;
+    content: "pla";
+}
+
+.usa-combo-box__list-option[data-value="#ab2165"]::after {
+    @include u-bg("magenta-60v");
+    color: color("magenta-60v");
+    margin: 5px;
+    border-radius: 4px;
+    content: "pla";
+}
+
+.usa-combo-box__list-option[data-value="#00687d"]::after {
+    @include u-bg("cyan-60v");
+    color: color("cyan-60v");
+    margin: 5px;
+    border-radius: 4px;
+    content: "pla";
+}

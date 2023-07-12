@@ -17,14 +17,14 @@ import AuthService from "../../services/auth";
  * the request with a 401 Forbidden status code.
  */
 const auth = function (req: Request, res: Response, next: NextFunction) {
-  const user = AuthService.getCurrentUser(req);
-  if (!user) {
-    res.status(401);
-    return res.send("Unauthorized");
-  }
+    const user = AuthService.getCurrentUser(req);
+    if (!user) {
+        res.status(401);
+        return res.send("Unauthorized");
+    }
 
-  req.user = user;
-  next();
+    req.user = user;
+    next();
 };
 
 export default auth;

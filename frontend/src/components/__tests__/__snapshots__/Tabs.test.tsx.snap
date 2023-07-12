@@ -19,9 +19,8 @@ exports[`Tabs tests renders the Tabs component 1`] = `
         >
           <div
             aria-controls="tab1-panel"
-            aria-label="Active Tab Tab 1"
             aria-selected="true"
-            class="tab display-inline-block padding-x-2 padding-y-105 text-bold font-sans-md border-bottom-05 border-base-darker"
+            class="tab display-inline-block padding-x-2 padding-y-105 text-bold font-sans-md"
             id="tab1-tab"
             role="tab"
             tabindex="0"
@@ -41,12 +40,11 @@ exports[`Tabs tests renders the Tabs component 1`] = `
         >
           <div
             aria-controls="tab2-panel"
-            aria-label="Tab Tab 2"
             aria-selected="false"
             class="tab display-inline-block padding-x-2 padding-y-105 text-bold font-sans-md"
             id="tab2-tab"
             role="tab"
-            tabindex="0"
+            tabindex="-1"
           >
             Tab 2
           </div>
@@ -54,9 +52,11 @@ exports[`Tabs tests renders the Tabs component 1`] = `
       </div>
     </div>
     <div
+      aria-labelledbyid="tab1-tab"
       class="tab-content"
       id="tab1-panel"
       role="tabpanel"
+      tabindex="0"
     >
       Tab 1
     </div>
@@ -87,12 +87,11 @@ exports[`Tabs tests renders the Tabs component with default tab 2 selected 1`] =
         >
           <div
             aria-controls="tab1-panel"
-            aria-label="Tab Tab 1"
             aria-selected="false"
             class="tab display-inline-block padding-x-2 padding-y-105 text-bold font-sans-md"
             id="tab1-tab"
             role="tab"
-            tabindex="0"
+            tabindex="-1"
           >
             Tab 1
           </div>
@@ -109,9 +108,8 @@ exports[`Tabs tests renders the Tabs component with default tab 2 selected 1`] =
         >
           <div
             aria-controls="tab2-panel"
-            aria-label="Active Tab Tab 2"
             aria-selected="true"
-            class="tab display-inline-block padding-x-2 padding-y-105 text-bold font-sans-md border-bottom-05 border-base-darker"
+            class="tab display-inline-block padding-x-2 padding-y-105 text-bold font-sans-md"
             id="tab2-tab"
             role="tab"
             tabindex="0"
@@ -126,9 +124,11 @@ exports[`Tabs tests renders the Tabs component with default tab 2 selected 1`] =
       role="tabpanel"
     />
     <div
+      aria-labelledbyid="tab2-tab"
       class="tab-content"
       id="tab2-panel"
       role="tabpanel"
+      tabindex="0"
     >
       Tab 2
     </div>

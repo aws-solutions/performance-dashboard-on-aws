@@ -1,0 +1,10 @@
+#!/usr/bin/env sh
+. "$(dirname -- "$0")/_/husky.sh"
+
+./add-license.sh
+./generate-attributions.sh
+./check-license.sh
+
+pushd backend && npm run lint-src && popd
+pushd frontend && npm run lint-src && popd
+pushd cdk && npm run lint-src && popd

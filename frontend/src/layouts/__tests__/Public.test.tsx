@@ -13,13 +13,13 @@ import Home from "../../containers/Home";
 const history = createMemoryHistory();
 
 describe("PublicLayout", () => {
-  test("renders the component", async () => {
-    const wrapper = render(
-      <Router history={history}>
-        <Route component={withPublicLayout(Home)} />
-      </Router>,
-      { wrapper: MemoryRouter }
-    );
-    expect(wrapper.container).toMatchSnapshot();
-  });
+    test("renders the component", async () => {
+        const wrapper = render(
+            <Router history={history}>
+                <Route component={withPublicLayout(Home)} />
+            </Router>,
+            { wrapper: MemoryRouter },
+        );
+        expect(wrapper.container).toMatchSnapshot();
+    });
 });

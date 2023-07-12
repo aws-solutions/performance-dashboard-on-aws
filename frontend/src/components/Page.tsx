@@ -9,23 +9,21 @@ import { useSettings } from "../hooks";
 import { useTranslation } from "react-i18next";
 
 interface Props extends RouteProps {
-  title: string;
+    title: string;
 }
 
 function Page({ title, ...routeProps }: Props) {
-  const { t } = useTranslation();
-  const { settings } = useSettings();
+    const { t } = useTranslation();
+    const { settings } = useSettings();
 
-  useEffect(() => {
-    const appTitle =
-      settings.navbarTitle ||
-      t("PageTitle.Default") ||
-      "Performance Dashboard on AWS";
+    useEffect(() => {
+        const appTitle =
+            settings.navbarTitle || t("PageTitle.Default") || "Performance Dashboard on AWS";
 
-    document.title = title ? `${title} - ${appTitle}` : appTitle;
-  }, [settings.navbarTitle, t, title]);
+        document.title = title ? `${title} - ${appTitle}` : appTitle;
+    }, [settings.navbarTitle, t, title]);
 
-  return <Route {...routeProps} />;
+    return <Route {...routeProps} />;
 }
 
 export default Page;

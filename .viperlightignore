@@ -14,14 +14,9 @@ examples/README.md:49
 
 frontend/public/env.*:*
 
-frontend/src/containers/__tests__/PublishingGuidanceSettings.test.tsx:30
+frontend/src/containers/__tests__/PublishingGuidanceSettings.test.tsx:28
 
 frontend/src/locales/en/translation.json:536
-
-frontend/src/services/__tests__/BackendService.test.ts:389
-frontend/src/services/__tests__/BackendService.test.ts:396
-frontend/src/services/__tests__/BackendService.test.ts:403
-frontend/src/services/__tests__/BackendService.test.ts:409
 
 node_modules/*
 

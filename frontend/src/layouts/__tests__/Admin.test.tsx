@@ -13,13 +13,13 @@ import AdminHome from "../../containers/AdminHome";
 const history = createMemoryHistory();
 
 describe("AdminLayout", () => {
-  test("renders the component", async () => {
-    const wrapper = render(
-      <Router history={history}>
-        <Route component={withAdminLayout(AdminHome)} />
-      </Router>,
-      { wrapper: MemoryRouter }
-    );
-    expect(wrapper.container).toMatchSnapshot();
-  });
+    test("renders the component", async () => {
+        const wrapper = render(
+            <Router history={history}>
+                <Route component={withAdminLayout(AdminHome)} />
+            </Router>,
+            { wrapper: MemoryRouter },
+        );
+        expect(wrapper.container).toMatchSnapshot();
+    });
 });

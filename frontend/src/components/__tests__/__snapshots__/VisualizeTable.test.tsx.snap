@@ -28,9 +28,6 @@ exports[`renders the VisualizeTable component 1`] = `
               for="title"
             >
               Table title
-              <span>
-                *
-              </span>
             </label>
             <div
               class="usa-hint"

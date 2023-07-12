@@ -14,38 +14,37 @@ import BackendService from "../services/BackendService";
  * Settings from the Backend.
  */
 const defaultSettings: Settings = {
-  dateTimeFormat: {
-    date: "YYYY-MM-DD",
-    time: "HH:mm",
-  },
-  publishingGuidance:
-    "I acknowledge that I have reviewed the dashboard" +
-    " and it is ready to publish",
-  navbarTitle: "",
-  topicAreaLabels: {
-    singular: "Topic Area",
-    plural: "Topic Areas",
-  },
-  customLogoS3Key: undefined,
-  customFaviconS3Key: undefined,
-  colors: {
-    primary: "#005EA2",
-    secondary: "#54278f",
-  },
-  contactUsContent:
-    "Please, collect all the relevant information of your issue and contact us using the following email address:",
+    dateTimeFormat: {
+        date: "YYYY-MM-DD",
+        time: "HH:mm",
+    },
+    publishingGuidance:
+        "I acknowledge that I have reviewed the dashboard" + " and it is ready to publish",
+    navbarTitle: "",
+    topicAreaLabels: {
+        singular: "Topic Area",
+        plural: "Topic Areas",
+    },
+    customLogoS3Key: undefined,
+    customFaviconS3Key: undefined,
+    colors: {
+        primary: "#005EA2",
+        secondary: "#54278f",
+    },
+    contactUsContent:
+        "Please, collect all the relevant information of your issue and contact us using the following email address:",
 };
 
 interface SettingsContextProps {
-  settings: Settings | PublicSettings;
-  reloadSettings: Function;
-  loadingSettings: boolean;
+    settings: Settings | PublicSettings;
+    reloadSettings: Function;
+    loadingSettings: boolean;
 }
 
 export const SettingsContext = React.createContext<SettingsContextProps>({
-  reloadSettings: () => {},
-  settings: defaultSettings,
-  loadingSettings: false,
+    reloadSettings: () => {},
+    settings: defaultSettings,
+    loadingSettings: false,
 });
 
 /**
@@ -57,31 +56,29 @@ export const SettingsContext = React.createContext<SettingsContextProps>({
  * backend returns a Settings object that is missing certain fields.
  */
 const settingsReducer = (backendSettings: Settings): Settings => {
-  return {
-    ...backendSettings, // add all values to start with
-    // Check if we need to fallback to default values
-    dateTimeFormat: backendSettings.dateTimeFormat
-      ? backendSettings.dateTimeFormat
-      : defaultSettings.dateTimeFormat,
-    publishingGuidance: backendSettings.publishingGuidance
-      ? backendSettings.publishingGuidance
-      : defaultSettings.publishingGuidance,
-  };
+    return {
+        ...backendSettings, // add all values to start with
+        // Check if we need to fallback to default values
+        dateTimeFormat: backendSettings.dateTimeFormat
+            ? backendSettings.dateTimeFormat
+            : defaultSettings.dateTimeFormat,
+        publishingGuidance: backendSettings.publishingGuidance
+            ? backendSettings.publishingGuidance
+            : defaultSettings.publishingGuidance,
+    };
 };
 
-const publicSettingsReducer = (
-  backendSettings: PublicSettings
-): PublicSettings => {
-  return {
-    ...backendSettings, // add all values to start with
-    // Check if we need to fallback to default values
-    dateTimeFormat: backendSettings.dateTimeFormat
-      ? backendSettings.dateTimeFormat
-      : defaultSettings.dateTimeFormat,
-    contactUsContent: backendSettings.contactUsContent
-      ? backendSettings.contactUsContent
-      : defaultSettings.contactUsContent,
-  };
+const publicSettingsReducer = (backendSettings: PublicSettings): PublicSettings => {
+    return {
+        ...backendSettings, // add all values to start with
+        // Check if we need to fallback to default values
+        dateTimeFormat: backendSettings.dateTimeFormat
+            ? backendSettings.dateTimeFormat
+            : defaultSettings.dateTimeFormat,
+        contactUsContent: backendSettings.contactUsContent
+            ? backendSettings.contactUsContent
+            : defaultSettings.contactUsContent,
+    };
 };
 
 /**
@@ -91,92 +88,86 @@ const publicSettingsReducer = (
  * of fetching them over and over on every screen.
  */
 function SettingsProvider(props: { children: React.ReactNode }) {
-  const [settings, setSettings] = useState<SettingsContextProps>({
-    reloadSettings: () => {},
-    settings: defaultSettings,
-    loadingSettings: false,
-  });
-
-  const fetchSettings = useCallback(async (isUserAuthenticated: boolean) => {
-    return isUserAuthenticated
-      ? BackendService.fetchSettings()
-      : BackendService.fetchPublicSettings();
-  }, []);
-
-  const loadSettings = useCallback(async () => {
-    let isUserAuthenticated: boolean;
-    try {
-      await Auth.currentSession();
-      isUserAuthenticated = true;
-    } catch (err) {
-      isUserAuthenticated = false;
-    }
-
-    try {
-      /**
-       * useCallback is used because it is important that the
-       * reloadSettings function does not change, because it
-       * causes an infinite loop due to the settings-hook
-       * having a useEffect on it.
-       */
-      setSettings({
-        reloadSettings: loadSettings,
-        settings: defaultSettings,
-        loadingSettings: true,
-      });
-
-      const data = await fetchSettings(isUserAuthenticated);
-
-      setSettings({
-        settings: isUserAuthenticated
-          ? settingsReducer(data)
-          : publicSettingsReducer(data),
-        reloadSettings: loadSettings,
-        loadingSettings: false,
-      });
-    } catch (err) {
-      console.log("Failed to load settings from backend");
-      setSettings({
-        reloadSettings: loadSettings,
+    const [settings, setSettings] = useState<SettingsContextProps>({
+        reloadSettings: () => {},
         settings: defaultSettings,
         loadingSettings: false,
-      });
-    }
-  }, [fetchSettings]);
+    });
 
-  /**
-   * Listen for authentication events so that when users
-   * signIn or their token is refreshed, we refetch the
-   * Settings. This covers an edge case in which we fail
-   * to fetch Settings the first time because the user was
-   * not authenticated yet.
-   */
-  const listenAuthEvents = useCallback(
-    (event: any) => {
-      const { payload } = event;
-      switch (payload.event) {
-        case "signIn":
-        case "tokenRefresh":
-          loadSettings();
-          break;
-        default:
-          break;
-      }
-    },
-    [loadSettings]
-  );
+    const fetchSettings = useCallback(async (isUserAuthenticated: boolean) => {
+        return isUserAuthenticated
+            ? BackendService.fetchSettings()
+            : BackendService.fetchPublicSettings();
+    }, []);
 
-  useEffect(() => {
-    loadSettings();
-    Hub.listen("auth", listenAuthEvents);
-    return () => Hub.remove("auth", listenAuthEvents);
-  }, [loadSettings, listenAuthEvents]);
+    const loadSettings = useCallback(async () => {
+        let isUserAuthenticated: boolean;
+        try {
+            await Auth.currentSession();
+            isUserAuthenticated = true;
+        } catch (err) {
+            isUserAuthenticated = false;
+        }
 
-  return (
-    <SettingsContext.Provider value={settings}>
-      {props.children}
-    </SettingsContext.Provider>
-  );
+        try {
+            /**
+             * useCallback is used because it is important that the
+             * reloadSettings function does not change, because it
+             * causes an infinite loop due to the settings-hook
+             * having a useEffect on it.
+             */
+            setSettings({
+                reloadSettings: loadSettings,
+                settings: defaultSettings,
+                loadingSettings: true,
+            });
+
+            const data = await fetchSettings(isUserAuthenticated);
+
+            setSettings({
+                settings: isUserAuthenticated ? settingsReducer(data) : publicSettingsReducer(data),
+                reloadSettings: loadSettings,
+                loadingSettings: false,
+            });
+        } catch (err) {
+            console.log("Failed to load settings from backend");
+            setSettings({
+                reloadSettings: loadSettings,
+                settings: defaultSettings,
+                loadingSettings: false,
+            });
+        }
+    }, [fetchSettings]);
+
+    /**
+     * Listen for authentication events so that when users
+     * signIn or their token is refreshed, we refetch the
+     * Settings. This covers an edge case in which we fail
+     * to fetch Settings the first time because the user was
+     * not authenticated yet.
+     */
+    const listenAuthEvents = useCallback(
+        (event: any) => {
+            const { payload } = event;
+            switch (payload.event) {
+                case "signIn":
+                case "tokenRefresh":
+                    loadSettings();
+                    break;
+                default:
+                    break;
+            }
+        },
+        [loadSettings],
+    );
+
+    useEffect(() => {
+        loadSettings();
+        Hub.listen("auth", listenAuthEvents);
+        return () => Hub.remove("auth", listenAuthEvents);
+    }, [loadSettings, listenAuthEvents]);
+
+    return <SettingsContext.Provider value={settings}>{props.children}</SettingsContext.Provider>;
 }
 
 export default SettingsProvider;

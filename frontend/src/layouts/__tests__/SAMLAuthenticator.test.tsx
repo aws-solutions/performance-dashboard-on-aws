@@ -14,13 +14,13 @@ import Home from "../../containers/Home";
 const history = createMemoryHistory();
 
 describe("SAMLAuthenticatorLayout", () => {
-  test("renders the component", async () => {
-    const wrapper = render(
-      <Router history={history}>
-        <Route component={withSAMLAuthenticator(withPublicLayout(Home))} />
-      </Router>,
-      { wrapper: MemoryRouter }
-    );
-    expect(wrapper.container).toMatchSnapshot();
-  });
+    test("renders the component", async () => {
+        const wrapper = render(
+            <Router history={history}>
+                <Route component={withSAMLAuthenticator(withPublicLayout(Home))} />
+            </Router>,
+            { wrapper: MemoryRouter },
+        );
+        expect(wrapper.container).toMatchSnapshot();
+    });
 });

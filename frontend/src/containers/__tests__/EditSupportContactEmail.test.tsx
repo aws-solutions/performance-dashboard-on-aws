@@ -19,38 +19,35 @@ history.push("/admin/settings/supportcontact/edit");
 jest.spyOn(history, "push");
 
 beforeEach(async () => {
-  await act(async () => {
-    render(
-      <Router history={history}>
-        <Route path="/admin/settings/supportcontact/edit">
-          <EditSupportContactEmail />
-        </Route>
-      </Router>
-    );
-  });
+    await act(async () => {
+        render(
+            <Router history={history}>
+                <Route path="/admin/settings/supportcontact/edit">
+                    <EditSupportContactEmail />
+                </Route>
+            </Router>,
+        );
+    });
 });
 
 test("submits form with the entered values", async () => {
-  userEvent.clear(screen.getByLabelText("Support Contact Email Address*"));
-  userEvent.type(
-    screen.getByLabelText("Support Contact Email Address*"),
-    "test1234@example.com"
-  );
+    userEvent.clear(screen.getByLabelText("Support Contact Email Address"));
+    userEvent.type(screen.getByLabelText("Support Contact Email Address"), "test1234@example.com");
 
-  await act(async () => {
-    fireEvent.submit(screen.getByTestId("EditSupportContactEmailForm"));
-  });
+    await act(async () => {
+        fireEvent.submit(screen.getByTestId("EditSupportContactEmailForm"));
+    });
 
-  expect(BackendService.updateSetting).toBeCalledWith(
-    "adminContactEmailAddress",
-    "test1234@example.com",
-    expect.anything()
-  );
+    expect(BackendService.updateSetting).toBeCalledWith(
+        "adminContactEmailAddress",
+        "test1234@example.com",
+        expect.anything(),
+    );
 });
 
 test("invokes cancel function when use clicks cancel", async () => {
-  await act(async () => {
-    fireEvent.click(screen.getByRole("button", { name: "Cancel" }));
-  });
-  expect(history.push).toHaveBeenCalledWith("/admin/settings/adminsite");
+    await act(async () => {
+        fireEvent.click(screen.getByRole("button", { name: "Cancel" }));
+    });
+    expect(history.push).toHaveBeenCalledWith("/admin/settings/adminsite");
 });

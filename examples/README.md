@@ -82,10 +82,7 @@ You can debug locally by running `/examples/src/cli.ts` using VSCode and the fol
       "cwd": "${workspaceRoot}/examples",
       "type": "node-terminal",
       "restart": true,
-      "resolveSourceMapLocations": [
-        "${workspaceFolder}/**",
-        "!**/node_modules/**"
-      ]
+      "resolveSourceMapLocations": ["${workspaceFolder}/**", "!**/node_modules/**"]
     },
     {
       "name": "Export",
@@ -95,10 +92,7 @@ You can debug locally by running `/examples/src/cli.ts` using VSCode and the fol
       "cwd": "${workspaceRoot}/examples",
       "type": "node-terminal",
       "restart": true,
-      "resolveSourceMapLocations": [
-        "${workspaceFolder}/**",
-        "!**/node_modules/**"
-      ]
+      "resolveSourceMapLocations": ["${workspaceFolder}/**", "!**/node_modules/**"]
     }
   ]
 }

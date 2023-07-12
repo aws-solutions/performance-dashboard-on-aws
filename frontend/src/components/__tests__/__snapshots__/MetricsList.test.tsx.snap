@@ -11,9 +11,6 @@ exports[`renders the component 1`] = `
       class="margin-bottom-0 margin-top-2 usa-label text-bold"
     >
       Metrics
-      <span>
-        *
-      </span>
     </label>
     <p
       class="margin-top-2px usa-hint"

@@ -3,90 +3,108 @@
  *  SPDX-License-Identifier: Apache-2.0
  */
 
-import * as cdk from "@aws-cdk/core";
-import * as lambda from "@aws-cdk/aws-lambda";
-import s3Deploy = require("@aws-cdk/aws-s3-deployment");
-import * as s3 from "@aws-cdk/aws-s3";
-import { ObjectOwnership } from "@aws-cdk/aws-s3";
+import { CfnOutput, CustomResource, Duration, Stack, StackProps } from "aws-cdk-lib";
 import { ExampleDashboardLambda } from "./constructs/exampledashboardlambda";
-import customResource = require("@aws-cdk/custom-resources");
+import { Function } from "aws-cdk-lib/aws-lambda";
+import { BlockPublicAccess, Bucket, BucketEncryption, ObjectOwnership } from "aws-cdk-lib/aws-s3";
+import { Construct } from "constructs";
+import { BucketDeployment, Source } from "aws-cdk-lib/aws-s3-deployment";
+import { Provider } from "aws-cdk-lib/custom-resources";
+import { exampleLanguageParameter } from "./constructs/parameters";
+import { AnyPrincipal, Effect, PolicyStatement } from "aws-cdk-lib/aws-iam";
 
-interface DashboardExamplesProps extends cdk.StackProps {
-  datasetsBucketName: string;
-  datasetsBucketArn: string;
-  databaseTableName: string;
-  databaseTableArn: string;
-  adminEmail: string;
+interface DashboardExamplesProps extends StackProps {
+    datasetsBucketName: string;
+    datasetsBucketArn: string;
+    databaseTableName: string;
+    databaseTableArn: string;
+    adminEmail: string;
+    serverAccessLogsBucketName: string;
 }
 
-export class DashboardExamplesStack extends cdk.Stack {
-  public readonly exampleSetupLambda: lambda.Function;
-  public readonly exampleBucket: s3.Bucket;
+export class DashboardExamplesStack extends Stack {
+    public readonly exampleSetupLambda: Function;
+    public readonly exampleBucket: Bucket;
 
-  constructor(scope: cdk.Construct, id: string, props: DashboardExamplesProps) {
-    super(scope, id, props);
+    constructor(scope: Construct, id: string, props: DashboardExamplesProps) {
+        super(scope, id, props);
 
-    const exampleLanguage = new cdk.CfnParameter(this, "exampleLanguage", {
-      type: "String",
-      description: "Language for example dashboards",
-      allowedValues: ["english", "spanish", "portuguese"],
-      default: "english",
-    });
+        const exampleLanguage = exampleLanguageParameter(this);
 
-    const exampleBucket = new s3.Bucket(this, "ExampleBucket", {
-      encryption: s3.BucketEncryption.S3_MANAGED,
-      versioned: false,
-      objectOwnership: ObjectOwnership.OBJECT_WRITER,
-    });
+        const serveraccesslogStorage = Bucket.fromBucketName(
+            this,
+            "ServerAccessLogsStorage",
+            props.serverAccessLogsBucketName,
+        );
 
-    const lambdas = new ExampleDashboardLambda(
-      this,
-      "SetupExampleDashboardLambda",
-      {
-        exampleBucketArn: exampleBucket.bucketArn,
-        exampleBucketName: exampleBucket.bucketName,
-        datasetBucketArn: props.datasetsBucketArn,
-        datasetBucketName: props.datasetsBucketName,
-        databaseTableName: props.databaseTableName,
-        databaseTableArn: props.databaseTableArn,
-        adminEmail: props.adminEmail,
-        exampleLanguage: exampleLanguage.valueAsString,
-      }
-    );
+        const exampleBucket = new Bucket(this, "ExampleBucket", {
+            encryption: BucketEncryption.S3_MANAGED,
+            blockPublicAccess: BlockPublicAccess.BLOCK_ALL,
+            serverAccessLogsBucket: serveraccesslogStorage,
+            serverAccessLogsPrefix: "example_bucket/",
+            versioned: true,
+            objectOwnership: ObjectOwnership.OBJECT_WRITER,
+        });
 
-    /**
-     * S3 Deploy
-     * Uploads examples to S3 to be able to install from there
-     */
-    const examplesDeploy = new s3Deploy.BucketDeployment(
-      this,
-      "Deploy-Examples",
-      {
-        sources: [s3Deploy.Source.asset("../examples/resources/")],
-        destinationBucket: exampleBucket,
-        memoryLimit: 2048,
-        prune: false,
-      }
-    );
+        exampleBucket.addToResourcePolicy(
+            new PolicyStatement({
+                effect: Effect.DENY,
+                actions: ["s3:*"],
+                principals: [new AnyPrincipal()],
+                resources: [exampleBucket.arnForObjects("*")],
+                conditions: {
+                    Bool: {
+                        "aws:SecureTransport": false,
+                    },
+                },
+            }),
+        );
 
-    /**
-     * Outputs
-     */
-    this.exampleSetupLambda = lambdas.exampleSetupLambda;
-    this.exampleBucket = exampleBucket;
+        exampleBucket.addLifecycleRule({
+            enabled: true,
+            noncurrentVersionExpiration: Duration.days(90),
+        });
 
-    const provider = new customResource.Provider(this, "ExampleProvider", {
-      onEventHandler: lambdas.exampleSetupLambda,
-    });
+        const lambdas = new ExampleDashboardLambda(this, "SetupExampleDashboardLambda", {
+            exampleBucketArn: exampleBucket.bucketArn,
+            exampleBucketName: exampleBucket.bucketName,
+            datasetBucketArn: props.datasetsBucketArn,
+            datasetBucketName: props.datasetsBucketName,
+            databaseTableName: props.databaseTableName,
+            databaseTableArn: props.databaseTableArn,
+            adminEmail: props.adminEmail,
+            exampleLanguage: exampleLanguage.valueAsString,
+        });
 
-    const resource = new cdk.CustomResource(this, "ExampleDeployment", {
-      serviceToken: provider.serviceToken,
-    });
+        /**
+         * S3 Deploy
+         * Uploads examples to S3 to be able to install from there
+         */
+        const examplesDeploy = new BucketDeployment(this, "Deploy-Examples", {
+            sources: [Source.asset("../examples/resources/")],
+            destinationBucket: exampleBucket,
+            memoryLimit: 2048,
+            prune: false,
+        });
 
-    resource.node.addDependency(examplesDeploy);
+        /**
+         * Outputs
+         */
+        this.exampleSetupLambda = lambdas.exampleSetupLambda;
+        this.exampleBucket = exampleBucket;
 
-    new cdk.CfnOutput(this, "ExamplesStorageBucket", {
-      value: exampleBucket.bucketName,
-    });
-  }
+        const provider = new Provider(this, "ExampleProvider", {
+            onEventHandler: lambdas.exampleSetupLambda,
+        });
+
+        const resource = new CustomResource(this, "ExampleDeployment", {
+            serviceToken: provider.serviceToken,
+        });
+
+        resource.node.addDependency(examplesDeploy);
+
+        new CfnOutput(this, "ExamplesStorageBucket", {
+            value: exampleBucket.bucketName,
+        });
+    }
 }

@@ -1,53 +1,51 @@
 {
-  "name": "performance-dashboard-cdk",
-  "version": "1.8.1",
-  "description": "Performance Dashboard on AWS CDK",
-  "license": "Apache-2.0",
-  "bin": {
-    "cdk": "bin/main.js"
-  },
-  "scripts": {
-    "build": "tsc",
-    "watch": "tsc -w",
-    "test": "jest --passWithNoTests",
-    "cdk": "cdk",
-    "deploy:pipeline": "cdk deploy --app 'npx ts-node bin/pipeline.ts'",
-    "deploy:github": "cdk deploy --app 'npx ts-node bin/github.ts'"
-  },
-  "devDependencies": {
-    "@aws-cdk/assert": "1.176.0",
-    "@types/aws-sdk": "^2.7.0",
-    "@types/node": "^16.11.7",
-    "aws-cdk": "1.176.0",
-    "ts-node": "10.9.1",
-    "typescript": "^4.2.0"
-  },
-  "dependencies": {
-    "@aws-cdk/aws-apigateway": "1.176.0",
-    "@aws-cdk/aws-cloudfront": "1.176.0",
-    "@aws-cdk/aws-cloudtrail": "^1.176.0",
-    "@aws-cdk/aws-cloudwatch": "1.176.0",
-    "@aws-cdk/aws-cloudwatch-actions": "1.176.0",
-    "@aws-cdk/aws-codebuild": "1.176.0",
-    "@aws-cdk/aws-codecommit": "1.176.0",
-    "@aws-cdk/aws-codepipeline": "1.176.0",
-    "@aws-cdk/aws-codepipeline-actions": "1.176.0",
-    "@aws-cdk/aws-codestarnotifications": "1.176.0",
-    "@aws-cdk/aws-cognito": "1.176.0",
-    "@aws-cdk/aws-dynamodb": "1.176.0",
-    "@aws-cdk/aws-iam": "1.176.0",
-    "@aws-cdk/aws-kms": "1.176.0",
-    "@aws-cdk/aws-lambda": "1.176.0",
-    "@aws-cdk/aws-lambda-event-sources": "1.176.0",
-    "@aws-cdk/aws-logs": "1.176.0",
-    "@aws-cdk/aws-s3": "1.176.0",
-    "@aws-cdk/aws-s3-deployment": "1.176.0",
-    "@aws-cdk/aws-sns": "1.176.0",
-    "@aws-cdk/aws-stepfunctions-tasks": "1.176.0",
-    "@aws-cdk/core": "1.176.0",
-    "@aws-cdk/custom-resources": "1.176.0",
-    "@cloudcomponents/cdk-lambda-at-edge-pattern": "1.39.0",
-    "aws-sdk": "^2.1055.0",
-    "source-map-support": "^0.5.16"
-  }
+    "name": "performance-dashboard-cdk",
+    "version": "1.9.0",
+    "description": "Performance Dashboard on AWS CDK",
+    "license": "Apache-2.0",
+    "bin": {
+        "cdk": "bin/main.js"
+    },
+    "scripts": {
+        "build": "tsc",
+        "watch": "tsc -w",
+        "test": "jest --passWithNoTests",
+        "cdk": "cdk",
+        "deploy:pipeline": "cdk deploy --app 'npx ts-node bin/pipeline.ts'",
+        "deploy:github": "cdk deploy --app 'npx ts-node bin/github.ts'",
+        "lint-src": "lint-staged"
+    },
+    "lint-staged": {
+        "*.{js,ts,tsx, jsx}": [
+            "eslint --quiet --fix"
+        ],
+        "*.{json,md,html,js,jsx,ts,tsx}": [
+            "prettier --write"
+        ]
+    },
+    "devDependencies": {
+        "@types/aws-sdk": "^2.7.0",
+        "@types/node": "^16.11.7",
+        "@typescript-eslint/eslint-plugin": "^5.45.1",
+        "aws-cdk": "^2.86.0",
+        "eslint": "^8.29.0",
+        "eslint-config-prettier": "^8.5.0",
+        "eslint-config-standard-with-typescript": "^23.0.0",
+        "eslint-plugin-import": "^2.26.0",
+        "eslint-plugin-n": "^15.6.0",
+        "eslint-plugin-prettier": "^4.2.1",
+        "eslint-plugin-promise": "^6.1.1",
+        "eslint-plugin-react": "^7.31.11",
+        "lint-staged": "^13.1.0",
+        "ts-node": "10.9.1",
+        "typescript": "4.8.4"
+    },
+    "dependencies": {
+        "@aws-cdk/aws-servicecatalogappregistry-alpha": "^2.60.0-alpha.0",
+        "aws-cdk-lib": "^2.86.0",
+        "aws-sdk": "^2.1270.0",
+        "cdk-nag": "^2.21.43",
+        "constructs": "^10.1.196",
+        "source-map-support": "^0.5.21"
+    }
 }

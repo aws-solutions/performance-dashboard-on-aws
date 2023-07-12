@@ -3,376 +3,179 @@
  *  SPDX-License-Identifier: Apache-2.0
  */
 
-import React, { useCallback, useMemo, useRef, useState } from "react";
-import {
-  ResponsiveContainer,
-  Pie,
-  PieChart,
-  Cell,
-  Legend,
-  Tooltip,
-} from "recharts";
-import { useColors, useWindowSize } from "../hooks";
+import React, { useMemo, useRef, useState } from "react";
+import { useColors } from "../hooks";
 import TickFormatter from "../services/TickFormatter";
 import MarkdownRender from "./MarkdownRender";
 import DataTable from "./DataTable";
 import { ColumnMetadata, NumberDataType } from "../models";
-import RenderLegendText from "./Legend";
 import ShareButton from "./ShareButton";
+import PieChart from "@cloudscape-design/components/pie-chart";
+import { useTranslation } from "react-i18next";
 
 type Props = {
-  id: string;
-  title: string;
-  downloadTitle: string;
-  summary: string;
-  parts: Array<string>;
-  data?: Array<object>;
-  summaryBelow: boolean;
-  significantDigitLabels: boolean;
-  colors?: {
-    primary: string | undefined;
-    secondary: string | undefined;
-  };
-  columnsMetadata: Array<any>;
-  hideDataLabels?: boolean;
-  isPreview?: boolean;
-  showMobilePreview?: boolean;
-  computePercentages?: boolean;
+    id: string;
+    title: string;
+    downloadTitle: string;
+    summary: string;
+    parts: Array<string>;
+    data?: Array<object>;
+    summaryBelow: boolean;
+    significantDigitLabels: boolean;
+    colors?: {
+        primary: string | undefined;
+        secondary: string | undefined;
+    };
+    columnsMetadata: Array<any>;
+    hideDataLabels?: boolean;
+    isPreview?: boolean;
+    showMobilePreview?: boolean;
+    computePercentages?: boolean;
 };
 
 const PieChartWidget = (props: Props) => {
-  const [partsHover, setPartsHover] = useState<string | null>(null);
-  const [hiddenParts, setHiddenParts] = useState<Array<string>>([]);
-  const [xAxisLargestValue, setXAxisLargestValue] = useState(0);
+    const { t } = useTranslation();
 
-  const pieData = useRef<Array<object>>([]);
-  const pieParts = useRef<Array<string>>([]);
-  let total = useRef<number>(0);
+    const [xAxisLargestValue, setXAxisLargestValue] = useState(0);
 
-  const { data, parts, showMobilePreview } = props;
-  useMemo(() => {
-    if (data && data.length > 0) {
-      let pie = {};
-      total.current = 0;
-      pieParts.current = [];
-      pieData.current = [];
-      let maxTick = -Infinity;
-      for (let dataItem of data) {
-        const key = dataItem[parts[0] as keyof object];
-        const value = dataItem[parts[1] as keyof object];
-        const barKey = `${key}`;
-        pie = {
-          ...pie,
-          [barKey]: value,
-        };
-        pieData.current.push({ name: barKey, value: Number(value) });
-        pieParts.current.push(barKey);
-        if (hiddenParts.includes(barKey)) {
-          continue;
+    const pieParts = useRef<Array<string>>([]);
+    let total = useRef<number>(0);
+
+    const { data, parts, showMobilePreview } = props;
+    useMemo(() => {
+        if (data && data.length > 0) {
+            total.current = 0;
+            let maxTick = -Infinity;
+            for (let dataItem of data) {
+                const value = dataItem[parts[1] as keyof object];
+                total.current += isNaN(value) ? 0 : Number(value);
+                maxTick = Math.max(maxTick, value);
+            }
+            setXAxisLargestValue(maxTick);
         }
-        total.current += isNaN(value) ? 0 : Number(value);
-        maxTick = Math.max(maxTick, value);
-      }
-      setXAxisLargestValue(maxTick);
-    }
-  }, [data, parts, pieData, pieParts, hiddenParts]);
+    }, [data, parts]);
 
-  const colors = useColors(
-    pieParts.current.length,
-    props.colors?.primary,
-    props.colors?.secondary
-  );
-
-  const getOpacity = useCallback(
-    (dataKey) => {
-      if (!partsHover) {
-        return 1;
-      }
-      return partsHover === dataKey ? 1 : 0.2;
-    },
-    [partsHover]
-  );
-
-  const toggleParts = (e: any) => {
-    if (hiddenParts.includes(e.value)) {
-      const hidden = hiddenParts.filter((column) => column !== e.value);
-      setHiddenParts(hidden);
-    } else {
-      setHiddenParts([...hiddenParts, e.value]);
-    }
-  };
-
-  const displayedAmount = (
-    value: number | string,
-    columnMetadata: ColumnMetadata
-  ): string => {
-    const displayedAmount = TickFormatter.format(
-      Number(value),
-      xAxisLargestValue,
-      props.significantDigitLabels,
-      "",
-      "",
-      columnMetadata
+    const colors = useColors(
+        pieParts.current.length,
+        props.colors?.primary,
+        props.colors?.secondary,
     );
-    const computedPercentage =
-      Math.round((Number(value) / total.current) * 100 * 100) / 100;
-    const displayedPercentage = TickFormatter.format(
-      computedPercentage,
-      xAxisLargestValue,
-      false,
-      NumberDataType.Percentage,
-      ""
-    );
-    return props.computePercentages
-      ? `${displayedAmount} (${displayedPercentage})`
-      : displayedAmount;
-  };
 
-  const renderCustomizedLabel = (properties: any): any => {
-    const RADIAN = Math.PI / 180;
-    const { cx, cy, payload, fill, midAngle, outerRadius } = properties;
-    const sin = Math.sin(-RADIAN * midAngle);
-    const cos = Math.cos(-RADIAN * midAngle);
-    const sx = cx + (outerRadius + 10) * cos;
-    const sy = cy + (outerRadius + 10) * sin;
-    const mx = cx + (outerRadius + 30) * cos;
-    const my = cy + (outerRadius + 30) * sin;
-    const ex = mx + (cos >= 0 ? 1 : -1) * 12;
-    const ey = my;
-    const textAnchor = cos >= 0 ? "start" : "end";
+    const displayedAmount = (value: number | string, columnMetadata: ColumnMetadata): string => {
+        const displayedAmount = TickFormatter.format(
+            Number(value),
+            xAxisLargestValue,
+            props.significantDigitLabels,
+            "",
+            "",
+            columnMetadata,
+        );
+        const computedPercentage = Math.round((Number(value) / total.current) * 100 * 100) / 100;
+        const displayedPercentage = TickFormatter.format(
+            computedPercentage,
+            xAxisLargestValue,
+            false,
+            NumberDataType.Percentage,
+            "",
+        );
+        return props.computePercentages
+            ? `${displayedAmount} (${displayedPercentage})`
+            : displayedAmount;
+    };
 
-    let columnMetadata;
-    if (parts && parts.length > 1 && props.columnsMetadata) {
-      columnMetadata = props.columnsMetadata.find(
-        (cm) => cm.columnName === parts[1]
-      );
-    }
+    const dataSeries = (data: object[]): any[] => {
+        const result = data.map((dataItem, index) => {
+            const key = dataItem[parts[0] as keyof object];
+            const value = dataItem[parts[1] as keyof object];
+            return {
+                title: key,
+                value: value,
+                color: colors[index],
+            };
+        });
+        return result;
+    };
 
-    return !props.hideDataLabels && !hiddenParts.includes(payload.name) ? (
-      <g>
-        <path
-          d={`M${sx},${sy}L${mx},${my}L${ex},${ey}`}
-          stroke={fill}
-          fill="none"
-        />
-        <circle cx={ex} cy={ey} r={2} fill={fill} stroke="none" />
-        <text
-          x={ex + (cos >= 0 ? 1 : -1) * 12}
-          y={ey}
-          textAnchor={textAnchor}
-          fill={fill}
-        >
-          {displayedAmount(payload.value, columnMetadata)}
-        </text>
-      </g>
-    ) : (
-      ""
-    );
-  };
-
-  const renderCustomizedLine = (properties: any): any => {
-    const RADIAN = Math.PI / 180;
-    const { cx, cy, payload, fill, midAngle, outerRadius } = properties;
-    const sin = Math.sin(-RADIAN * midAngle);
-    const cos = Math.cos(-RADIAN * midAngle);
-    const sx = cx + (outerRadius + 10) * cos;
-    const sy = cy + (outerRadius + 10) * sin;
-    const mx = cx + (outerRadius + 30) * cos;
-    const my = cy + (outerRadius + 30) * sin;
-    const ex = mx + (cos >= 0 ? 1 : -1) * 12;
-    const ey = my;
-
-    return !props.hideDataLabels && !hiddenParts.includes(payload.name) ? (
-      <g>
-        <path
-          d={`M${sx},${sy}L${mx},${my}L${ex},${ey}`}
-          stroke={fill}
-          fill="none"
-        />
-      </g>
-    ) : (
-      ""
-    );
-  };
-
-  const renderLegendText = (value: string, entry: any) => {
-    let columnMetadata;
-    if (parts && parts.length > 1 && props.columnsMetadata) {
-      columnMetadata = props.columnsMetadata.find(
-        (cm) => cm.columnName === parts[1]
-      );
-    }
+    const displayDataValue = (dataItem: any): string => {
+        // Check if there is metadata for this column
+        let columnMetadata;
+        if (parts && parts.length > 1 && props.columnsMetadata) {
+            columnMetadata = props.columnsMetadata.find((cm) => cm.columnName === parts[1]);
+        }
+        return displayedAmount(dataItem.value, columnMetadata);
+    };
 
     return (
-      <span>
-        <span className="margin-left-05 font-sans-md text-bottom">
-          {RenderLegendText(value.toLocaleString(), entry)}
-        </span>
-        <br />
-        <span className="margin-left-5 margin-bottom-1 text-base-darker text-bold">
-          {value && value !== "null" ? (
-            TickFormatter.format(
-              Number(
-                (pieData.current.find((d: any) => d.name === value) as any)
-                  .value
-              ),
-              xAxisLargestValue,
-              props.significantDigitLabels,
-              "",
-              "",
-              columnMetadata
-            )
-          ) : (
-            <br />
-          )}
-        </span>
-      </span>
+        <div aria-label={props.title} tabIndex={-1} className={props.title ? "" : "padding-top-2"}>
+            {props.title && (
+                <h2 className={`margin-bottom-${props.summaryBelow ? "4" : "1"}`}>
+                    {props.title}
+                    <ShareButton
+                        id={`${props.id}a`}
+                        title={props.title}
+                        className="margin-left-1"
+                    />
+                </h2>
+            )}
+            {!props.summaryBelow && (
+                <MarkdownRender
+                    source={props.summary}
+                    className="usa-prose margin-top-1 margin-bottom-4 chartSummaryAbove textOrSummary"
+                />
+            )}
+            {data && data.length > 0 && (
+                <div className="chart-container">
+                    <PieChart
+                        data={dataSeries(props.data ?? [])}
+                        segmentDescription={(datum) => {
+                            if (props.hideDataLabels) {
+                                return "";
+                            }
+                            return displayDataValue(datum);
+                        }}
+                        detailPopoverContent={(datum) => {
+                            return [
+                                {
+                                    key: datum.title,
+                                    value: displayDataValue(datum),
+                                },
+                            ];
+                        }}
+                        i18nStrings={{
+                            detailPopoverDismissAriaLabel: t(
+                                "ChartAriaLabels.DetailPopoverDismissAriaLabel",
+                            ),
+                            legendAriaLabel: t("ChartAriaLabels.LegendAriaLabel"),
+                            chartAriaRoleDescription: props.summary,
+                        }}
+                        ariaDescription={props.summary}
+                        ariaLabel={props.title}
+                        size="large"
+                        hideFilter
+                        hideTitles={props.hideDataLabels}
+                    />
+                </div>
+            )}
+            <div>
+                <DataTable
+                    rows={data || []}
+                    columns={parts}
+                    fileName={props.downloadTitle}
+                    columnsMetadata={props.columnsMetadata}
+                    showMobilePreview={showMobilePreview}
+                    title={props.title}
+                />
+            </div>
+            {props.summaryBelow && (
+                <div>
+                    <MarkdownRender
+                        source={props.summary}
+                        className="usa-prose margin-top-1 margin-bottom-0 chartSummaryBelow textOrSummary"
+                    />
+                </div>
+            )}
+        </div>
     );
-  };
-
-  const windowSize = useWindowSize();
-  const smallScreenPixels = 800;
-
-  const calculateChartHeight = (): number => {
-    const baseHeight = 300;
-    const pixelsByPart = 60;
-    const pixelsByPartInPreview = 50;
-    const labelsPerRow = 4;
-    const labelsPerRowInPreview = 2;
-
-    if (!data || !data.length) {
-      return baseHeight;
-    }
-
-    let additional;
-    if (windowSize.width <= smallScreenPixels || showMobilePreview) {
-      additional = data.length * pixelsByPart;
-    } else if (props.isPreview) {
-      additional =
-        (Math.floor(data.length / labelsPerRowInPreview) + 1) *
-        pixelsByPartInPreview;
-    } else {
-      additional = (Math.floor(data.length / labelsPerRow) + 1) * pixelsByPart;
-    }
-    return baseHeight + additional;
-  };
-
-  return (
-    <div
-      aria-label={props.title}
-      tabIndex={-1}
-      className={props.title ? "" : "padding-top-2"}
-    >
-      {props.title && (
-        <h2 className={`margin-bottom-${props.summaryBelow ? "4" : "1"}`}>
-          {props.title}
-          <ShareButton
-            id={`${props.id}a`}
-            title={props.title}
-            className="margin-left-1"
-          />
-        </h2>
-      )}
-      {!props.summaryBelow && (
-        <MarkdownRender
-          source={props.summary}
-          className="usa-prose margin-top-1 margin-bottom-4 chartSummaryAbove textOrSummary"
-        />
-      )}
-      {pieData.current.length > 0 && (
-        <div aria-hidden="true">
-          <ResponsiveContainer
-            id={props.id}
-            width="100%"
-            height={calculateChartHeight()}
-          >
-            <PieChart>
-              <Legend
-                verticalAlign="top"
-                formatter={renderLegendText}
-                iconSize={24}
-                wrapperStyle={{
-                  top: 0,
-                  right: 0,
-                  width: "100%",
-                }}
-                onClick={toggleParts}
-                onMouseLeave={() => setPartsHover(null)}
-                onMouseEnter={(e: any) => setPartsHover(e.value)}
-                layout={
-                  windowSize.width <= smallScreenPixels || showMobilePreview
-                    ? "vertical"
-                    : undefined
-                }
-              />
-              <Pie
-                data={pieData.current.map((d: any) => {
-                  return !hiddenParts.includes(d.name)
-                    ? d
-                    : { name: d.name, value: 0 };
-                })}
-                dataKey="value"
-                nameKey="name"
-                cx={
-                  props.isPreview ||
-                  windowSize.width <= smallScreenPixels ||
-                  showMobilePreview
-                    ? "50%"
-                    : "28%"
-                }
-                cy="50%"
-                outerRadius={120}
-                label={renderCustomizedLabel}
-                labelLine={renderCustomizedLine}
-                isAnimationActive={false}
-              >
-                {pieParts.current.map((part: any, index) => (
-                  <Cell
-                    key={`cell-${index}`}
-                    fill={!hiddenParts.includes(part) ? colors[index] : "#ccc"}
-                    fillOpacity={getOpacity(part)}
-                    onMouseLeave={() => setPartsHover(null)}
-                    onMouseEnter={() => setPartsHover(part)}
-                  />
-                ))}
-              </Pie>
-              <Tooltip
-                itemStyle={{ color: "#1b1b1b" }}
-                isAnimationActive={false}
-                formatter={(value: number | string) => {
-                  // Check if there is metadata for this column
-                  let columnMetadata;
-                  if (parts && parts.length > 1 && props.columnsMetadata) {
-                    columnMetadata = props.columnsMetadata.find(
-                      (cm) => cm.columnName === parts[1]
-                    );
-                  }
-                  return displayedAmount(value, columnMetadata);
-                }}
-              />
-            </PieChart>
-          </ResponsiveContainer>
-        </div>
-      )}
-      <div>
-        <DataTable
-          rows={data || []}
-          columns={parts}
-          fileName={props.downloadTitle}
-          columnsMetadata={props.columnsMetadata}
-          showMobilePreview={showMobilePreview}
-        />
-      </div>
-      {props.summaryBelow && (
-        <div>
-          <MarkdownRender
-            source={props.summary}
-            className="usa-prose margin-top-1 margin-bottom-0 chartSummaryBelow textOrSummary"
-          />
-        </div>
-      )}
-    </div>
-  );
 };
 
 export default PieChartWidget;

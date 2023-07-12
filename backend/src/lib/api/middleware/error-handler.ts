@@ -20,17 +20,17 @@ import { ItemNotFound } from "../../errors/index";
  * the controllers and return appropriate HTTP status codes.
  */
 const errorHandler = (fn: Function) => async (req: Request, res: Response) => {
-  Promise.resolve(fn(req, res)).catch((err) => {
-    console.error(err);
+    Promise.resolve(fn(req, res)).catch((err) => {
+        console.error(err);
 
-    if (err instanceof ItemNotFound) {
-      res.status(400);
-      res.send("Bad Request");
-    } else {
-      res.status(500);
-      res.send("Internal server error");
-    }
-  });
+        if (err instanceof ItemNotFound || err.statusCode === 400) {
+            res.status(400);
+            res.send("Bad Request");
+        } else {
+            res.status(500);
+            res.send("Internal server error");
+        }
+    });
 };
 
 export default errorHandler;

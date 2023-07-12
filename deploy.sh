@@ -26,13 +26,21 @@ else
     exit 0
 fi
 
-authenticationRequired=${3:-false}
+authenticationRequired=${3:-no}
 if [ "$authenticationRequired" != "" ]; then
     echo "Authentication Required = $authenticationRequired"
     export AUTHENTICATION_REQUIRED=$authenticationRequired
 else
     echo "Please specify if authentication is required (true|false)"
     exit 0
+fi
+
+cname=${4:-}
+if [ "$authenticationRequired" != "" ]; then
+    echo "CNAME = $cname"
+    export CNAME=$cname
+else
+    echo "No CNAME passed"
 fi
 
 verify_prereqs() {
@@ -61,11 +69,19 @@ deploy_auth() {
     # Auth stack definition is in cdk/lib/auth-stack.ts
     echo "Deploying auth stack"
     cd $CDK_DIR
+    npm run cdk -- deploy Auth --require-approval never --parameters authenticationRequired=$authenticationRequired
+}
+
+deploy_authz() {
+    # Deploys the Authorization stack with CDK.
+    # Authz stack definition is in cdk/lib/authz-stack.ts
+    echo "Deploying authz stack"
+    cd $CDK_DIR
 
     if [ "$CDK_ADMIN_EMAIL" != "" ]; then
-        npm run cdk -- deploy Auth --require-approval never --parameters adminEmail=$CDK_ADMIN_EMAIL
+        npm run cdk -- deploy Authz --require-approval never --parameters  PerformanceDash-${environment}-Authz:adminEmail=$CDK_ADMIN_EMAIL --parameters authenticationRequired=$authenticationRequired
     else
-        npm run cdk -- deploy Auth --require-approval never
+        npm run cdk -- deploy Authz --require-approval never --parameters authenticationRequired=$authenticationRequired
     fi
 }
 
@@ -76,7 +92,7 @@ deploy_backend() {
 
     cd $CDK_DIR
     echo "Deploying backend stack"
-    npm run cdk -- deploy Backend --require-approval never --outputs-file outputs-backend.json
+    npm run cdk -- deploy Backend --require-approval never --outputs-file outputs-backend.json --parameters authenticationRequired=$authenticationRequired --parameters PerformanceDash-${environment}-Backend:domainName=$cname
 }
 
 deploy_frontend() {
@@ -85,23 +101,31 @@ deploy_frontend() {
     npm run build
 
     cd $CDK_DIR
-    npm run cdk -- deploy Frontend --require-approval never
     echo "Deploying frontend stack"
+    npm run cdk -- deploy Frontend --require-approval never  --parameters PerformanceDash-${environment}-Frontend:domainName=$cname
 }
 
-deploy_ops() {
-    echo "Deploying ops stack"
+deploy_frontendConfig() {
     cd $CDK_DIR
-    npm run cdk -- deploy Ops --require-approval never
+    echo "Deploying frontendConfig stack"
+    npm run cdk -- deploy FrontendConfig --require-approval never --parameters authenticationRequired=$authenticationRequired
 }
+
 deploy_examples() {
     echo "Deploying examples"
     cd $EXAMPLES_DIR
     npm run build
 
     cd $CDK_DIR
-    npm run cdk -- deploy DashboardExamples --require-approval never --parameters PerformanceDash-${environment}-DashboardExamples:exampleLanguage=${exampleLanguage}
+    npm run cdk -- deploy DashboardExamples --require-approval never --parameters PerformanceDash-${environment}-DashboardExamples:exampleLanguage=$exampleLanguage
 }
+
+deploy_ops() {
+    echo "Deploying ops stack"
+    cd $CDK_DIR
+    npm run cdk -- deploy Ops --require-approval never 
+}
+
 build_cdk() {
     cd $CDK_DIR
     npm run build
@@ -112,7 +136,9 @@ verify_prereqs
 create_build_directories
 build_cdk
 deploy_auth
-deploy_backend
+deploy_authz
 deploy_frontend
-deploy_ops
+deploy_backend
+deploy_frontendConfig
 deploy_examples
+deploy_ops

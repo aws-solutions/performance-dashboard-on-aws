@@ -4,18 +4,18 @@
  */
 
 export interface TopicArea {
-  id: string;
-  name: string;
-  createdBy: string;
-  dashboardCount?: number;
+    id: string;
+    name: string;
+    createdBy: string;
+    dashboardCount?: number;
 }
 
-export type TopicAreaList = Array<TopicArea>;
+export type TopicAreaList = TopicArea[];
 
 export interface TopicAreaItem {
-  pk: string;
-  sk: string;
-  type: string;
-  name: string;
-  createdBy: string;
+    pk: string;
+    sk: string;
+    type: string;
+    name: string;
+    createdBy: string;
 }

@@ -13,23 +13,23 @@ jest.mock("../../hooks");
 jest.mock("../../services/BackendService");
 
 describe("Page", () => {
-  const history = createMemoryHistory();
+    const history = createMemoryHistory();
 
-  test("renders a page", async () => {
-    const { baseElement } = render(
-      <Router history={history}>
-        <Page title="this is a title" />
-      </Router>
-    );
-    expect(baseElement).toMatchSnapshot();
-  });
+    test("renders a page", async () => {
+        const { baseElement } = render(
+            <Router history={history}>
+                <Page title="this is a title" />
+            </Router>,
+        );
+        expect(baseElement).toMatchSnapshot();
+    });
 
-  test("should set document title", async () => {
-    render(
-      <Router history={history}>
-        <Page title="this is a title" />
-      </Router>
-    );
-    expect(document.title).toBe("this is a title - Performance Dashboard");
-  });
+    test("should set document title", async () => {
+        render(
+            <Router history={history}>
+                <Page title="this is a title" />
+            </Router>,
+        );
+        expect(document.title).toBe("this is a title - Performance Dashboard");
+    });
 });

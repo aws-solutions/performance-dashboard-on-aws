@@ -3,35 +3,41 @@
  *  SPDX-License-Identifier: Apache-2.0
  */
 
-import * as cdk from "@aws-cdk/core";
-import * as sns from "@aws-cdk/aws-sns";
-import * as lambda from "@aws-cdk/aws-lambda";
-import * as apigateway from "@aws-cdk/aws-apigateway";
-import * as dynamodb from "@aws-cdk/aws-dynamodb";
-import * as cloudwatch from "@aws-cdk/aws-cloudwatch";
-import { SnsAction } from "@aws-cdk/aws-cloudwatch-actions";
-import * as kms from "@aws-cdk/aws-kms";
+import { SnsAction } from "aws-cdk-lib/aws-cloudwatch-actions";
 import {
-  Alarm,
-  Metric,
-  MathExpression,
-  Dashboard,
-  GraphWidget,
-  SingleValueWidget,
-  AlarmStatusWidget,
-  Color,
-  TreatMissingData,
-  ComparisonOperator,
-} from "@aws-cdk/aws-cloudwatch";
+    Alarm,
+    Metric,
+    MathExpression,
+    Dashboard,
+    GraphWidget,
+    SingleValueWidget,
+    AlarmStatusWidget,
+    Color,
+    TreatMissingData,
+    ComparisonOperator,
+    HorizontalAnnotation,
+} from "aws-cdk-lib/aws-cloudwatch";
+import { CfnOutput, Duration, Stack, StackProps } from "aws-cdk-lib";
+import { Function } from "aws-cdk-lib/aws-lambda";
+import { RestApi } from "aws-cdk-lib/aws-apigateway";
+import { Table } from "aws-cdk-lib/aws-dynamodb";
+import { Topic } from "aws-cdk-lib/aws-sns";
+import { Construct } from "constructs";
+import { Key } from "aws-cdk-lib/aws-kms";
+import { AppRegistryForSolution } from "../lib/constructs/appRegistry";
 
-interface Props extends cdk.StackProps {
-  privateApiFunction: lambda.Function;
-  publicApiFunction: lambda.Function;
-  dynamodbStreamsFunction: lambda.Function;
-  restApi: apigateway.RestApi;
-  mainTable: dynamodb.Table;
-  auditTrailTable: dynamodb.Table;
-  environment: string;
+interface Props extends StackProps {
+    solutionId: string;
+    solutionName: string;
+    solutionVersion: string;
+    appRegistryName: string;
+    privateApiFunction: Function;
+    publicApiFunction: Function;
+    dynamodbStreamsFunction: Function;
+    restApi: RestApi;
+    mainTable: Table;
+    auditTrailTable: Table;
+    environment: string;
 }
 
 const ENABLE_ALARM_SNS_NOTIFICATIONS = true;
@@ -42,498 +48,503 @@ const DASHBOARD_WIDGET_HEIGHT = 9;
 const DASHBOARD_DEFAULT_PERIOD = "-PT12H";
 const LAMBDA_THROTTLE_THRESHOLD = 10;
 
-export class OpsStack extends cdk.Stack {
-  private readonly opsNotifications: sns.Topic;
-  private readonly props: Props;
-  private readonly alarms: Alarm[];
+export class OpsStack extends Stack {
+    private readonly appRegistry: AppRegistryForSolution;
+    private readonly opsNotifications: Topic;
+    private readonly props: Props;
+    private readonly alarms: Alarm[];
 
-  constructor(scope: cdk.Construct, id: string, props: Props) {
-    super(scope, id, props);
+    constructor(scope: Construct, id: string, props: Props) {
+        super(scope, id, props);
 
-    this.props = props;
-    this.alarms = [];
+        this.props = props;
+        this.alarms = [];
 
-    const targetKmsKey = new kms.Key(this, "PDoA", {
-      enableKeyRotation: true,
-    });
-    targetKmsKey.addAlias(`PDoA/OpsNotifications-${props.environment}`);
+        const targetKmsKey = new Key(this, "PDoA", {
+            enableKeyRotation: true,
+        });
+        targetKmsKey.addAlias(`PDoA/OpsNotifications-${props.environment}`);
 
-    this.opsNotifications = new sns.Topic(this, "OpsNotifications", {
-      masterKey: targetKmsKey,
-    });
+        this.opsNotifications = new Topic(this, "OpsNotifications", {
+            masterKey: targetKmsKey,
+        });
 
-    this.createLambdaAlarms("PrivateApiFunction", props.privateApiFunction);
-    this.createLambdaAlarms("PublicApiFunction", props.publicApiFunction);
-    this.createLambdaAlarms(
-      "DynamoDBStreamsFunction",
-      props.dynamodbStreamsFunction
-    );
-    this.createOpsDashboard();
+        this.appRegistry = new AppRegistryForSolution(this, this.stackId, {
+            solutionId: this.props.solutionId,
+            solutionName: this.props.solutionName,
+            solutionVersion: this.props.solutionVersion,
+            appRegistryApplicationName: this.props.appRegistryName,
+            applicationType: "AWS-Solutions",
+            attributeGroupName: `${this.stackName}-Solution-Metadata`,
+        });
 
-    new cdk.CfnOutput(this, "OpsNotificationsTopic", {
-      value: this.opsNotifications.topicArn,
-    });
-  }
+        this.createLambdaAlarms("PrivateApiFunction", props.privateApiFunction);
+        this.createLambdaAlarms("PublicApiFunction", props.publicApiFunction);
+        this.createLambdaAlarms("DynamoDBStreamsFunction", props.dynamodbStreamsFunction);
+        this.createOpsDashboard();
 
-  createLambdaAlarms(id: string, lambdaFunction: lambda.Function) {
-    const invocations = new Metric({
-      namespace: "AWS/Lambda",
-      metricName: "Invocations",
-      statistic: "Sum",
-      dimensions: {
-        FunctionName: lambdaFunction.functionName,
-      },
-    });
+        new CfnOutput(this, "OpsNotificationsTopic", {
+            value: this.opsNotifications.topicArn,
+        });
+        new CfnOutput(this, "AppRegistryArn", {
+            description: "ARN of the application registry",
+            value: this.appRegistry.registryApplication.applicationArn,
+        });
+    }
 
-    const errors = new Metric({
-      namespace: "AWS/Lambda",
-      metricName: "Errors",
-      statistic: "Sum",
-      dimensions: {
-        FunctionName: lambdaFunction.functionName,
-      },
-    });
+    createLambdaAlarms(id: string, lambdaFunction: Function) {
+        const invocations = new Metric({
+            namespace: "AWS/Lambda",
+            metricName: "Invocations",
+            statistic: "Sum",
+            dimensionsMap: {
+                FunctionName: lambdaFunction.functionName,
+            },
+        });
 
-    const errorRateAlarm = new Alarm(this, id.concat("ErrorRateAlarm"), {
-      alarmDescription: "At least 5% of Lambda executions resulted in error",
-      evaluationPeriods: LAMBDA_ALARMS_EVALUATION_PERIODS,
-      threshold: 5,
-      treatMissingData: TreatMissingData.NOT_BREACHING,
-      comparisonOperator: ComparisonOperator.GREATER_THAN_OR_EQUAL_TO_THRESHOLD,
-      actionsEnabled: ENABLE_ALARM_SNS_NOTIFICATIONS,
-      metric: new MathExpression({
-        expression: "(errors / invocations) * 100",
-        label: "Error Rate (%)",
-        usingMetrics: {
-          invocations: invocations,
-          errors: errors,
-        },
-      }).with({
-        period: cdk.Duration.minutes(LAMBDA_ALARMS_EVALUATION_PERIOD_MINUTES),
-      }),
-    });
+        const errors = new Metric({
+            namespace: "AWS/Lambda",
+            metricName: "Errors",
+            statistic: "Sum",
+            dimensionsMap: {
+                FunctionName: lambdaFunction.functionName,
+            },
+        });
 
-    const throttlesAlarm = new Alarm(this, id.concat("ThrottleRateAlarm"), {
-      alarmDescription: "At least 10 Lambda invocations were throttled",
-      evaluationPeriods: LAMBDA_ALARMS_EVALUATION_PERIODS,
-      threshold: LAMBDA_THROTTLE_THRESHOLD,
-      actionsEnabled: ENABLE_ALARM_SNS_NOTIFICATIONS,
-      treatMissingData: TreatMissingData.NOT_BREACHING,
-      comparisonOperator: ComparisonOperator.GREATER_THAN_OR_EQUAL_TO_THRESHOLD,
-      metric: new Metric({
-        namespace: "AWS/Lambda",
-        metricName: "Throttles",
-        statistic: "Sum",
-        dimensions: {
-          FunctionName: lambdaFunction.functionName,
-        },
-      }).with({
-        period: cdk.Duration.minutes(LAMBDA_ALARMS_EVALUATION_PERIOD_MINUTES),
-      }),
-    });
+        const errorRateAlarm = new Alarm(this, id.concat("ErrorRateAlarm"), {
+            alarmDescription: "At least 5% of Lambda executions resulted in error",
+            evaluationPeriods: LAMBDA_ALARMS_EVALUATION_PERIODS,
+            threshold: 5,
+            treatMissingData: TreatMissingData.NOT_BREACHING,
+            comparisonOperator: ComparisonOperator.GREATER_THAN_OR_EQUAL_TO_THRESHOLD,
+            actionsEnabled: ENABLE_ALARM_SNS_NOTIFICATIONS,
+            metric: new MathExpression({
+                expression: "(errors / invocations) * 100",
+                label: "Error Rate (%)",
+                usingMetrics: {
+                    invocations,
+                    errors,
+                },
+            }).with({
+                period: Duration.minutes(LAMBDA_ALARMS_EVALUATION_PERIOD_MINUTES),
+            }),
+        });
 
-    this.alarms.push(errorRateAlarm);
-    this.alarms.push(throttlesAlarm);
+        const throttlesAlarm = new Alarm(this, id.concat("ThrottleRateAlarm"), {
+            alarmDescription: "At least 10 Lambda invocations were throttled",
+            evaluationPeriods: LAMBDA_ALARMS_EVALUATION_PERIODS,
+            threshold: LAMBDA_THROTTLE_THRESHOLD,
+            actionsEnabled: ENABLE_ALARM_SNS_NOTIFICATIONS,
+            treatMissingData: TreatMissingData.NOT_BREACHING,
+            comparisonOperator: ComparisonOperator.GREATER_THAN_OR_EQUAL_TO_THRESHOLD,
+            metric: new Metric({
+                namespace: "AWS/Lambda",
+                metricName: "Throttles",
+                statistic: "Sum",
+                dimensionsMap: {
+                    FunctionName: lambdaFunction.functionName,
+                },
+            }).with({
+                period: Duration.minutes(LAMBDA_ALARMS_EVALUATION_PERIOD_MINUTES),
+            }),
+        });
 
-    errorRateAlarm.addAlarmAction(new SnsAction(this.opsNotifications));
-    throttlesAlarm.addAlarmAction(new SnsAction(this.opsNotifications));
-  }
+        this.alarms.push(errorRateAlarm);
+        this.alarms.push(throttlesAlarm);
 
-  createOpsDashboard() {
-    const dashboard = new Dashboard(this, "OpsDashboard", {
-      start: DASHBOARD_DEFAULT_PERIOD,
-    });
+        errorRateAlarm.addAlarmAction(new SnsAction(this.opsNotifications));
+        throttlesAlarm.addAlarmAction(new SnsAction(this.opsNotifications));
+    }
 
-    const apiRequests = this.createApiRequestsWidget();
-    const apiLatency = this.createApiLatencyWidget();
-    const apiRequestsAggregated = this.createApiRequestsAggregationWidget();
-    const apiErrorsAggregated = this.createApiErrorsAggregationWidget();
-    const apiLatencyAggregated = this.createApiLatencyAggregationWidget();
-    const alarmsWidget = this.createAlarmsWidget();
+    createOpsDashboard() {
+        const dashboard = new Dashboard(this, "OpsDashboard", {
+            start: DASHBOARD_DEFAULT_PERIOD,
+        });
 
-    const privateApiInvocations = this.createLambdaInvocationsWidget(
-      this.props.privateApiFunction,
-      "Admin Users"
-    );
+        const apiRequests = this.createApiRequestsWidget();
+        const apiLatency = this.createApiLatencyWidget();
+        const apiRequestsAggregated = this.createApiRequestsAggregationWidget();
+        const apiErrorsAggregated = this.createApiErrorsAggregationWidget();
+        const apiLatencyAggregated = this.createApiLatencyAggregationWidget();
+        const alarmsWidget = this.createAlarmsWidget();
 
-    const publicApiInvocations = this.createLambdaInvocationsWidget(
-      this.props.publicApiFunction,
-      "Public Users"
-    );
+        const privateApiInvocations = this.createLambdaInvocationsWidget(
+            this.props.privateApiFunction,
+            "Admin Users",
+        );
 
-    const dynamodbStreamsInvocations = this.createLambdaInvocationsWidget(
-      this.props.dynamodbStreamsFunction,
-      "DynamoDB Streams Processor",
-      24
-    );
+        const publicApiInvocations = this.createLambdaInvocationsWidget(
+            this.props.publicApiFunction,
+            "Public Users",
+        );
 
-    const mainTableLatency = this.createDynamoDBLatencyWidget(
-      this.props.mainTable,
-      "DynamoDB Main Table - Latency by Request Type"
-    );
+        const dynamodbStreamsInvocations = this.createLambdaInvocationsWidget(
+            this.props.dynamodbStreamsFunction,
+            "DynamoDB Streams Processor",
+            24,
+        );
 
-    const mainTableErrors = this.createDynamoDBErrorsWidget(
-      this.props.mainTable,
-      "DynamoDB Main Table - Errors"
-    );
+        const mainTableLatency = this.createDynamoDBLatencyWidget(
+            this.props.mainTable,
+            "DynamoDB Main Table - Latency by Request Type",
+        );
 
-    const auditTrailTableLatency = this.createDynamoDBLatencyWidget(
-      this.props.mainTable,
-      "DynamoDB Audit Trail Table - Latency by Request Type"
-    );
+        const mainTableErrors = this.createDynamoDBErrorsWidget(
+            this.props.mainTable,
+            "DynamoDB Main Table - Errors",
+        );
 
-    const auditTrailTableErrors = this.createDynamoDBErrorsWidget(
-      this.props.mainTable,
-      "DynamoDB Audit Trail Table - Errors"
-    );
+        const auditTrailTableLatency = this.createDynamoDBLatencyWidget(
+            this.props.mainTable,
+            "DynamoDB Audit Trail Table - Latency by Request Type",
+        );
 
-    dashboard.addWidgets(alarmsWidget);
-    dashboard.addWidgets(
-      apiLatencyAggregated,
-      apiRequestsAggregated,
-      apiErrorsAggregated
-    );
-    dashboard.addWidgets(apiRequests);
-    dashboard.addWidgets(apiLatency);
-    dashboard.addWidgets(privateApiInvocations, publicApiInvocations);
-    dashboard.addWidgets(dynamodbStreamsInvocations);
-    dashboard.addWidgets(mainTableLatency);
-    dashboard.addWidgets(mainTableErrors);
-    dashboard.addWidgets(auditTrailTableLatency);
-    dashboard.addWidgets(auditTrailTableErrors);
+        const auditTrailTableErrors = this.createDynamoDBErrorsWidget(
+            this.props.mainTable,
+            "DynamoDB Audit Trail Table - Errors",
+        );
 
-    return dashboard;
-  }
+        dashboard.addWidgets(alarmsWidget);
+        dashboard.addWidgets(apiLatencyAggregated, apiRequestsAggregated, apiErrorsAggregated);
+        dashboard.addWidgets(apiRequests);
+        dashboard.addWidgets(apiLatency);
+        dashboard.addWidgets(privateApiInvocations, publicApiInvocations);
+        dashboard.addWidgets(dynamodbStreamsInvocations);
+        dashboard.addWidgets(mainTableLatency);
+        dashboard.addWidgets(mainTableErrors);
+        dashboard.addWidgets(auditTrailTableLatency);
+        dashboard.addWidgets(auditTrailTableErrors);
 
-  createLambdaInvocationsWidget(
-    lambdaFunction: lambda.Function,
-    label: string,
-    width: number = 12
-  ): GraphWidget {
-    const horizontalAnnotation: cloudwatch.HorizontalAnnotation = {
-      value: LAMBDA_THROTTLE_THRESHOLD,
-      color: Color.ORANGE,
-      visible: true,
-      label: "Throttle",
-    };
-    return new GraphWidget({
-      title: `Lambda Invocations - ${label}`,
-      width,
-      height: DASHBOARD_WIDGET_HEIGHT,
-      leftAnnotations: [horizontalAnnotation],
-      left: [
-        new Metric({
-          namespace: "AWS/Lambda",
-          metricName: "Invocations",
-          statistic: "Sum",
-          color: Color.GREEN,
-          period: cdk.Duration.minutes(DASHBOARD_AGGREGATION_PERIOD_MINUTES),
-          dimensions: {
-            FunctionName: lambdaFunction.functionName,
-          },
-        }),
-        new Metric({
-          namespace: "AWS/Lambda",
-          metricName: "Errors",
-          statistic: "Sum",
-          color: Color.RED,
-          period: cdk.Duration.minutes(DASHBOARD_AGGREGATION_PERIOD_MINUTES),
-          dimensions: {
-            FunctionName: lambdaFunction.functionName,
-          },
-        }),
-        new Metric({
-          namespace: "AWS/Lambda",
-          metricName: "Throttles",
-          statistic: "Sum",
-          color: Color.ORANGE,
-          period: cdk.Duration.minutes(DASHBOARD_AGGREGATION_PERIOD_MINUTES),
-          dimensions: {
-            FunctionName: lambdaFunction.functionName,
-          },
-        }),
-        new Metric({
-          namespace: "AWS/Lambda",
-          metricName: "ConcurrentExecutions",
-          statistic: "Maximum",
-          color: Color.PURPLE,
-          period: cdk.Duration.minutes(DASHBOARD_AGGREGATION_PERIOD_MINUTES),
-          dimensions: {
-            FunctionName: lambdaFunction.functionName,
-          },
-        }),
-      ],
-    });
-  }
+        return dashboard;
+    }
 
-  createApiRequestsWidget(): GraphWidget {
-    return new GraphWidget({
-      title: "API Requests",
-      width: 24,
-      height: DASHBOARD_WIDGET_HEIGHT,
-      left: [
-        new Metric({
-          namespace: "AWS/ApiGateway",
-          metricName: "Count",
-          statistic: "sum",
-          color: Color.GREEN,
-          period: cdk.Duration.minutes(DASHBOARD_AGGREGATION_PERIOD_MINUTES),
-          dimensions: {
-            ApiName: "ApiGateway",
-          },
-        }),
-        new Metric({
-          namespace: "AWS/ApiGateway",
-          metricName: "4XXError",
-          statistic: "sum",
-          color: Color.ORANGE,
-          period: cdk.Duration.minutes(DASHBOARD_AGGREGATION_PERIOD_MINUTES),
-          dimensions: {
-            ApiName: "ApiGateway",
-          },
-        }),
-        new Metric({
-          namespace: "AWS/ApiGateway",
-          metricName: "5XXError",
-          statistic: "sum",
-          color: Color.RED,
-          period: cdk.Duration.minutes(DASHBOARD_AGGREGATION_PERIOD_MINUTES),
-          dimensions: {
-            ApiName: "ApiGateway",
-          },
-        }),
-      ],
-    });
-  }
+    public associateAppWithOtherStacks(stacks: Stack[]) {
+        this.appRegistry.associateAppWithOtherStacks(stacks);
+    }
 
-  createApiLatencyWidget(): GraphWidget {
-    return new GraphWidget({
-      title: "API Latency",
-      width: 24,
-      height: DASHBOARD_WIDGET_HEIGHT,
-      leftYAxis: {
-        min: 0,
-        max: 3000,
-      },
-      left: [
-        new Metric({
-          namespace: "AWS/ApiGateway",
-          metricName: "Latency",
-          statistic: "p50",
-          color: Color.GREEN,
-          period: cdk.Duration.minutes(DASHBOARD_AGGREGATION_PERIOD_MINUTES),
-          dimensions: {
-            ApiName: "ApiGateway",
-          },
-        }),
-        new Metric({
-          namespace: "AWS/ApiGateway",
-          metricName: "Latency",
-          statistic: "p99",
-          color: Color.PURPLE,
-          period: cdk.Duration.minutes(DASHBOARD_AGGREGATION_PERIOD_MINUTES),
-          dimensions: {
-            ApiName: "ApiGateway",
-          },
-        }),
-      ],
-    });
-  }
+    createLambdaInvocationsWidget(
+        lambdaFunction: Function,
+        label: string,
+        width: number = 12,
+    ): GraphWidget {
+        const horizontalAnnotation: HorizontalAnnotation = {
+            value: LAMBDA_THROTTLE_THRESHOLD,
+            color: Color.ORANGE,
+            visible: true,
+            label: "Throttle",
+        };
+        return new GraphWidget({
+            title: `Lambda Invocations - ${label}`,
+            width,
+            height: DASHBOARD_WIDGET_HEIGHT,
+            leftAnnotations: [horizontalAnnotation],
+            left: [
+                new Metric({
+                    namespace: "AWS/Lambda",
+                    metricName: "Invocations",
+                    statistic: "Sum",
+                    color: Color.GREEN,
+                    period: Duration.minutes(DASHBOARD_AGGREGATION_PERIOD_MINUTES),
+                    dimensionsMap: {
+                        FunctionName: lambdaFunction.functionName,
+                    },
+                }),
+                new Metric({
+                    namespace: "AWS/Lambda",
+                    metricName: "Errors",
+                    statistic: "Sum",
+                    color: Color.RED,
+                    period: Duration.minutes(DASHBOARD_AGGREGATION_PERIOD_MINUTES),
+                    dimensionsMap: {
+                        FunctionName: lambdaFunction.functionName,
+                    },
+                }),
+                new Metric({
+                    namespace: "AWS/Lambda",
+                    metricName: "Throttles",
+                    statistic: "Sum",
+                    color: Color.ORANGE,
+                    period: Duration.minutes(DASHBOARD_AGGREGATION_PERIOD_MINUTES),
+                    dimensionsMap: {
+                        FunctionName: lambdaFunction.functionName,
+                    },
+                }),
+                new Metric({
+                    namespace: "AWS/Lambda",
+                    metricName: "ConcurrentExecutions",
+                    statistic: "Maximum",
+                    color: Color.PURPLE,
+                    period: Duration.minutes(DASHBOARD_AGGREGATION_PERIOD_MINUTES),
+                    dimensionsMap: {
+                        FunctionName: lambdaFunction.functionName,
+                    },
+                }),
+            ],
+        });
+    }
 
-  createDynamoDBLatencyWidget(
-    table: dynamodb.Table,
-    title: string
-  ): GraphWidget {
-    return new GraphWidget({
-      title: title,
-      width: 24,
-      height: DASHBOARD_WIDGET_HEIGHT,
-      left: [
-        new Metric({
-          namespace: "AWS/DynamoDB",
-          metricName: "SuccessfulRequestLatency",
-          statistic: "Average",
-          color: Color.BLUE,
-          period: cdk.Duration.minutes(DASHBOARD_AGGREGATION_PERIOD_MINUTES),
-          dimensions: {
-            TableName: table.tableName,
-            Operation: "Query",
-          },
-        }),
-        new Metric({
-          namespace: "AWS/DynamoDB",
-          metricName: "SuccessfulRequestLatency",
-          statistic: "Average",
-          color: Color.ORANGE,
-          period: cdk.Duration.minutes(DASHBOARD_AGGREGATION_PERIOD_MINUTES),
-          dimensions: {
-            TableName: table.tableName,
-            Operation: "PutItem",
-          },
-        }),
-        new Metric({
-          namespace: "AWS/DynamoDB",
-          metricName: "SuccessfulRequestLatency",
-          statistic: "Average",
-          color: Color.GREEN,
-          period: cdk.Duration.minutes(DASHBOARD_AGGREGATION_PERIOD_MINUTES),
-          dimensions: {
-            TableName: table.tableName,
-            Operation: "GetItem",
-          },
-        }),
-        new Metric({
-          namespace: "AWS/DynamoDB",
-          metricName: "SuccessfulRequestLatency",
-          statistic: "Average",
-          color: Color.PURPLE,
-          period: cdk.Duration.minutes(DASHBOARD_AGGREGATION_PERIOD_MINUTES),
-          dimensions: {
-            TableName: table.tableName,
-            Operation: "UpdateItem",
-          },
-        }),
-        new Metric({
-          namespace: "AWS/DynamoDB",
-          metricName: "SuccessfulRequestLatency",
-          statistic: "Average",
-          color: Color.PINK,
-          period: cdk.Duration.minutes(DASHBOARD_AGGREGATION_PERIOD_MINUTES),
-          dimensions: {
-            TableName: table.tableName,
-            Operation: "DeleteItem",
-          },
-        }),
-        new Metric({
-          namespace: "AWS/DynamoDB",
-          metricName: "SuccessfulRequestLatency",
-          statistic: "Average",
-          color: Color.GREY,
-          period: cdk.Duration.minutes(DASHBOARD_AGGREGATION_PERIOD_MINUTES),
-          dimensions: {
-            TableName: table.tableName,
-            Operation: "TransactWriteItems",
-          },
-        }),
-      ],
-    });
-  }
+    createApiRequestsWidget(): GraphWidget {
+        return new GraphWidget({
+            title: "API Requests",
+            width: 24,
+            height: DASHBOARD_WIDGET_HEIGHT,
+            left: [
+                new Metric({
+                    namespace: "AWS/ApiGateway",
+                    metricName: "Count",
+                    statistic: "sum",
+                    color: Color.GREEN,
+                    period: Duration.minutes(DASHBOARD_AGGREGATION_PERIOD_MINUTES),
+                    dimensionsMap: {
+                        ApiName: "ApiGateway",
+                    },
+                }),
+                new Metric({
+                    namespace: "AWS/ApiGateway",
+                    metricName: "4XXError",
+                    statistic: "sum",
+                    color: Color.ORANGE,
+                    period: Duration.minutes(DASHBOARD_AGGREGATION_PERIOD_MINUTES),
+                    dimensionsMap: {
+                        ApiName: "ApiGateway",
+                    },
+                }),
+                new Metric({
+                    namespace: "AWS/ApiGateway",
+                    metricName: "5XXError",
+                    statistic: "sum",
+                    color: Color.RED,
+                    period: Duration.minutes(DASHBOARD_AGGREGATION_PERIOD_MINUTES),
+                    dimensionsMap: {
+                        ApiName: "ApiGateway",
+                    },
+                }),
+            ],
+        });
+    }
 
-  createDynamoDBErrorsWidget(
-    table: dynamodb.Table,
-    title: string
-  ): GraphWidget {
-    return new GraphWidget({
-      title: title,
-      width: 24,
-      height: DASHBOARD_WIDGET_HEIGHT,
-      left: [
-        new Metric({
-          namespace: "AWS/DynamoDB",
-          metricName: "ThrottledRequests",
-          statistic: "Sum",
-          color: Color.ORANGE,
-          period: cdk.Duration.minutes(DASHBOARD_AGGREGATION_PERIOD_MINUTES),
-          dimensions: {
-            TableName: table.tableName,
-            Operation: "GetItem",
-          },
-        }),
-        new Metric({
-          namespace: "AWS/DynamoDB",
-          metricName: "ThrottledRequests",
-          statistic: "Sum",
-          color: Color.PINK,
-          period: cdk.Duration.minutes(DASHBOARD_AGGREGATION_PERIOD_MINUTES),
-          dimensions: {
-            TableName: table.tableName,
-            Operation: "Query",
-          },
-        }),
-        new Metric({
-          namespace: "AWS/DynamoDB",
-          metricName: "SystemErrors",
-          statistic: "Sum",
-          color: Color.RED,
-          period: cdk.Duration.minutes(DASHBOARD_AGGREGATION_PERIOD_MINUTES),
-          dimensions: {
-            TableName: table.tableName,
-          },
-        }),
-        new Metric({
-          namespace: "AWS/DynamoDB",
-          metricName: "UserErrors",
-          statistic: "Sum",
-          color: Color.RED,
-          period: cdk.Duration.minutes(DASHBOARD_AGGREGATION_PERIOD_MINUTES),
-          dimensions: {
-            TableName: table.tableName,
-          },
-        }),
-      ],
-    });
-  }
+    createApiLatencyWidget(): GraphWidget {
+        return new GraphWidget({
+            title: "API Latency",
+            width: 24,
+            height: DASHBOARD_WIDGET_HEIGHT,
+            leftYAxis: {
+                min: 0,
+                max: 3000,
+            },
+            left: [
+                new Metric({
+                    namespace: "AWS/ApiGateway",
+                    metricName: "Latency",
+                    statistic: "p50",
+                    color: Color.GREEN,
+                    period: Duration.minutes(DASHBOARD_AGGREGATION_PERIOD_MINUTES),
+                    dimensionsMap: {
+                        ApiName: "ApiGateway",
+                    },
+                }),
+                new Metric({
+                    namespace: "AWS/ApiGateway",
+                    metricName: "Latency",
+                    statistic: "p99",
+                    color: Color.PURPLE,
+                    period: Duration.minutes(DASHBOARD_AGGREGATION_PERIOD_MINUTES),
+                    dimensionsMap: {
+                        ApiName: "ApiGateway",
+                    },
+                }),
+            ],
+        });
+    }
 
-  createApiLatencyAggregationWidget(): SingleValueWidget {
-    return new SingleValueWidget({
-      title: "API Latency",
-      width: 8,
-      setPeriodToTimeRange: true,
-      metrics: [
-        new Metric({
-          namespace: "AWS/ApiGateway",
-          metricName: "Latency",
-          statistic: "p99",
-          label: "p99",
-          dimensions: {
-            ApiName: "ApiGateway",
-          },
-        }),
-      ],
-    });
-  }
+    createDynamoDBLatencyWidget(table: Table, title: string): GraphWidget {
+        return new GraphWidget({
+            title,
+            width: 24,
+            height: DASHBOARD_WIDGET_HEIGHT,
+            left: [
+                new Metric({
+                    namespace: "AWS/DynamoDB",
+                    metricName: "SuccessfulRequestLatency",
+                    statistic: "Average",
+                    color: Color.BLUE,
+                    period: Duration.minutes(DASHBOARD_AGGREGATION_PERIOD_MINUTES),
+                    dimensionsMap: {
+                        TableName: table.tableName,
+                        Operation: "Query",
+                    },
+                }),
+                new Metric({
+                    namespace: "AWS/DynamoDB",
+                    metricName: "SuccessfulRequestLatency",
+                    statistic: "Average",
+                    color: Color.ORANGE,
+                    period: Duration.minutes(DASHBOARD_AGGREGATION_PERIOD_MINUTES),
+                    dimensionsMap: {
+                        TableName: table.tableName,
+                        Operation: "PutItem",
+                    },
+                }),
+                new Metric({
+                    namespace: "AWS/DynamoDB",
+                    metricName: "SuccessfulRequestLatency",
+                    statistic: "Average",
+                    color: Color.GREEN,
+                    period: Duration.minutes(DASHBOARD_AGGREGATION_PERIOD_MINUTES),
+                    dimensionsMap: {
+                        TableName: table.tableName,
+                        Operation: "GetItem",
+                    },
+                }),
+                new Metric({
+                    namespace: "AWS/DynamoDB",
+                    metricName: "SuccessfulRequestLatency",
+                    statistic: "Average",
+                    color: Color.PURPLE,
+                    period: Duration.minutes(DASHBOARD_AGGREGATION_PERIOD_MINUTES),
+                    dimensionsMap: {
+                        TableName: table.tableName,
+                        Operation: "UpdateItem",
+                    },
+                }),
+                new Metric({
+                    namespace: "AWS/DynamoDB",
+                    metricName: "SuccessfulRequestLatency",
+                    statistic: "Average",
+                    color: Color.PINK,
+                    period: Duration.minutes(DASHBOARD_AGGREGATION_PERIOD_MINUTES),
+                    dimensionsMap: {
+                        TableName: table.tableName,
+                        Operation: "DeleteItem",
+                    },
+                }),
+                new Metric({
+                    namespace: "AWS/DynamoDB",
+                    metricName: "SuccessfulRequestLatency",
+                    statistic: "Average",
+                    color: Color.GREY,
+                    period: Duration.minutes(DASHBOARD_AGGREGATION_PERIOD_MINUTES),
+                    dimensionsMap: {
+                        TableName: table.tableName,
+                        Operation: "TransactWriteItems",
+                    },
+                }),
+            ],
+        });
+    }
 
-  createApiRequestsAggregationWidget(): SingleValueWidget {
-    return new SingleValueWidget({
-      title: "API Requests",
-      width: 8,
-      setPeriodToTimeRange: true,
-      metrics: [
-        new Metric({
-          namespace: "AWS/ApiGateway",
-          metricName: "Count",
-          statistic: "Sum",
-          dimensions: {
-            ApiName: "ApiGateway",
-          },
-        }),
-      ],
-    });
-  }
+    createDynamoDBErrorsWidget(table: Table, title: string): GraphWidget {
+        return new GraphWidget({
+            title,
+            width: 24,
+            height: DASHBOARD_WIDGET_HEIGHT,
+            left: [
+                new Metric({
+                    namespace: "AWS/DynamoDB",
+                    metricName: "ThrottledRequests",
+                    statistic: "Sum",
+                    color: Color.ORANGE,
+                    period: Duration.minutes(DASHBOARD_AGGREGATION_PERIOD_MINUTES),
+                    dimensionsMap: {
+                        TableName: table.tableName,
+                        Operation: "GetItem",
+                    },
+                }),
+                new Metric({
+                    namespace: "AWS/DynamoDB",
+                    metricName: "ThrottledRequests",
+                    statistic: "Sum",
+                    color: Color.PINK,
+                    period: Duration.minutes(DASHBOARD_AGGREGATION_PERIOD_MINUTES),
+                    dimensionsMap: {
+                        TableName: table.tableName,
+                        Operation: "Query",
+                    },
+                }),
+                new Metric({
+                    namespace: "AWS/DynamoDB",
+                    metricName: "SystemErrors",
+                    statistic: "Sum",
+                    color: Color.RED,
+                    period: Duration.minutes(DASHBOARD_AGGREGATION_PERIOD_MINUTES),
+                    dimensionsMap: {
+                        TableName: table.tableName,
+                    },
+                }),
+                new Metric({
+                    namespace: "AWS/DynamoDB",
+                    metricName: "UserErrors",
+                    statistic: "Sum",
+                    color: Color.RED,
+                    period: Duration.minutes(DASHBOARD_AGGREGATION_PERIOD_MINUTES),
+                    dimensionsMap: {
+                        TableName: table.tableName,
+                    },
+                }),
+            ],
+        });
+    }
 
-  createApiErrorsAggregationWidget(): SingleValueWidget {
-    return new SingleValueWidget({
-      title: "API Errors",
-      width: 8,
-      setPeriodToTimeRange: true,
-      metrics: [
-        new Metric({
-          namespace: "AWS/ApiGateway",
-          metricName: "5XXError",
-          statistic: "Sum",
-          dimensions: {
-            ApiName: "ApiGateway",
-          },
-        }),
-      ],
-    });
-  }
+    createApiLatencyAggregationWidget(): SingleValueWidget {
+        return new SingleValueWidget({
+            title: "API Latency",
+            width: 8,
+            setPeriodToTimeRange: true,
+            metrics: [
+                new Metric({
+                    namespace: "AWS/ApiGateway",
+                    metricName: "Latency",
+                    statistic: "p99",
+                    label: "p99",
+                    dimensionsMap: {
+                        ApiName: "ApiGateway",
+                    },
+                }),
+            ],
+        });
+    }
 
-  createAlarmsWidget(): AlarmStatusWidget {
-    return new AlarmStatusWidget({
-      title: "Alarm Status",
-      width: 24,
-      alarms: [...this.alarms],
-    });
-  }
+    createApiRequestsAggregationWidget(): SingleValueWidget {
+        return new SingleValueWidget({
+            title: "API Requests",
+            width: 8,
+            setPeriodToTimeRange: true,
+            metrics: [
+                new Metric({
+                    namespace: "AWS/ApiGateway",
+                    metricName: "Count",
+                    statistic: "Sum",
+                    dimensionsMap: {
+                        ApiName: "ApiGateway",
+                    },
+                }),
+            ],
+        });
+    }
+
+    createApiErrorsAggregationWidget(): SingleValueWidget {
+        return new SingleValueWidget({
+            title: "API Errors",
+            width: 8,
+            setPeriodToTimeRange: true,
+            metrics: [
+                new Metric({
+                    namespace: "AWS/ApiGateway",
+                    metricName: "5XXError",
+                    statistic: "Sum",
+                    dimensionsMap: {
+                        ApiName: "ApiGateway",
+                    },
+                }),
+            ],
+        });
+    }
+
+    createAlarmsWidget(): AlarmStatusWidget {
+        return new AlarmStatusWidget({
+            title: "Alarm Status",
+            width: 24,
+            alarms: [...this.alarms],
+        });
+    }
 }

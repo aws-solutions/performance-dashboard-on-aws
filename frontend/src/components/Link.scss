@@ -1,5 +1,5 @@
 @import "../styles/base";
 
 .action-link:visited {
-  @include u-text("base-dark", "!important");
+    @include u-text("base-dark", "!important");
 }

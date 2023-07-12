@@ -8,30 +8,30 @@ import StorageService from "../services/StorageService";
 import { useTranslation } from "react-i18next";
 
 type UseImageHook = {
-  loadingFile: boolean;
-  file: File | undefined;
+    loadingFile: boolean;
+    file: File | undefined;
 };
 
 export function useImage(s3Key: string): UseImageHook {
-  const { t } = useTranslation();
-  const [loading, setLoading] = useState<boolean>(false);
-  const [file, setFile] = useState<File>();
+    const { t } = useTranslation();
+    const [loading, setLoading] = useState<boolean>(false);
+    const [file, setFile] = useState<File>();
 
-  const fetchData = useCallback(async () => {
-    if (s3Key) {
-      setLoading(true);
-      const data = await StorageService.downloadFile(s3Key, t);
-      setFile(data);
-      setLoading(false);
-    }
-  }, [s3Key, t]);
+    const fetchData = useCallback(async () => {
+        if (s3Key) {
+            setLoading(true);
+            const data = await StorageService.downloadFile(s3Key, t);
+            setFile(data);
+            setLoading(false);
+        }
+    }, [s3Key, t]);
 
-  useEffect(() => {
-    fetchData();
-  }, [fetchData]);
+    useEffect(() => {
+        fetchData();
+    }, [fetchData]);
 
-  return {
-    loadingFile: loading,
-    file,
-  };
+    return {
+        loadingFile: loading,
+        file,
+    };
 }

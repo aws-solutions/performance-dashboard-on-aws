@@ -16,47 +16,45 @@ jest.mock("../../services/StorageService");
 jest.mock("../../hooks");
 
 beforeEach(() => {
-  BackendService.editWidget = jest.fn();
-  BackendService.createDataset = jest.fn().mockReturnValue({ id: "123" });
-  StorageService.uploadMetric = jest.fn().mockReturnValue({
-    s3Keys: {
-      raw: "abc.json",
-      json: "abc.json",
-    },
-  });
-  StorageService.downloadJson = jest.fn();
+    BackendService.editWidget = jest.fn();
+    BackendService.createDataset = jest.fn().mockReturnValue({ id: "123" });
+    StorageService.uploadMetric = jest.fn().mockReturnValue({
+        s3Keys: {
+            raw: "abc.json",
+            json: "abc.json",
+        },
+    });
+    StorageService.downloadJson = jest.fn();
 });
 
 test("renders title", async () => {
-  render(<EditMetrics />, { wrapper: MemoryRouter });
-  expect(
-    await screen.findByRole("heading", { name: "Edit metrics" })
-  ).toBeInTheDocument();
+    render(<EditMetrics />, { wrapper: MemoryRouter });
+    expect(await screen.findByRole("heading", { name: "Edit metrics" })).toBeInTheDocument();
 });
 
 test("renders a textfield for metric title", async () => {
-  render(<EditMetrics />, { wrapper: MemoryRouter });
-  expect(await screen.findByLabelText("Metrics title*")).toBeInTheDocument();
+    render(<EditMetrics />, { wrapper: MemoryRouter });
+    expect(await screen.findByLabelText("Metrics title")).toBeInTheDocument();
 });
 
 test("on submit, it does not calls editWidget api and uploads dataset without a metric added", async () => {
-  const { getByRole, getByLabelText } = render(<EditMetrics />, {
-    wrapper: MemoryRouter,
-  });
+    const { getByRole, getByLabelText } = render(<EditMetrics />, {
+        wrapper: MemoryRouter,
+    });
 
-  const submitButton = getByRole("button", { name: "Save" });
+    const submitButton = getByRole("button", { name: "Save" });
 
-  fireEvent.input(getByLabelText("Metrics title*"), {
-    target: {
-      value: "Test Metrics",
-    },
-  });
+    fireEvent.input(getByLabelText("Metrics title"), {
+        target: {
+            value: "Test Metrics",
+        },
+    });
 
-  await waitFor(() => expect(submitButton).toBeEnabled());
-  await act(async () => {
-    fireEvent.click(submitButton);
-  });
+    await waitFor(() => expect(submitButton).toBeEnabled());
+    await act(async () => {
+        fireEvent.click(submitButton);
+    });
 
-  expect(BackendService.editWidget).not.toHaveBeenCalled();
-  expect(StorageService.uploadMetric).not.toHaveBeenCalled();
+    expect(BackendService.editWidget).not.toHaveBeenCalled();
+    expect(StorageService.uploadMetric).not.toHaveBeenCalled();
 });

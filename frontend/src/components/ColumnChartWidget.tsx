@@ -3,314 +3,181 @@
  *  SPDX-License-Identifier: Apache-2.0
  */
 
-import React, { useCallback, useEffect, useRef, useState } from "react";
-import {
-  XAxis,
-  YAxis,
-  BarChart,
-  Bar,
-  Legend,
-  LabelList,
-  ResponsiveContainer,
-  CartesianGrid,
-  Tooltip,
-  // @ts-ignore
-  CategoricalChartWrapper,
-} from "recharts";
-import { useColors, useYAxisMetadata, useWindowSize } from "../hooks";
+import React, { useEffect, useRef, useState } from "react";
+import { useColors, useYAxisMetadata } from "../hooks";
 import UtilsService from "../services/UtilsService";
 import TickFormatter from "../services/TickFormatter";
 import MarkdownRender from "./MarkdownRender";
 import DataTable from "./DataTable";
-import RenderLegendText from "./Legend";
-import { ColumnDataType } from "../models";
 import ShareButton from "./ShareButton";
+import BarChart from "@cloudscape-design/components/bar-chart";
+import { useTranslation } from "react-i18next";
 
 type Props = {
-  id: string;
-  title: string;
-  downloadTitle: string;
-  summary: string;
-  columns: Array<string>;
-  data?: Array<any>;
-  summaryBelow: boolean;
-  isPreview?: boolean;
-  hideLegend?: boolean;
-  horizontalScroll?: boolean;
-  stackedChart?: boolean;
-  hideDataLabels?: boolean;
-  setWidthPercent?: (widthPercent: number) => void;
-  significantDigitLabels: boolean;
-  colors?: {
-    primary: string | undefined;
-    secondary: string | undefined;
-  };
-  columnsMetadata: Array<any>;
-  showMobilePreview?: boolean;
+    id: string;
+    title: string;
+    downloadTitle: string;
+    summary: string;
+    columns: Array<string>;
+    data?: Array<any>;
+    summaryBelow: boolean;
+    isPreview?: boolean;
+    hideLegend?: boolean;
+    horizontalScroll?: boolean;
+    stackedChart?: boolean;
+    setWidthPercent?: (widthPercent: number) => void;
+    significantDigitLabels: boolean;
+    colors?: {
+        primary: string | undefined;
+        secondary: string | undefined;
+    };
+    columnsMetadata: Array<any>;
+    showMobilePreview?: boolean;
+    height?: number;
 };
 
 function ColumnChartWidget(props: Props) {
-  const chartRef = useRef(null);
-  const [columnsHover, setColumnsHover] = useState(null);
-  const [hiddenColumns, setHiddenColumns] = useState<Array<string>>([]);
-  const [chartLoaded, setChartLoaded] = useState(false);
-  const { yAxisLargestValue, yAxisMargin } = useYAxisMetadata(
-    chartRef,
-    chartLoaded,
-    props.significantDigitLabels
-  );
+    const { t } = useTranslation();
 
-  const colors = useColors(
-    props.columns.length,
-    props.colors?.primary,
-    props.colors?.secondary
-  );
+    const chartRef = useRef(null);
+    const [chartLoaded, setChartLoaded] = useState(false);
+    const { yAxisLargestValue } = useYAxisMetadata(
+        chartRef,
+        chartLoaded,
+        props.significantDigitLabels,
+    );
 
-  const getOpacity = useCallback(
-    (dataKey) => {
-      if (!columnsHover) {
-        return 1;
-      }
-      return columnsHover === dataKey ? 1 : 0.2;
-    },
-    [columnsHover]
-  );
+    const colors = useColors(props.columns.length, props.colors?.primary, props.colors?.secondary);
 
-  const windowSize = useWindowSize();
-  const smallScreenPixels = 800;
+    const { data, columns, showMobilePreview } = props;
 
-  const { data, columns, showMobilePreview } = props;
+    const columnsMetadataDict = new Map();
+    props.columnsMetadata.forEach((el) => columnsMetadataDict.set(el.columnName, el));
 
-  const columnsMetadataDict = new Map();
-  props.columnsMetadata.forEach((el) =>
-    columnsMetadataDict.set(el.columnName, el)
-  );
+    /**
+     * Calculate the width percent out of the total width
+     * depending on the container. Width: (largestHeader + 1) *
+     * headersCount * pixelsByCharacter + marginLeft + marginRight
+     */
+    const widthPercent = UtilsService.computeChartWidgetWidthPercent({
+        ...props,
+        headers: props.columns,
+    });
 
-  const computePadding = () => {
-    if (showMobilePreview || windowSize.width < smallScreenPixels) {
-      return 20;
-    }
-    if (props.isPreview) {
-      return 60;
-    }
-    return 120;
-  };
-  const padding = computePadding();
+    useEffect(() => {
+        if (props.setWidthPercent) {
+            props.setWidthPercent(widthPercent);
+        }
+    }, [props, widthPercent]);
 
-  const xAxisType = useCallback(() => {
-    let columnMetadata;
-    if (props.columnsMetadata && columns.length) {
-      columnMetadata = props.columnsMetadata.find(
-        (cm) => cm.columnName === columns[0]
-      );
-    }
-    if (columnMetadata && columnMetadata.dataType === ColumnDataType.Text) {
-      return "category";
-    } else {
-      return data && data.every((row) => typeof row[columns[0]] === "number")
-        ? "number"
-        : "category";
-    }
-  }, [data, columns, props.columnsMetadata]);
+    const dataSeries = (data: any[]): any[] => {
+        const result = props.columns.slice(1).map((column, index) => {
+            return {
+                data: data.map((row) => {
+                    return {
+                        x: row[columns[0]],
+                        y: row[column],
+                    };
+                }),
+                title: column,
+                type: "bar",
+                color: colors[index],
+                valueFormatter: (tick: any) => {
+                    // Check if there is metadata for this column
+                    let columnMetadata;
+                    if (props.columnsMetadata) {
+                        columnMetadata = props.columnsMetadata.find(
+                            (cm) => cm.columnName === column,
+                        );
+                    }
 
-  const toggleColumns = (e: any) => {
-    if (hiddenColumns.includes(e.dataKey)) {
-      const hidden = hiddenColumns.filter((column) => column !== e.dataKey);
-      setHiddenColumns(hidden);
-    } else {
-      setHiddenColumns([...hiddenColumns, e.dataKey]);
-    }
-  };
-
-  /**
-   * Calculate the width percent out of the total width
-   * depending on the container. Width: (largestHeader + 1) *
-   * headersCount * pixelsByCharacter + marginLeft + marginRight
-   */
-  const widthPercent = UtilsService.computeChartWidgetWidthPercent({
-    ...props,
-    headers: props.columns,
-  });
-
-  const valueAccessor =
-    (attribute: string) =>
-    ({ payload }: any) => {
-      return payload;
+                    return TickFormatter.format(
+                        Number(tick),
+                        yAxisLargestValue,
+                        props.significantDigitLabels,
+                        "",
+                        "",
+                        columnMetadata,
+                    );
+                },
+            };
+        });
+        return result;
     };
 
-  useEffect(() => {
-    if (props.setWidthPercent) {
-      props.setWidthPercent(widthPercent);
-    }
-  }, [props, widthPercent]);
-
-  return (
-    <div
-      aria-label={props.title}
-      tabIndex={-1}
-      className={`overflow-x-hidden overflow-y-hidden${
-        widthPercent > 100 && props.horizontalScroll ? " scroll-shadow" : ""
-      } ${props.title ? "" : "padding-top-2"}`}
-    >
-      {props.title && (
-        <h2 className={`margin-bottom-${props.summaryBelow ? "4" : "1"}`}>
-          {props.title}
-          <ShareButton
-            id={`${props.id}a`}
-            title={props.title}
-            className="margin-left-1"
-          />
-        </h2>
-      )}
-      {!props.summaryBelow && (
-        <MarkdownRender
-          source={props.summary}
-          className="usa-prose margin-top-0 margin-bottom-4 chartSummaryAbove textOrSummary"
-        />
-      )}
-      {data && data.length > 0 && (
-        <div aria-hidden="true">
-          <ResponsiveContainer
-            id={props.id}
-            width={
-              props.horizontalScroll
-                ? `${Math.max(widthPercent, 100)}%`
-                : "100%"
-            }
-            height={300}
-          >
-            <BarChart
-              className="column-chart"
-              data={props.data}
-              margin={{ right: 0, left: yAxisMargin }}
-              ref={(el: CategoricalChartWrapper) => {
-                chartRef.current = el;
-                setChartLoaded(!!el);
-              }}
-            >
-              <CartesianGrid vertical={false} />
-              <XAxis
-                dataKey={props.columns.length ? props.columns[0] : ""}
-                type={xAxisType()}
-                padding={{ left: padding, right: padding }}
-                domain={["dataMin", "dataMax"]}
-                interval={props.horizontalScroll ? 0 : "preserveStartEnd"}
-                scale={xAxisType() === "number" ? "linear" : "auto"}
-              />
-              <YAxis
-                type="number"
-                tickFormatter={(tick: any) => {
-                  return TickFormatter.format(
-                    Number(tick),
-                    yAxisLargestValue,
-                    props.significantDigitLabels,
-                    "",
-                    ""
-                  );
-                }}
-              />
-              <Tooltip
-                itemStyle={{ color: "#1b1b1b" }}
-                isAnimationActive={false}
-                formatter={(value: number | string, name: string) => {
-                  // Check if there is metadata for this column
-                  let columnMetadata;
-                  if (props.columnsMetadata) {
-                    columnMetadata = props.columnsMetadata.find(
-                      (cm) => cm.columnName === name
-                    );
-                  }
-
-                  return TickFormatter.format(
-                    Number(value),
-                    yAxisLargestValue,
-                    props.significantDigitLabels,
-                    "",
-                    "",
-                    columnMetadata
-                  );
-                }}
-              />
-              {!props.hideLegend && (
-                <Legend
-                  verticalAlign="top"
-                  onClick={toggleColumns}
-                  onMouseLeave={() => setColumnsHover(null)}
-                  onMouseEnter={(e: any) => setColumnsHover(e.dataKey)}
-                  formatter={RenderLegendText}
+    return (
+        <div
+            aria-label={props.title}
+            tabIndex={-1}
+            className={`overflow-x-hidden overflow-y-hidden${
+                widthPercent > 100 && props.horizontalScroll ? " scroll-shadow" : ""
+            } ${props.title ? "" : "padding-top-2"}`}
+        >
+            {props.title && (
+                <h2 className={`margin-bottom-${props.summaryBelow ? "4" : "1"}`}>
+                    {props.title}
+                    <ShareButton
+                        id={`${props.id}a`}
+                        title={props.title}
+                        className="margin-left-1"
+                    />
+                </h2>
+            )}
+            {!props.summaryBelow && (
+                <MarkdownRender
+                    source={props.summary}
+                    className="usa-prose margin-top-0 margin-bottom-4 chartSummaryAbove textOrSummary"
                 />
-              )}
-              {props.columns.length > 0 &&
-                props.columns.slice(1).map((column, index) => {
-                  return (
-                    <Bar
-                      dataKey={column}
-                      fill={colors[index]}
-                      key={index}
-                      fillOpacity={getOpacity(column)}
-                      hide={hiddenColumns.includes(column)}
-                      isAnimationActive={false}
-                      stackId={props.stackedChart ? "a" : `${index}`}
-                    >
-                      {!props.hideDataLabels &&
-                        props.stackedChart &&
-                        index === props.columns.length - 2 && (
-                          <LabelList
-                            position="top"
-                            valueAccessor={valueAccessor(column)}
-                            formatter={(tick: any) => {
-                              return TickFormatter.stackedFormat(
-                                tick,
-                                yAxisLargestValue,
-                                props.significantDigitLabels,
-                                props.columns.slice(1),
-                                props.columnsMetadata
-                              );
-                            }}
-                          />
-                        )}
-                      {!props.hideDataLabels && !props.stackedChart && (
-                        <LabelList
-                          dataKey={column}
-                          position="top"
-                          formatter={(tick: any) =>
-                            TickFormatter.format(
-                              Number(tick),
-                              yAxisLargestValue,
-                              props.significantDigitLabels,
-                              "",
-                              "",
-                              columnsMetadataDict.get(column)
-                            )
-                          }
-                        />
-                      )}
-                    </Bar>
-                  );
-                })}
-            </BarChart>
-          </ResponsiveContainer>
+            )}
+            {data && data.length > 0 && (
+                <div className="chart-container">
+                    <BarChart
+                        series={dataSeries(data)}
+                        i18nStrings={{
+                            detailPopoverDismissAriaLabel: t(
+                                "ChartAriaLabels.DetailPopoverDismissAriaLabel",
+                            ),
+                            legendAriaLabel: t("ChartAriaLabels.LegendAriaLabel"),
+                            chartAriaRoleDescription: props.summary,
+                            yTickFormatter: (tick: any) => {
+                                return TickFormatter.format(
+                                    Number(tick),
+                                    yAxisLargestValue,
+                                    props.significantDigitLabels,
+                                    "",
+                                    "",
+                                );
+                            },
+                        }}
+                        ariaLabel={props.title}
+                        hideFilter
+                        xScaleType="categorical"
+                        stackedBars={props.stackedChart}
+                        hideLegend={props.hideLegend}
+                        height={props.height}
+                    />
+                </div>
+            )}
+            <div>
+                <DataTable
+                    rows={data || []}
+                    columns={columns}
+                    columnsMetadata={props.columnsMetadata}
+                    fileName={props.downloadTitle}
+                    showMobilePreview={showMobilePreview}
+                    title={props.title}
+                />
+            </div>
+            {props.summaryBelow && (
+                <div>
+                    <MarkdownRender
+                        source={props.summary}
+                        className="usa-prose margin-top-1 margin-bottom-0 chartSummaryBelow textOrSummary"
+                    />
+                </div>
+            )}
         </div>
-      )}
-      <div>
-        <DataTable
-          rows={data || []}
-          columns={columns}
-          columnsMetadata={props.columnsMetadata}
-          fileName={props.downloadTitle}
-          showMobilePreview={showMobilePreview}
-        />
-      </div>
-      {props.summaryBelow && (
-        <div>
-          <MarkdownRender
-            source={props.summary}
-            className="usa-prose margin-top-1 margin-bottom-0 chartSummaryBelow textOrSummary"
-          />
-        </div>
-      )}
-    </div>
-  );
+    );
 }
 
 export default ColumnChartWidget;

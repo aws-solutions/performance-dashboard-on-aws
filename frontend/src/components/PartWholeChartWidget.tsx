@@ -3,287 +3,136 @@
  *  SPDX-License-Identifier: Apache-2.0
  */
 
-import React, { useCallback, useMemo, useRef, useState } from "react";
-import {
-  XAxis,
-  YAxis,
-  BarChart,
-  Bar,
-  Legend,
-  ResponsiveContainer,
-  CartesianGrid,
-} from "recharts";
-import { useColors, useWindowSize } from "../hooks";
+import React, { useMemo, useState } from "react";
+import { useColors } from "../hooks";
 import TickFormatter from "../services/TickFormatter";
 import MarkdownRender from "./MarkdownRender";
 import DataTable from "./DataTable";
-import RenderLegendText from "./Legend";
 import ShareButton from "./ShareButton";
+import BarChart from "@cloudscape-design/components/bar-chart";
+import { useTranslation } from "react-i18next";
 
 type Props = {
-  id: string;
-  title: string;
-  downloadTitle: string;
-  summary: string;
-  parts: Array<string>;
-  data?: Array<object>;
-  summaryBelow: boolean;
-  significantDigitLabels: boolean;
-  columnsMetadata: Array<any>;
-  colors?: {
-    primary: string | undefined;
-    secondary: string | undefined;
-  };
-  showMobilePreview?: boolean;
+    id: string;
+    title: string;
+    downloadTitle: string;
+    summary: string;
+    parts: Array<string>;
+    data?: Array<object>;
+    summaryBelow: boolean;
+    significantDigitLabels: boolean;
+    columnsMetadata: Array<any>;
+    colors?: {
+        primary: string | undefined;
+        secondary: string | undefined;
+    };
+    showMobilePreview?: boolean;
 };
 
 const PartWholeChartWidget = (props: Props) => {
-  const [partsHover, setPartsHover] = useState(null);
-  const [hiddenParts, setHiddenParts] = useState<Array<string>>([]);
-  const [xAxisLargestValue, setXAxisLargestValue] = useState(0);
-  const windowSize = useWindowSize();
+    const { t } = useTranslation();
 
-  const partWholeData = useRef<Array<object>>([]);
-  const partWholeParts = useRef<Array<string>>([]);
-  let total = useRef<number>(0);
+    const [xAxisLargestValue, setXAxisLargestValue] = useState(0);
 
-  const { data, parts, showMobilePreview } = props;
-  useMemo(() => {
-    if (data && data.length > 0) {
-      let bar = {};
-      total.current = 0;
-      partWholeParts.current = [];
-      partWholeData.current = [];
-      let maxTick = -Infinity;
-      for (let dataItem of data) {
-        const key = dataItem[parts[0] as keyof object];
-        const value = dataItem[parts[1] as keyof object];
-        const barKey = `${key} ${value}`;
-        bar = {
-          ...bar,
-          [barKey]: value,
-        };
-        partWholeParts.current.push(barKey);
-        if (hiddenParts.includes(barKey)) {
-          continue;
+    const { data, parts, showMobilePreview } = props;
+    useMemo(() => {
+        if (data && data.length > 0) {
+            let maxTick = -Infinity;
+            for (let dataItem of data) {
+                const value = dataItem[parts[1] as keyof object];
+                maxTick = Math.max(maxTick, value);
+            }
+            setXAxisLargestValue(maxTick);
         }
-        total.current += isNaN(value) ? 0 : Number(value);
-        maxTick = Math.max(maxTick, value);
-      }
-      partWholeData.current.push(bar);
-      setXAxisLargestValue(maxTick);
-    }
-  }, [data, parts, partWholeData, partWholeParts, hiddenParts]);
+    }, [data, parts]);
 
-  const colors = useColors(
-    partWholeParts.current.length,
-    props.colors?.primary,
-    props.colors?.secondary
-  );
+    const colors = useColors(data?.length ?? 0, props.colors?.primary, props.colors?.secondary);
 
-  const getOpacity = useCallback(
-    (dataKey) => {
-      if (!partsHover) {
-        return 1;
-      }
-      return partsHover === dataKey ? 1 : 0.2;
-    },
-    [partsHover]
-  );
-
-  const toggleParts = (e: any) => {
-    if (hiddenParts.includes(e.dataKey)) {
-      const hidden = hiddenParts.filter((column) => column !== e.dataKey);
-      setHiddenParts(hidden);
-    } else {
-      setHiddenParts([...hiddenParts, e.dataKey]);
-    }
-  };
-
-  const renderLegendText = (value: string, entry: any) => {
-    const index = value.lastIndexOf(" ");
-    const label = value.substring(0, index);
-    const amount = value.substring(index + 1);
-
-    let columnMetadata;
-    if (parts && parts.length > 1 && props.columnsMetadata) {
-      columnMetadata = props.columnsMetadata.find(
-        (cm) => cm.columnName === parts[1]
-      );
-    }
+    const dataSeries = (data: object[]): any[] => {
+        const result = data.map((dataItem, index) => {
+            return {
+                data: [{ x: "", y: dataItem[parts[1] as keyof object] }],
+                title: dataItem[parts[0] as keyof object],
+                type: "bar",
+                color: colors[index],
+                valueFormatter: (tick: any) => {
+                    return TickFormatter.format(
+                        Number(tick),
+                        xAxisLargestValue,
+                        props.significantDigitLabels,
+                        "",
+                        "",
+                    );
+                },
+            };
+        });
+        return result;
+    };
 
     return (
-      <span>
-        <span className="margin-left-05 font-sans-md text-bottom">
-          {RenderLegendText(label.toLocaleString(), entry)}
-        </span>
-        <br />
-        <span className="margin-left-5 margin-bottom-1 text-base-darker text-bold">
-          {amount && amount !== "null" ? (
-            TickFormatter.format(
-              Number(amount),
-              xAxisLargestValue,
-              props.significantDigitLabels,
-              "",
-              "",
-              columnMetadata
-            )
-          ) : (
-            <br />
-          )}
-        </span>
-      </span>
+        <div aria-label={props.title} tabIndex={-1} className={props.title ? "" : "padding-top-2"}>
+            {props.title && (
+                <h2 className={`margin-bottom-${props.summaryBelow ? "4" : "1"}`}>
+                    {props.title}
+                    <ShareButton
+                        id={`${props.id}a`}
+                        title={props.title}
+                        className="margin-left-1"
+                    />
+                </h2>
+            )}
+            {!props.summaryBelow && (
+                <MarkdownRender
+                    source={props.summary}
+                    className="usa-prose margin-top-1 margin-bottom-4 chartSummaryAbove textOrSummary"
+                />
+            )}
+            {data && data.length > 0 && (
+                <div className="chart-container">
+                    <BarChart
+                        series={dataSeries(props.data ?? [])}
+                        i18nStrings={{
+                            legendAriaLabel: t("ChartAriaLabels.LegendAriaLabel"),
+                            chartAriaRoleDescription: props.summary,
+                            yTickFormatter: (tick: any) => {
+                                return TickFormatter.format(
+                                    Number(tick),
+                                    xAxisLargestValue,
+                                    props.significantDigitLabels,
+                                    "",
+                                    "",
+                                );
+                            },
+                        }}
+                        ariaLabel={props.title}
+                        height={80}
+                        hideFilter
+                        horizontalBars
+                        stackedBars
+                        xScaleType="categorical"
+                    />
+                </div>
+            )}
+            <div>
+                <DataTable
+                    rows={data || []}
+                    columns={parts}
+                    fileName={props.downloadTitle}
+                    columnsMetadata={props.columnsMetadata}
+                    showMobilePreview={showMobilePreview}
+                    title={props.title}
+                />
+            </div>
+            {props.summaryBelow && (
+                <div>
+                    <MarkdownRender
+                        source={props.summary}
+                        className="usa-prose margin-top-1 margin-bottom-0 chartSummaryBelow textOrSummary"
+                    />
+                </div>
+            )}
+        </div>
     );
-  };
-
-  const calculateChartHeight = (): number => {
-    const minHeight = 250;
-    const minHeightMobile = 300;
-    const maxHeight = 500;
-    const pixelsByPart = 20;
-    const smallScreenPixels = 800;
-
-    if (!data || !data.length) {
-      return minHeight;
-    }
-
-    // Handle very small screens where width is less than 300 pixels
-    if (windowSize.width <= smallScreenPixels || showMobilePreview) {
-      if (data.length < 5) {
-        return minHeightMobile;
-      } else {
-        // For every part in the chart, add 20 pixels
-        const additional = Math.min(maxHeight, data.length * pixelsByPart);
-        return minHeightMobile + additional;
-      }
-    }
-
-    return data.length < 15 ? minHeight : maxHeight;
-  };
-
-  return (
-    <div
-      aria-label={props.title}
-      tabIndex={-1}
-      className={props.title ? "" : "padding-top-2"}
-    >
-      {props.title && (
-        <h2 className={`margin-bottom-${props.summaryBelow ? "4" : "1"}`}>
-          {props.title}
-          <ShareButton
-            id={`${props.id}a`}
-            title={props.title}
-            className="margin-left-1"
-          />
-        </h2>
-      )}
-      {!props.summaryBelow && (
-        <MarkdownRender
-          source={props.summary}
-          className="usa-prose margin-top-1 margin-bottom-4 chartSummaryAbove textOrSummary"
-        />
-      )}
-      {partWholeData.current.length > 0 && (
-        <div aria-hidden="true">
-          <ResponsiveContainer
-            id={props.id}
-            width="100%"
-            height={calculateChartHeight()}
-          >
-            <BarChart
-              className="part-to-whole-chart"
-              data={partWholeData.current}
-              layout="vertical"
-              margin={{ right: -50, left: -50 }}
-              barSize={100}
-            >
-              <CartesianGrid horizontal={false} vertical={false} />
-              <XAxis
-                tickLine={false}
-                domain={[0, "dataMax"]}
-                ticks={[0, total.current]}
-                axisLine={false}
-                interval="preserveStartEnd"
-                type="number"
-                padding={{ left: 2, right: 2 }}
-                tickFormatter={(tick: any) =>
-                  TickFormatter.format(
-                    Number(tick),
-                    xAxisLargestValue,
-                    props.significantDigitLabels,
-                    "",
-                    ""
-                  )
-                }
-              />
-              <YAxis
-                orientation="left"
-                yAxisId="left"
-                tick={false}
-                tickLine={false}
-                type="category"
-                padding={{ top: 40 }}
-              />
-              <YAxis
-                yAxisId="right"
-                orientation="right"
-                tick={false}
-                tickLine={false}
-                type="category"
-                padding={{ top: 40 }}
-              />
-              <Legend
-                verticalAlign="top"
-                formatter={renderLegendText}
-                iconSize={24}
-                wrapperStyle={{
-                  top: 0,
-                  right: 0,
-                  width: "100%",
-                }}
-                onClick={toggleParts}
-                onMouseLeave={() => setPartsHover(null)}
-                onMouseEnter={(e: any) => setPartsHover(e.dataKey)}
-              />
-              {partWholeParts.current.map((part, index) => {
-                return (
-                  <Bar
-                    yAxisId="left"
-                    stackId={"a"}
-                    dataKey={part}
-                    key={index}
-                    fill={colors[index]}
-                    fillOpacity={getOpacity(part)}
-                    stroke="white"
-                    strokeWidth={2}
-                    hide={hiddenParts.includes(part)}
-                    isAnimationActive={false}
-                  />
-                );
-              })}
-            </BarChart>
-          </ResponsiveContainer>
-        </div>
-      )}
-      <div>
-        <DataTable
-          rows={data || []}
-          columns={parts}
-          fileName={props.downloadTitle}
-          columnsMetadata={props.columnsMetadata}
-          showMobilePreview={showMobilePreview}
-        />
-      </div>
-      {props.summaryBelow && (
-        <div>
-          <MarkdownRender
-            source={props.summary}
-            className="usa-prose margin-top-1 margin-bottom-0 chartSummaryBelow textOrSummary"
-          />
-        </div>
-      )}
-    </div>
-  );
 };
 
 export default PartWholeChartWidget;

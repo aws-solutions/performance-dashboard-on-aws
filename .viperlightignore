@@ -21,3 +21,28 @@ frontend/src/locales/en/translation.json:536
 node_modules/*
 
 README.md:63
+
+# Adding packages to ignore list to avoid introducing breaking changes at this point
+
+[node-npmoutdated]
+pino=6.14.0
+uuid=8.3.2
+@types/node=16.11.65
+@types/jest=27.5.2
+@types/pino=6.3.12
+@types/uuid=8.3.4
+@typescript-eslint/eslint-plugin=5.45.1
+eslint-config-standard-with-typescript=23.0.0
+eslint-plugin-n=15.6.0
+eslint-plugin-prettier=4.2.1
+jest=27.5.1
+ts-jest=27.1.5
+ts-node=8.10.2
+typescript=4.8.4
+fs-extra=10.1.0
+@types/fs-extra=9.0.13
+prettier=2.8.0
+
+
+
+

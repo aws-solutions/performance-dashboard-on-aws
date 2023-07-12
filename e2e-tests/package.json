@@ -3,6 +3,10 @@
     "version": "0.8.0-beta",
     "description": "Performance Dashboard on AWS UI Tests",
     "license": "Apache-2.0",
+    "author": {
+        "name": "Amazon Web Services",
+        "url": "https://aws.amazon.com/solutions"
+    },
     "scripts": {
         "start": "cypress open",
         "test": "cypress run"

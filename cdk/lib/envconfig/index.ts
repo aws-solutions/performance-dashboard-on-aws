@@ -19,7 +19,9 @@ export const handler = async (event: any): Promise<void> => {
         return await uploadConfig();
     }
 
-    return await Promise.reject(new Error("Invalid config type"));
+    // On Delete do nothing
+    console.log("On Delete do nothing");
+    return await Promise.resolve();
 };
 
 const uploadConfig = async () => {

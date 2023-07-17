@@ -567,7 +567,7 @@
     "SettingsColorsEdit": "Editar colores",
     "SettingsColorsDescription": "Personalice los colores para que los paneles tengan un estilo similar al de la marca o la paleta de colores de su organización.",
     "SettingsColorsPrimaryColor": "Color principal",
-    "SettingsColorsPrimaryColorDescription": "Este color será el primer color utilizado en las visualizaciones de datos y el color de los botones. Debe ser un color HEX válido (por ejemplo, #00FF00, #0f0).",
+    "SettingsColorsPrimaryColorDescription": "Este será el primer color que se utilizará en las visualizaciones de datos. Debe ser un color HEX válido (por ejemplo, #00FF00, #0f0).",
     "SettingsColorsPrimaryColorLink": "Obtenga más información sobre cómo el color se relaciona con la accesibilidad.",
     "SettingsColorsPrimaryColorInvalid": "El color no es un valor de color HEX válido",
     "SettingsColorsPrimaryColorEmpty": "Especifique un color",
@@ -983,6 +983,7 @@
     "Draft": "Borrador",
     "DashboardContent": "Contenido del panel",
     "ContentItems": "Elementos de contenido",
+    "SectionItems": "Elementos de la sección",
     "ExpandPreview": "Vista previa en pantalla completa",
     "ClosePreview": "Salir de la vista previa en pantalla completa",
     "Admin": "Administrador",
@@ -1064,7 +1065,7 @@
         "TopicAreaListingDelete": "Eliminar el área de tema",
         "TopicAreaListingEdit": "Editar área de tema",
         "Breadcrumbs": "Migas de pan",
-        "ViewDashboard": "Ver panel {{dashboard}}"
+        "ViewDashboard": "Ver panel{{dashboard}}"
     },
     "percentage": "{{pct}} %",
     "Search": {
@@ -1109,5 +1110,10 @@
         "ItemDropped": "Ha soltado {{sourceLabel}}-{{sourceName}} en {{destinationLabel}}-{{destinationName}}.",
         "OutsideTheDroppableAreaError": "Actualmente no se encuentra en un área en la que se pueda soltar {{label}}-{{name}}."
     },
-    "ContactUs": "Contacto"
+    "ContactUs": "Contacto",
+    "ChartAriaLabels": {
+        "DetailPopoverDismissAriaLabel": "Descartar",
+        "LegendAriaLabel": "Leyenda"
+    },
+    "GlobalRemove": "Eliminar"
 }

@@ -567,7 +567,7 @@
     "SettingsColorsEdit": "Editar cores",
     "SettingsColorsDescription": "Personalize essas cores para deixar seus painéis com um estilo semelhante à marca ou a à paleta de cores da sua organização.",
     "SettingsColorsPrimaryColor": "Cor primária",
-    "SettingsColorsPrimaryColorDescription": "Essa cor será a primeira cor usada em visualizações de dados e é a cor dos botões. Deve ser uma cor HEX válida (Ex: #00FF00, #0f0).",
+    "SettingsColorsPrimaryColorDescription": "Essa cor será a primeira usada nas visualizações de dados. Deve ser uma cor HEX válida (Ex: #00FF00, #0f0).",
     "SettingsColorsPrimaryColorLink": "Saiba mais sobre a relação entre cores e acessibilidade.",
     "SettingsColorsPrimaryColorInvalid": "A cor não é um valor válido de cor HEX",
     "SettingsColorsPrimaryColorEmpty": "Especifique uma cor",
@@ -983,6 +983,7 @@
     "Draft": "Rascunho",
     "DashboardContent": "Conteúdo do painel",
     "ContentItems": "Itens de conteúdo",
+    "SectionItems": "Itens de seção",
     "ExpandPreview": "Visualização em tela cheia",
     "ClosePreview": "Sair da visualização em tela cheia",
     "Admin": "Administrador",
@@ -1109,5 +1110,10 @@
         "ItemDropped": "Você descartou {{sourceLabel}}-{{sourceName}} para {{destinationLabel}}-{{destinationName}}.",
         "OutsideTheDroppableAreaError": "No momento, você não está em uma área que permita soltar {{label}}-{{name}}."
     },
-    "ContactUs": "Entre em contato conosco"
+    "ContactUs": "Entre em contato conosco",
+    "ChartAriaLabels": {
+        "DetailPopoverDismissAriaLabel": "Descartar",
+        "LegendAriaLabel": "Legenda"
+    },
+    "GlobalRemove": "Remover"
 }

@@ -2,7 +2,6 @@
 
 ![Mainline](https://github.com/awslabs/performance-dashboard-on-aws/workflows/Unit%20Tests/badge.svg?branch=mainline)
 ![Version](https://img.shields.io/github/v/release/aws-solutions/performance-dashboard-on-aws)
-[![Quality Gate Status](https://sonarqube.nightswatch.dashboard.solutionsbuilder.aws.dev/api/project_badges/measure?project=com.amazon.aws%3Aperformance-dashboard-on-aws&metric=alert_status&token=7db63af1557d2512ec40345e6733d2914e39b5d5)](https://sonarqube.nightswatch.dashboard.solutionsbuilder.aws.dev/dashboard?id=com.amazon.aws%3Aperformance-dashboard-on-aws)
 
 <p align="center">
   <img src="docs/images/Dashboard_Images.jpg" alt="Performance Dashboard on AWS user interface image">

@@ -20,6 +20,8 @@ const env = {
   contactEmail: "support@example.com",
   brandName: "Performance Dashboard",
   topicAreaLabel: "Topic Area",
+  authenticationRequired: "yes", //i.e 'yes' or 'no'
+  frontendDomain: "http://localhost:3000",
 };
 
 window.EnvironmentConfig = env;

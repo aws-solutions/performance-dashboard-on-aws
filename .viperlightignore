@@ -1,5 +1,7 @@
 .vscode/*
 
+.tools/*
+
 cdk/outputs-backend.json:3
 cdk/outputs-backend.json:5
 cdk/outputs-backend.json:9

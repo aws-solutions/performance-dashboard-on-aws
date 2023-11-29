@@ -1,0 +1,13 @@
+id: SO0157 # Solution Id
+name: performance-dashboard-on-aws # trademarked name
+version: v1.9.1 # current version of the solution. Used to verify template headers
+cloudformation_templates: # This list should match with AWS CloudFormation templates section of IG
+  - template: performance-dashboard-on-aws.template
+    main_template: true
+  - template: Auth.template
+  - template: Authz.template
+  - template: Frontend.template
+  - template: Backend.template
+  - template: FrontendConfig.template
+  - template: DashboardExamples.template
+  - template: Ops.template

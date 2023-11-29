@@ -1,6 +1,6 @@
 {
     "name": "lambda",
-    "version": "1.9.0",
+    "version": "1.9.1",
     "description": "test project for lambda",
     "license": "Apache-2.0",
     "author": {
@@ -66,6 +66,6 @@
     },
     "overrides": {
         "semver": "7.5.2",
-        "word-wrap" : "npm:@aashutoshrathi/word-wrap@1.2.5"
+        "word-wrap": "npm:@aashutoshrathi/word-wrap@1.2.5"
     }
 }

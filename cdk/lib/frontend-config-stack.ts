@@ -43,7 +43,7 @@ export class FrontendConfigStack extends Stack {
         // the React code is deployed.
 
         const lambdaFunction = new Function(this, "EnvConfig", {
-            runtime: Runtime.NODEJS_16_X,
+            runtime: Runtime.NODEJS_18_X,
             description: "Deploys env.js file on S3 with environment configuration",
             code: Code.fromAsset("build/lib/envconfig"),
             handler: "index.handler",

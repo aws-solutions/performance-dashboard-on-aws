@@ -44,7 +44,7 @@ export class LambdaFunctions extends Construct {
         const contentBucket = Bucket.fromBucketArn(this, "ContentBucket", props.contentBucketArn);
 
         this.apiHandler = new Function(this, "PrivateApi", {
-            runtime: Runtime.NODEJS_16_X,
+            runtime: Runtime.NODEJS_18_X,
             description: "Handles API Gateway traffic from admin users",
             code: Code.fromAsset("../backend/build"),
             handler: "src/lambda/api.handler",
@@ -71,7 +71,7 @@ export class LambdaFunctions extends Construct {
         // It provides flexibility to define specific throttling limits
         // between this lambda vs the one that handles private traffic.
         this.publicApiHandler = new Function(this, "PublicApi", {
-            runtime: Runtime.NODEJS_16_X,
+            runtime: Runtime.NODEJS_18_X,
             description: "Handles API Gateway traffic from public users",
             code: Code.fromAsset("../backend/build"),
             handler: "src/lambda/api.handler",
@@ -97,7 +97,7 @@ export class LambdaFunctions extends Construct {
         // based on the stream from the Main table. Its primary function is to
         // write updates to the Audit Trail table.
         this.ddbStreamProcessor = new Function(this, "DynamoDBStreamProcessor", {
-            runtime: Runtime.NODEJS_16_X,
+            runtime: Runtime.NODEJS_18_X,
             description: "Handles messages from the main table's DynamoDB stream",
             code: Code.fromAsset("../backend/build"),
             handler: "src/lambda/streams.handler",

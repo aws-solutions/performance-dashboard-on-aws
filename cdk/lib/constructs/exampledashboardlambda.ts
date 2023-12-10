@@ -27,7 +27,7 @@ export class ExampleDashboardLambda extends Construct {
         super(scope, id);
 
         this.exampleSetupLambda = new Function(this, "SetupExamples", {
-            runtime: Runtime.NODEJS_16_X,
+            runtime: Runtime.NODEJS_18_X,
             description: "Inserts examples into database for end users",
             code: Code.fromAsset("../examples/build"),
             handler: "src/index.handler",

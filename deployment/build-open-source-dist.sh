@@ -81,6 +81,8 @@ echo "cp -r $source_dir/.github/ $dist_dir"
 cp -r "$source_dir/.github/" $dist_dir
 echo "rm -r $dist_dir/.github/workflows"
 rm -r "$dist_dir/.github/workflows"
+echo "cp $source_template_dir/../solution-manifest.yaml $dist_dir"
+cp $source_template_dir/../solution-manifest.yaml $dist_dir
 
 
 echo "------------------------------------------------------------------------------"

@@ -73,6 +73,7 @@ Make the installation and deployment scripts executable:
 
 ```bash
 chmod +x install.sh
+chmod +x build.sh
 chmod +x deploy.sh
 chmod +x test.sh
 ```
@@ -110,6 +111,12 @@ If this is the first time you deploy PDoA, you must also specify the desired ema
 ```bash
 # You only need to do this the first time you deploy.
 export CDK_ADMIN_EMAIL=performance-dashboard-admin@example.com
+```
+
+Let's build the soluton first.
+
+```bash
+./build.sh
 ```
 
 Now, to deploy a `dev` environment for example, you may run the deployment script like so:

@@ -281,7 +281,7 @@ export class BackendApi extends Construct {
         const authorizationTypeValue = Fn.conditionIf(
             authenticationRequiredCond.logicalId,
             AuthorizationType.COGNITO,
-            "",
+            AuthorizationType.NONE,
         );
         const authorizerIdValue = Fn.conditionIf(
             authenticationRequiredCond.logicalId,

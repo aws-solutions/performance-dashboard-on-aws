@@ -27,7 +27,11 @@ To run the backend locally from VSCode, create a folder in the root of this repo
         "DATASETS_BUCKET": "performancedash-${stageName}-${accountNumber}-${region}-datasets",
         "USER_POOL_ID": "${your-user-pool-id}",
         "LOG_LEVEL": "debug",
-        "TS_NODE_FILES": "true"
+        "TS_NODE_FILES": "true",
+        "CORS_ORIGIN": "http://localhost:3000",
+        "AUTHENTICATION_REQUIRED": "yes", //i.e 'yes' or 'no'
+        "CSRF_SECRET": "",
+        "COOKIES_SECRET": ""
       },
       "args": ["${workspaceRoot}/backend/src/local/server.ts"],
       "cwd": "${workspaceRoot}/backend",

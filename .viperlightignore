@@ -22,7 +22,7 @@ frontend/src/locales/en/translation.json:536
 
 node_modules/*
 
-README.md:62
+README.md:61
 
 # Adding packages to ignore list to avoid introducing breaking changes at this point
 

@@ -1,6 +1,5 @@
 # Performance Dashboard on AWS
 
-![Mainline](https://github.com/awslabs/performance-dashboard-on-aws/workflows/Unit%20Tests/badge.svg?branch=mainline)
 ![Version](https://img.shields.io/github/v/release/aws-solutions/performance-dashboard-on-aws)
 
 <p align="center">

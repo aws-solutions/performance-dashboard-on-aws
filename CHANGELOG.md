@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [1.9.2]
 
+### Changed
+
+- Migrate to AWS SDK v3.
+- Upgrade to Node.js 18.
+
 ## [1.9.1] - 2023-12-15
 
 ### Fixed

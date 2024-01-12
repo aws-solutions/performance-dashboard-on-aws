@@ -7,7 +7,7 @@ import factory from "../topicarea-factory";
 import { TopicArea, TopicAreaItem } from "../../models/topicarea";
 import { User } from "../../models/user";
 import { ItemNotFound } from "../../../lib/errors";
-import { GetItemOutput } from "aws-sdk/clients/dynamodb";
+import { GetItemOutput } from "@aws-sdk/client-dynamodb";
 
 const user: User = {
     userId: "johndoe",

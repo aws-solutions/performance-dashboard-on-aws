@@ -6,7 +6,7 @@
 import { HomepageItem } from "../../models/homepage";
 import HomepageFactory from "../homepage-factory";
 import { ItemNotFound } from "../../../lib/errors";
-import { GetItemOutput } from "aws-sdk/clients/dynamodb";
+import { GetItemOutput } from "@aws-sdk/client-dynamodb";
 
 describe("getDefaultHomepage", () => {
     it("returns default values", () => {

@@ -4,7 +4,7 @@
  */
 
 import { Role, User } from "../models/user";
-import { UserType } from "aws-sdk/clients/cognitoidentityserviceprovider";
+import { UserType } from "@aws-sdk/client-cognito-identity-provider";
 
 function createNew(email: string, role: string): User {
     return {
@@ -16,7 +16,7 @@ function createNew(email: string, role: string): User {
 
 function fromCognitoUser(cognitoUser: UserType): User {
     return {
-        userId: cognitoUser.Username || "",
+        userId: cognitoUser.Username ?? "",
         enabled: cognitoUser.Enabled,
         userStatus: cognitoUser.UserStatus,
         sub: cognitoUser.Attributes
@@ -27,7 +27,7 @@ function fromCognitoUser(cognitoUser: UserType): User {
             : "",
         roles: cognitoUser.Attributes
             ? JSON.parse(
-                  cognitoUser.Attributes.find((a) => a.Name === "custom:roles")?.Value || '[""]',
+                  cognitoUser.Attributes.find((a) => a.Name === "custom:roles")?.Value ?? '[""]',
               )
             : [""],
         createdAt: cognitoUser.UserCreateDate ? cognitoUser.UserCreateDate : new Date(),

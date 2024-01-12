@@ -6,7 +6,7 @@
 import { SettingsItem, Settings } from "../../models/settings";
 import SettingsFactory from "../settings-factory";
 import { ItemNotFound } from "../../../lib/errors";
-import { GetItemOutput } from "aws-sdk/clients/dynamodb";
+import { GetItemOutput } from "@aws-sdk/client-dynamodb";
 
 describe("getDefaultSettings", () => {
     it("returns default values", () => {

@@ -3,9 +3,11 @@
  *  SPDX-License-Identifier: Apache-2.0
  */
 
-import AWS = require("aws-sdk");
+import { PutObjectCommand, S3Client } from "@aws-sdk/client-s3";
 
 const frontendBucket = process.env.FRONTEND_BUCKET;
+
+const client = new S3Client({});
 
 export const handler = async (event: any): Promise<void> => {
     console.log("Event=", JSON.stringify(event));
@@ -29,18 +31,17 @@ const uploadConfig = async () => {
         throw new Error("FRONTEND_BUCKET env variable not defined");
     }
 
-    const s3 = new AWS.S3();
     const content = getConfigContent();
-    const result = await s3
-        .putObject({
-            Bucket: frontendBucket,
-            Key: "env.js",
-            Body: content,
-            ContentType: "application/javascript",
-        })
-        .promise();
 
-    console.log("S3 putObject result = ", result);
+    const command = new PutObjectCommand({
+        Bucket: frontendBucket,
+        Key: "env.js",
+        Body: content,
+        ContentType: "application/javascript",
+    });
+    const response = await client.send(command);
+
+    console.log("S3 putObject result = ", response);
 };
 
 function getConfigContent(): string {

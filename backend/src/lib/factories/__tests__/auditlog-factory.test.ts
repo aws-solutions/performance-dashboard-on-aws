@@ -7,7 +7,7 @@ import { Dashboard, DashboardState, DASHBOARD_ITEM_TYPE } from "../../models/das
 import AuditLogFactory from "../auditlog-factory";
 import { AuditLogItem, DashboardAuditLogItem, ItemEvent } from "../../models/auditlog";
 import { ItemNotFound } from "../../../lib/errors";
-import { GetItemOutput } from "aws-sdk/clients/dynamodb";
+import { GetItemOutput } from "@aws-sdk/client-dynamodb";
 
 const timestamp = new Date();
 

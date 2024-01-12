@@ -18,7 +18,7 @@ jest.mock("../../services/dynamodb");
 let user: User;
 let tableName: string;
 let repo: DashboardRepository;
-let dynamodb = mocked(DynamoDBService.prototype);
+const dynamodb = mocked(DynamoDBService.prototype);
 
 beforeEach(() => {
     user = { userId: "test" };
@@ -694,9 +694,9 @@ describe("listDashboards", () => {
 });
 
 describe("getDashboardWithWidgets", () => {
-    it("throws an error when dashboardId is not found", () => {
+    it("throws an error when dashboardId is not found", async () => {
         dynamodb.query = jest.fn().mockReturnValue({ Items: [] });
-        return expect(repo.getDashboardWithWidgets("123")).rejects.toThrowError();
+        return await expect(repo.getDashboardWithWidgets("123")).rejects.toThrowError();
     });
 
     it("returns a dashboard with no widgets", async () => {
@@ -820,6 +820,10 @@ describe("getCurrentDraft", () => {
 });
 
 describe("DashboardRepository.saveDashboardAndWidgets", () => {
+    beforeEach(() => {
+        jest.useFakeTimers("modern");
+        dynamodb.transactWrite = jest.fn();
+    });
     it("should call saveDashboardAndWidgets with the correct key", async () => {
         const now = new Date();
         jest.useFakeTimers("modern");
@@ -896,6 +900,10 @@ describe("DashboardRepository.saveDashboardAndWidgets", () => {
 });
 
 describe("DashboardRepository.deleteDashboardsAndWidgets", () => {
+    beforeEach(() => {
+        jest.useFakeTimers("modern");
+        dynamodb.transactWrite = jest.fn();
+    });
     it("should call delete dashboard with the correct key", async () => {
         repo.getDashboardWithWidgets = jest
             .fn()
@@ -1000,13 +1008,13 @@ describe("getNextVersionNumber", () => {
     });
 
     it("returns 1 when no dashboards are found", async () => {
-        getDashboardVersions.mockImplementation(() => Promise.resolve([]));
+        getDashboardVersions.mockImplementation(async () => await Promise.resolve([]));
         const nextVersion = await repo.getNextVersionNumber("123");
         expect(nextVersion).toEqual(1);
     });
 
     it("returns the maximum version plus one", async () => {
-        const dashboards: Array<Dashboard> = [
+        const dashboards: Dashboard[] = [
             {
                 id: "xyz",
                 version: 1,
@@ -1035,13 +1043,13 @@ describe("getNextVersionNumber", () => {
             },
         ];
 
-        getDashboardVersions.mockImplementation(() => Promise.resolve(dashboards));
+        getDashboardVersions.mockImplementation(async () => await Promise.resolve(dashboards));
         const nextVersion = await repo.getNextVersionNumber("123");
         expect(nextVersion).toEqual(3);
     });
 
     it("handles incorrect versions gracefully", async () => {
-        const dashboards: Array<Dashboard> = [
+        const dashboards: Dashboard[] = [
             {
                 id: "xyz",
                 version: undefined as unknown as number, // incorrect version
@@ -1057,13 +1065,13 @@ describe("getNextVersionNumber", () => {
             },
         ];
 
-        getDashboardVersions.mockImplementation(() => Promise.resolve(dashboards));
+        getDashboardVersions.mockImplementation(async () => await Promise.resolve(dashboards));
         const nextVersion = await repo.getNextVersionNumber("123");
         expect(nextVersion).toEqual(1);
     });
 
     it("handles a mix of incorrect and correct versions", async () => {
-        const dashboards: Array<Dashboard> = [
+        const dashboards: Dashboard[] = [
             {
                 id: "xyz",
                 version: undefined as unknown as number, // incorrect version
@@ -1092,7 +1100,7 @@ describe("getNextVersionNumber", () => {
             },
         ];
 
-        getDashboardVersions.mockImplementation(() => Promise.resolve(dashboards));
+        getDashboardVersions.mockImplementation(async () => await Promise.resolve(dashboards));
         const nextVersion = await repo.getNextVersionNumber("123");
         expect(nextVersion).toEqual(2);
     });

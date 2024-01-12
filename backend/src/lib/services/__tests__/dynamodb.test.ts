@@ -3,20 +3,32 @@
  *  SPDX-License-Identifier: Apache-2.0
  */
 
-import { DocumentClient } from "aws-sdk/clients/dynamodb";
-import { mocked } from "ts-jest/utils";
+import { DynamoDBDocumentClient, TransactWriteCommand } from "@aws-sdk/lib-dynamodb";
+import { AwsClientStub, mockClient } from "aws-sdk-client-mock";
 import DynamoDBService from "../dynamodb";
 
-jest.mock("aws-xray-sdk");
-
 describe("transactWrite", () => {
-    jest.mock("aws-sdk/clients/dynamodb");
-    let documentClient = mocked(DocumentClient.prototype);
-    documentClient.transactWrite = jest.fn().mockReturnValue({
-        promise: jest.fn(),
+    let dynamoDBMock: AwsClientStub<DynamoDBDocumentClient>;
+
+    beforeAll(() => {
+        dynamoDBMock = mockClient(DynamoDBDocumentClient);
+        jest.mock("aws-xray-sdk", () => {
+            return {
+                captureAWSv3Client: <T>(client: T) => client,
+            };
+        });
+    });
+
+    beforeEach(() => {
+        dynamoDBMock.reset();
+    });
+
+    afterAll(() => {
+        dynamoDBMock.restore();
     });
 
     it("creates 2 batches of 25 requests", async () => {
+        dynamoDBMock.on(TransactWriteCommand).resolves({});
         const numberOfItems = 50;
         const updateItems = [];
         for (let i = 0; i < numberOfItems; i++) {
@@ -36,7 +48,7 @@ describe("transactWrite", () => {
             TransactItems: updateItems,
         });
 
-        expect(documentClient.transactWrite).toBeCalledTimes(2);
+        expect(dynamoDBMock.commandCalls(TransactWriteCommand).length).toBe(2);
     });
 });
 

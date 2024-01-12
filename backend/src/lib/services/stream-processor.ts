@@ -4,6 +4,7 @@
  */
 
 import { DynamoDBRecord, StreamRecord } from "aws-lambda";
+import { AttributeValue } from "@aws-sdk/client-dynamodb";
 import DynamoDBService from "./dynamodb";
 import AuditTrailService from "./audit-trail";
 import { ItemEvent } from "../models/auditlog";
@@ -17,7 +18,7 @@ import logger from "./logger";
  * https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/Streams.Lambda.Tutorial.html
  */
 async function processRecord(record: DynamoDBRecord) {
-    if (!record.dynamodb || record.eventSource != "aws:dynamodb") {
+    if (!record.dynamodb || record.eventSource !== "aws:dynamodb") {
         logger.error("Discarding invalid stream record");
         return;
     }
@@ -25,19 +26,18 @@ async function processRecord(record: DynamoDBRecord) {
     switch (record.eventName) {
         case "MODIFY":
             logger.info("Handling MODIFY stream record");
-            return handleModifyRecord(record.dynamodb);
+            return await handleModifyRecord(record.dynamodb);
 
         case "INSERT":
             logger.info("Handling INSERT stream record");
-            return handleInsertRecord(record.dynamodb);
+            return await handleInsertRecord(record.dynamodb);
 
         case "REMOVE":
             logger.info("Handling REMOVE stream record");
-            return handleRemoveRecord(record.dynamodb);
+            return await handleRemoveRecord(record.dynamodb);
 
         default:
             logger.error("Discarding stream record, unknown eventName");
-            return;
     }
 }
 
@@ -53,11 +53,11 @@ async function handleModifyRecord(record: StreamRecord) {
     }
 
     const dynamodb = DynamoDBService.getInstance();
-    const oldItem = dynamodb.unmarshall(record.OldImage);
-    const newItem = dynamodb.unmarshall(record.NewImage);
+    const oldItem = dynamodb.unmarshall(record.OldImage as { [key: string]: AttributeValue });
+    const newItem = dynamodb.unmarshall(record.NewImage as { [key: string]: AttributeValue });
 
     const timestamp = getTimestampFromRecord(record);
-    return AuditTrailService.handleItemEvent(ItemEvent.Update, oldItem, newItem, timestamp);
+    return await AuditTrailService.handleItemEvent(ItemEvent.Update, oldItem, newItem, timestamp);
 }
 
 /**
@@ -71,10 +71,10 @@ async function handleInsertRecord(record: StreamRecord) {
     }
 
     const dynamodb = DynamoDBService.getInstance();
-    const newItem = dynamodb.unmarshall(record.NewImage);
+    const newItem = dynamodb.unmarshall(record.NewImage as { [key: string]: AttributeValue });
 
     const timestamp = getTimestampFromRecord(record);
-    return AuditTrailService.handleItemEvent(ItemEvent.Create, null, newItem, timestamp);
+    return await AuditTrailService.handleItemEvent(ItemEvent.Create, null, newItem, timestamp);
 }
 
 /**
@@ -86,12 +86,11 @@ async function handleRemoveRecord(record: StreamRecord) {
         logger.error("Discarding stream record. Missing `OldImage`");
         return;
     }
-
     const dynamodb = DynamoDBService.getInstance();
-    const oldItem = dynamodb.unmarshall(record.OldImage);
+    const oldItem = dynamodb.unmarshall(record.OldImage as { [key: string]: AttributeValue });
 
     const timestamp = getTimestampFromRecord(record);
-    return AuditTrailService.handleItemEvent(ItemEvent.Delete, oldItem, null, timestamp);
+    return await AuditTrailService.handleItemEvent(ItemEvent.Delete, oldItem, null, timestamp);
 }
 
 function getTimestampFromRecord(record: StreamRecord): Date {

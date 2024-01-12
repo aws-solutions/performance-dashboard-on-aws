@@ -4,8 +4,23 @@
  */
 
 import AWSXRay from "aws-xray-sdk";
-import { DynamoDB } from "aws-sdk";
-import { DocumentClient } from "aws-sdk/clients/dynamodb";
+import { AttributeValue, DynamoDBClient } from "@aws-sdk/client-dynamodb";
+import {
+    DeleteCommand,
+    DeleteCommandInput,
+    DynamoDBDocumentClient,
+    GetCommand,
+    GetCommandInput,
+    PutCommand,
+    PutCommandInput,
+    QueryCommand,
+    QueryCommandInput,
+    TransactWriteCommand,
+    TransactWriteCommandInput,
+    UpdateCommand,
+    UpdateCommandInput,
+} from "@aws-sdk/lib-dynamodb";
+import { unmarshall } from "@aws-sdk/util-dynamodb";
 import logger from "./logger";
 import packagejson from "../../../package.json";
 
@@ -16,9 +31,9 @@ import packagejson from "../../../package.json";
  * is a pain because of the promise() response structure.
  */
 class DynamoDBService {
-    private client: DocumentClient;
+    private readonly docClient: DynamoDBDocumentClient;
     private static instance: DynamoDBService;
-    private options = {
+    private readonly options = {
         customUserAgent: packagejson.awssdkUserAgent + packagejson.version,
     };
 
@@ -27,9 +42,15 @@ class DynamoDBService {
      * to prevent direct constructions calls with new operator.
      */
     private constructor() {
-        this.client = new DocumentClient(this.options);
         AWSXRay.setContextMissingStrategy(() => {});
-        AWSXRay.captureAWSClient((this.client as any).service);
+        this.docClient = DynamoDBDocumentClient.from(
+            AWSXRay.captureAWSv3Client(new DynamoDBClient({ ...this.options })),
+            {
+                marshallOptions: {
+                    removeUndefinedValues: true,
+                },
+            },
+        );
     }
 
     /**
@@ -43,29 +64,34 @@ class DynamoDBService {
         return DynamoDBService.instance;
     }
 
-    async get(input: DocumentClient.GetItemInput) {
+    async get(input: GetCommandInput) {
         logger.debug("DynamoDB GetItem %o", input);
-        return this.client.get(input).promise();
+        const command = new GetCommand(input);
+        return await this.docClient.send(command);
     }
 
-    async put(input: DocumentClient.PutItemInput) {
+    async put(input: PutCommandInput) {
         logger.debug("DynamoDB PutItem %o", input);
-        return this.client.put(input).promise();
+        const command = new PutCommand(input);
+        return await this.docClient.send(command);
     }
 
-    async query(input: DocumentClient.QueryInput) {
+    async query(input: QueryCommandInput) {
         logger.debug("DynamoDB Query %o", input);
-        return this.client.query(input).promise();
+        const command = new QueryCommand(input);
+        return await this.docClient.send(command);
     }
 
-    async update(input: DocumentClient.UpdateItemInput) {
+    async update(input: UpdateCommandInput) {
         logger.debug("DynamoDB UpdateItem %o", input);
-        return this.client.update(input).promise();
+        const command = new UpdateCommand(input);
+        return await this.docClient.send(command);
     }
 
-    async delete(input: DocumentClient.DeleteItemInput) {
+    async delete(input: DeleteCommandInput) {
         logger.debug("DynamoDB DeleteItem %o", input);
-        return this.client.delete(input).promise();
+        const command = new DeleteCommand(input);
+        return await this.docClient.send(command);
     }
 
     /**
@@ -73,11 +99,11 @@ class DynamoDBService {
      * into Javascript objects. It maps the "S", "N", attributes into
      * corresponding primitives (string, number, boolean, etc).
      */
-    unmarshall(data: DynamoDB.AttributeMap) {
-        return DynamoDB.Converter.unmarshall(data);
+    unmarshall(data: { [key: string]: AttributeValue }) {
+        return unmarshall(data);
     }
 
-    async transactWrite(input: DocumentClient.TransactWriteItemsInput) {
+    async transactWrite(input: TransactWriteCommandInput) {
         logger.debug("DynamoDB TransactWrite %o", input);
         if (!input.TransactItems) {
             return;
@@ -96,12 +122,10 @@ class DynamoDBService {
 
         logger.debug("DynamoDB TransactWrite batches = %d", batches.length);
         for await (const batch of batches) {
-            await this.client
-                .transactWrite({
-                    ...input,
-                    TransactItems: batch,
-                })
-                .promise();
+            const command = new TransactWriteCommand({
+                TransactItems: batch,
+            });
+            await this.docClient.send(command);
         }
     }
 }

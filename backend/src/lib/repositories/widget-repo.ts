@@ -3,7 +3,7 @@
  *  SPDX-License-Identifier: Apache-2.0
  */
 
-import { DocumentClient } from "aws-sdk/clients/dynamodb";
+import { QueryCommandInput, TransactWriteCommandInput } from "@aws-sdk/lib-dynamodb";
 import { Widget, WidgetItem, WidgetType } from "../models/widget";
 import BaseRepository from "./base";
 import WidgetFactory, { WIDGET_PREFIX, WIDGET_ITEM_TYPE } from "../factories/widget-factory";
@@ -53,7 +53,7 @@ class WidgetRepository extends BaseRepository {
     }
 
     public async getAssociatedWidgets(datasetId: string): Promise<Widget[]> {
-        const input: DocumentClient.QueryInput = {
+        const input: QueryCommandInput = {
             TableName: this.tableName,
             IndexName: "byType",
             KeyConditionExpression: "#type = :type",
@@ -150,7 +150,7 @@ class WidgetRepository extends BaseRepository {
 
     public async deleteWidget(dashboardId: string, widgetId: string) {
         const widget = await this.getWidgetById(dashboardId, widgetId);
-        const transactions: DocumentClient.TransactWriteItemList = [];
+        const transactions: TransactWriteCommandInput["TransactItems"] = [];
 
         if (widget.widgetType === WidgetType.Section && widget.content.widgetIds) {
             for (const id of widget.content.widgetIds) {
@@ -215,7 +215,7 @@ class WidgetRepository extends BaseRepository {
             section: string;
         }>,
     ) {
-        const transactions: DocumentClient.TransactWriteItemList = widgets.map((widget) => ({
+        const transactions: TransactWriteCommandInput["TransactItems"] = widgets.map((widget) => ({
             Update: {
                 TableName: this.tableName,
                 Key: {

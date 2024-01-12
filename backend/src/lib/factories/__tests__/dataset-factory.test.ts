@@ -7,7 +7,7 @@ import { DatasetItem, SourceType, DatasetSchema } from "../../models/dataset";
 import * as uuid from "uuid";
 import DatasetFactory from "../dataset-factory";
 import { ItemNotFound } from "../../../lib/errors";
-import { GetItemOutput } from "aws-sdk/clients/dynamodb";
+import { GetItemOutput } from "@aws-sdk/client-dynamodb";
 
 jest.mock("uuid");
 jest.spyOn(uuid, "v4").mockReturnValue("123");

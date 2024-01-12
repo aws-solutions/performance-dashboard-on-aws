@@ -7,7 +7,7 @@ import factory from "../dashboard-factory";
 import { Dashboard, DashboardItem, DashboardState } from "../../models/dashboard";
 import { User } from "../../models/user";
 import { ItemNotFound } from "../../../lib/errors";
-import { GetItemOutput } from "aws-sdk/clients/dynamodb";
+import { GetItemOutput } from "@aws-sdk/client-dynamodb";
 
 const user: User = {
     userId: "johndoe",

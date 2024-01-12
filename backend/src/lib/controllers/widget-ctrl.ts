@@ -169,22 +169,24 @@ async function duplicateWidget(req: Request, res: Response) {
             widget.content.widgetIds &&
             widget.content.widgetIds.length
         ) {
-            newWidgets = await widget.content.widgetIds.map(async (widgetId: string) => {
-                const childWidget = await repo.getWidgetById(dashboardId, widgetId);
-                const newChildWidget = WidgetFactory.createWidget({
-                    name: `(${newLabel}) ${childWidget.name}`,
-                    dashboardId,
-                    widgetType: childWidget.widgetType,
-                    showTitle: childWidget.showTitle,
-                    content: childWidget.content,
-                    section: newWidget.id,
-                });
-                newChildWidget.updatedAt = childWidget.updatedAt;
-                if (newChildWidget.content.title) {
-                    newChildWidget.content.title = `(${newLabel}) ${newChildWidget.content.title}`;
-                }
-                return newChildWidget;
-            });
+            newWidgets = await Promise.all(
+                widget.content.widgetIds.map(async (widgetId: string) => {
+                    const childWidget = await repo.getWidgetById(dashboardId, widgetId);
+                    const newChildWidget = WidgetFactory.createWidget({
+                        name: `(${newLabel}) ${childWidget.name}`,
+                        dashboardId,
+                        widgetType: childWidget.widgetType,
+                        showTitle: childWidget.showTitle,
+                        content: childWidget.content,
+                        section: newWidget.id,
+                    });
+                    newChildWidget.updatedAt = childWidget.updatedAt;
+                    if (newChildWidget.content.title) {
+                        newChildWidget.content.title = `(${newLabel}) ${newChildWidget.content.title}`;
+                    }
+                    return newChildWidget;
+                }),
+            );
             if (newWidgets.length) {
                 newWidget.content.widgetIds = newWidgets.map((w: Widget) => w.id);
             }

@@ -3,7 +3,7 @@
  *  SPDX-License-Identifier: Apache-2.0
  */
 
-import { UserType } from "aws-sdk/clients/cognitoidentityserviceprovider";
+import { UserType } from "@aws-sdk/client-cognito-identity-provider";
 import { Role } from "../../models/user";
 import { mocked } from "ts-jest/utils";
 import CognitoService from "../../services/cognito";
@@ -13,7 +13,7 @@ jest.mock("../../services/cognito");
 
 let userPoolId: string;
 let repo: UserRepository;
-let cognito = mocked(CognitoService.prototype);
+const cognito = mocked(CognitoService.prototype);
 
 beforeEach(() => {
     userPoolId = "abc";

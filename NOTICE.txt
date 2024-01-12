@@ -23,6 +23,12 @@ This software includes third party software subject to the following copyrights:
 @aws-amplify/ui-components@1.9.40 under the Apache-2.0
 @aws-amplify/ui-react@1.2.26 under the n/a
 @aws-cdk/aws-servicecatalogappregistry-alpha@2.60.0-alpha.0 under the Apache-2.0
+@aws-sdk/client-cognito-identity-provider@3.485.0 under the Apache-2.0
+@aws-sdk/client-dynamodb-streams@3.485.0 under the Apache-2.0
+@aws-sdk/client-dynamodb@3.485.0 under the Apache-2.0
+@aws-sdk/client-s3@3.485.0 under the Apache-2.0
+@aws-sdk/lib-dynamodb@3.485.0 under the Apache-2.0
+@aws-sdk/util-dynamodb@3.485.0 under the Apache-2.0
 @babel/plugin-proposal-private-property-in-object@7.21.11 under the MIT
 @cloudscape-design/components@3.0.159 under the Apache-2.0
 @cloudscape-design/global-styles@1.0.6 under the Apache-2.0
@@ -36,9 +42,8 @@ This software includes third party software subject to the following copyrights:
 @testing-library/jest-dom@5.17.0 under the MIT
 @testing-library/react@10.4.9 under the MIT
 @testing-library/user-event@12.8.3 under the MIT
-@types/aws-lambda@8.10.102 under the MIT
 @types/aws-lambda@8.10.109 under the MIT
-@types/aws-sdk@2.7.0 under the MIT
+@types/aws-lambda@8.10.131 under the MIT
 @types/aws-serverless-express@3.3.5 under the MIT
 @types/cookie-parser@1.4.3 under the MIT
 @types/cors@2.8.12 under the MIT
@@ -77,10 +82,9 @@ This software includes third party software subject to the following copyrights:
 aws-amplify@4.3.46 under the Apache-2.0
 aws-cdk-lib@2.86.0 under the Apache-2.0
 aws-cdk@2.86.0 under the Apache-2.0
-aws-sdk@2.1354.0 under the Apache-2.0
-aws-sdk@2.1393.0 under the Apache-2.0
+aws-sdk-client-mock@3.0.1 under the MIT
 aws-serverless-express@3.4.0 under the Apache-2.0
-aws-xray-sdk@3.5.0 under the Apache-2.0
+aws-xray-sdk@3.5.3 under the Apache-2.0
 cdk-nag@2.21.43 under the Apache-2.0
 commitizen@4.3.0 under the MIT
 constructs@10.1.198 under the Apache-2.0
@@ -114,7 +118,7 @@ license-report@6.3.0 under the MIT
 lint-staged@13.1.0 under the MIT
 mutationobserver-shim@0.3.7 under the MIT
 papaparse@5.3.2 under the MIT
-performance-dashboard-backend@1.9.1 under the Apache-2.0
+performance-dashboard-backend@1.9.2 under the Apache-2.0
 pino@6.14.0 under the MIT
 prettier@2.8.0 under the MIT
 prettier@2.8.1 under the MIT

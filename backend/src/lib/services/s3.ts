@@ -20,7 +20,7 @@ class S3Service {
 
     private constructor() {
         AWSXRay.setContextMissingStrategy(() => {});
-        this.client = AWSXRay.captureAWSClient(new S3Client({}));
+        this.client = AWSXRay.captureAWSv3Client(new S3Client({}));
     }
 
     static getInstance() {

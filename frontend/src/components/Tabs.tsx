@@ -5,7 +5,7 @@
 
 import React, { useEffect, useState, KeyboardEvent } from "react";
 import Tab from "./Tab";
-import { ScrollMenu, VisibilityContext } from "react-horizontal-scrolling-menu";
+import { ScrollMenu, type publicApiType } from "react-horizontal-scrolling-menu";
 import { LeftArrow, RightArrow } from "./Arrows";
 
 interface Props {
@@ -15,10 +15,8 @@ interface Props {
     ariaLabelledById: string;
 }
 
-type scrollVisibilityApiType = React.ContextType<typeof VisibilityContext>;
-
 function Tabs(props: Props) {
-    const [scrollMenuObj, setScrollMenuObj] = useState<scrollVisibilityApiType>();
+    const [scrollMenuObj, setScrollMenuObj] = useState<publicApiType>();
     const [activeTab, setActiveTab] = useState<string>(props.defaultActive);
     const tabsMap = new Map<number, string>();
 
@@ -123,7 +121,7 @@ function Tabs(props: Props) {
     );
 }
 
-function onWheel(apiObj: scrollVisibilityApiType, ev: React.WheelEvent): void {
+function onWheel(apiObj: publicApiType, ev: React.WheelEvent): void {
     const isThouchpad = Math.abs(ev.deltaX) !== 0 || Math.abs(ev.deltaY) < 15;
 
     if (isThouchpad) {

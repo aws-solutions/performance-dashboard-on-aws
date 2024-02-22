@@ -5,6 +5,6 @@
 ./generate-attributions.sh
 ./check-license.sh
 
-pushd backend && npm run lint-src && popd
-pushd frontend && npm run lint-src && popd
-pushd cdk && npm run lint-src && popd
+bash -c "pushd backend && npm run lint-src && popd"
+bash -c "pushd frontend && npm run lint-src && popd"
+bash -c "pushd cdk && npm run lint-src && popd"

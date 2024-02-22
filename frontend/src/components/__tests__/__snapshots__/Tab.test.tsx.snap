@@ -3,12 +3,12 @@
 exports[`renders the Tab component 1`] = `
 <div>
   <div
-    aria-controls="undefined-panel"
-    aria-selected="false"
+    aria-controls="tab1-panel"
+    aria-selected="true"
     class="tab display-inline-block padding-x-2 padding-y-105 text-bold font-sans-md"
-    id="undefined-tab"
+    id="tab1-tab"
     role="tab"
-    tabindex="-1"
+    tabindex="0"
   >
     Tab 1
   </div>
@@ -18,10 +18,10 @@ exports[`renders the Tab component 1`] = `
 exports[`renders the Tab component with default tab 2 selected 1`] = `
 <div>
   <div
-    aria-controls="undefined-panel"
+    aria-controls="tab1-panel"
     aria-selected="false"
     class="tab display-inline-block padding-x-2 padding-y-105 text-bold font-sans-md"
-    id="undefined-tab"
+    id="tab1-tab"
     role="tab"
     tabindex="-1"
   >

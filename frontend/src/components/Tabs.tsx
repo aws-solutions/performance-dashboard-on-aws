@@ -49,22 +49,26 @@ function Tabs(props: Props) {
         }
     };
 
-    const activateTabItem = (tab: string, currentTab: HTMLElement) => {
-        const rect = currentTab.getBoundingClientRect();
-        const wrapper = scrollMenuObj?.scrollContainer?.current;
-        if (rect && wrapper) {
-            const wrapperRect = wrapper.getBoundingClientRect();
-            if (rect.left < wrapperRect.left) {
-                scrollMenuObj?.scrollPrev();
-            } else {
-                const shownWidth = wrapperRect.right - rect.left;
-                if (shownWidth < rect.width) {
-                    scrollMenuObj?.scrollNext();
+    const activateTabItem = React.useCallback(
+        (tab: string, currentTab: HTMLElement) => {
+            const rect = currentTab.getBoundingClientRect();
+            const wrapper = scrollMenuObj?.scrollContainer?.current;
+
+            if (rect && wrapper) {
+                const wrapperRect = wrapper.getBoundingClientRect();
+                if (rect.left < wrapperRect.left) {
+                    scrollMenuObj?.scrollPrev();
+                } else {
+                    const shownWidth = wrapperRect.right - rect.left;
+                    if (shownWidth < rect.width) {
+                        scrollMenuObj?.scrollNext();
+                    }
                 }
             }
-        }
-        setActiveTab(tab);
-    };
+            setActiveTab(tab);
+        },
+        [scrollMenuObj],
+    );
 
     return (
         <div
@@ -96,19 +100,22 @@ function Tabs(props: Props) {
             </ScrollMenu>
 
             {React.Children.map(props.children, (child) => {
-                const childId = (child as any).props.id;
+                const childId = (child as JSX.Element).props.id;
+                const id = `${childId}-panel`;
+                const role = "tabpanel";
+
                 if (childId !== activeTab) {
-                    return <div id={`${childId}-panel`} role="tabpanel"></div>;
+                    return <div id={id} role={role}></div>;
                 }
                 return (
                     <div
-                        id={`${childId}-panel`}
+                        id={id}
                         className="tab-content"
-                        role="tabpanel"
+                        role={role}
                         tabIndex={0}
                         aria-labelledbyid={`${childId}-tab`}
                     >
-                        {(child as any).props.children}
+                        {(child as JSX.Element).props.children}
                     </div>
                 );
             })}

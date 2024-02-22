@@ -8,23 +8,44 @@ import { render, within } from "@testing-library/react";
 import Tab from "../Tab";
 import { MemoryRouter } from "react-router-dom";
 
-test("renders the Tab component", async () => {
+test("renders the Tab component", () => {
     const wrapper = render(
-        <Tab id="tab1" activeTab="tab1" key="Tab 1" label="Tab 1" onClick={() => {}} />,
+        <Tab
+            itemId="tab1"
+            activeTab="tab1"
+            key="Tab 1"
+            label="Tab 1"
+            onClick={() => {}}
+            onEnter={() => {}}
+        />,
     );
     expect(wrapper.container).toMatchSnapshot();
 });
 
-test("renders the Tab component with default tab 2 selected", async () => {
+test("renders the Tab component with default tab 2 selected", () => {
     const wrapper = render(
-        <Tab id="tab1" activeTab="tab2" key="Tab 1" label="Tab 1" onClick={() => {}} />,
+        <Tab
+            itemId="tab1"
+            activeTab="tab2"
+            key="Tab 1"
+            label="Tab 1"
+            onClick={() => {}}
+            onEnter={() => {}}
+        />,
     );
     expect(wrapper.container).toMatchSnapshot();
 });
 
-test("renders the tab", async () => {
+test("renders the tab", () => {
     const { getAllByRole } = render(
-        <Tab id="tab1" activeTab="tab2" key="Tab 1" label="Tab 1" onClick={() => {}} />,
+        <Tab
+            itemId="tab1"
+            activeTab="tab2"
+            key="Tab 1"
+            label="Tab 1"
+            onClick={() => {}}
+            onEnter={() => {}}
+        />,
         {
             wrapper: MemoryRouter,
         },

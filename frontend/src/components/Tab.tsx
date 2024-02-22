@@ -4,7 +4,6 @@
  */
 
 import React, { MouseEvent } from "react";
-import { useTranslation } from "react-i18next";
 import styles from "./Tab.module.scss";
 
 interface Props {
@@ -15,32 +14,31 @@ interface Props {
     onEnter: Function;
 }
 
-function Tab(props: Props) {
-    const { t } = useTranslation();
-    const onClick = (e: MouseEvent<HTMLElement>) => {
-        props.onClick(props.itemId, e.currentTarget);
+function Tab({ itemId, activeTab, label, onClick, onEnter }: Props) {
+    const onClickHandler = (e: MouseEvent<HTMLElement>) => {
+        onClick(itemId, e.currentTarget);
     };
 
     const onKeyDown = (e: React.KeyboardEvent<HTMLElement>) => {
         if (e.key === "Enter") {
-            props.onEnter(props.itemId, e.currentTarget);
+            onEnter(itemId, e.currentTarget);
         }
     };
 
-    let className = `${styles.tab} display-inline-block padding-x-2 padding-y-105 text-bold font-sans-md`;
+    const className = `${styles.tab} display-inline-block padding-x-2 padding-y-105 text-bold font-sans-md`;
 
     return (
         <div
-            id={`${props.itemId}-tab`}
-            aria-controls={`${props.itemId}-panel`}
-            aria-selected={props.activeTab === props.itemId}
+            id={`${itemId}-tab`}
+            aria-controls={`${itemId}-panel`}
+            aria-selected={activeTab === itemId}
             role="tab"
             className={className}
-            onClick={onClick}
+            onClick={onClickHandler}
             onKeyDown={onKeyDown}
-            tabIndex={props.activeTab === props.itemId ? 0 : -1}
+            tabIndex={activeTab === itemId ? 0 : -1}
         >
-            {props.label}
+            {label}
         </div>
     );
 }

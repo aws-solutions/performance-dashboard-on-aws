@@ -4,7 +4,7 @@
  */
 
 import React from "react";
-import { render, within } from "@testing-library/react";
+import { render, within, fireEvent, act } from "@testing-library/react";
 import Tabs from "../Tabs";
 import { MemoryRouter } from "react-router-dom";
 import { MockedObserver, traceMethodCalls, IntersectionObserverCB } from "../../testUtils";
@@ -31,55 +31,96 @@ describe("Tabs tests", () => {
         mockedObserverCalls = {};
     });
 
-    test("renders the Tabs component", async () => {
-        const wrapper = render(
-            <Tabs defaultActive="tab1" container="tab1test">
-                <div id="tab1" label="Tab 1">
-                    Tab 1
+    const tabs = Array(2)
+        .fill(0)
+        .map((_el, ind) => ({ id: `tab${ind + 1}`, text: `Tab ${ind + 1}` }));
+    const renderTabs = (defaultActive: string) => (
+        <Tabs defaultActive={defaultActive} ariaLabelledById="tab2test">
+            {tabs.map((tab) => (
+                <div id={tab.id} label={tab.text} key={tab.id}>
+                    {tab.text}
                 </div>
-                <div id="tab2" label="Tab 2">
-                    Tab 2
-                </div>
-            </Tabs>,
-        );
+            ))}
+        </Tabs>
+    );
+    const getSelectedTab = (container: HTMLElement) =>
+        container.querySelector('[aria-selected="true"]');
+
+    test("renders the Tabs component with default tab 2 selected", () => {
+        const active = tabs[1];
+
+        const wrapper = render(renderTabs(active.id));
+
+        expect(getSelectedTab(wrapper.container)?.textContent).toEqual(active.text);
         expect(wrapper.container).toMatchSnapshot();
     });
 
-    test("renders the Tabs component with default tab 2 selected", async () => {
-        const wrapper = render(
-            <Tabs defaultActive="tab2" container="tab2test">
-                <div id="tab1" label="Tab 1">
-                    Tab 1
-                </div>
-                <div id="tab2" label="Tab 2">
-                    Tab 2
-                </div>
-            </Tabs>,
-        );
-        expect(wrapper.container).toMatchSnapshot();
-    });
+    test("renders the tabs", () => {
+        const { container, getByRole, getAllByRole } = render(renderTabs("tab2"), {
+            wrapper: MemoryRouter,
+        });
 
-    test("renders the tabs", async () => {
-        const { getAllByRole } = render(
-            <Tabs defaultActive="tab2">
-                <div id="tab1" label="Tab 1">
-                    Tab 1
-                </div>
-                <div id="tab2" label="Tab 2">
-                    Tab 2
-                </div>
-            </Tabs>,
-            {
-                wrapper: MemoryRouter,
-            },
-        );
-
+        expect(getByRole("tablist")).toBeInTheDocument();
         const listItems = getAllByRole("tab");
         expect(listItems).toHaveLength(2);
-
         listItems.forEach((item, index) => {
             const { getByText } = within(item);
             expect(getByText(`Tab ${index + 1}`)).toBeInTheDocument();
         });
+        expect(container).toMatchSnapshot();
+    });
+
+    test("Set active tab by click", () => {
+        const defaultActive = tabs[0];
+        const newActive = tabs[1];
+        const wrapper = render(renderTabs(defaultActive.id));
+
+        expect(getSelectedTab(wrapper.container)?.textContent).toEqual(defaultActive.text);
+
+        act(() => {
+            fireEvent.click(wrapper.getByText(newActive.text));
+        });
+
+        expect(getSelectedTab(wrapper.container)?.textContent).toEqual(newActive.text);
+    });
+
+    test("When new props passed update active tab", () => {
+        const defaultActive = tabs[0];
+        const newActive = tabs[1];
+        const wrapper = render(renderTabs(defaultActive.id));
+
+        wrapper.rerender(renderTabs(newActive.id));
+
+        expect(getSelectedTab(wrapper.container)?.textContent).toEqual(newActive.text);
+    });
+
+    test("Switch tabs on ArrowLeft/ArrowRight keys", () => {
+        const defaultActive = tabs[0];
+        const newActive = tabs[1];
+        const { container, getByRole } = render(renderTabs(defaultActive.id));
+
+        act(() => {
+            fireEvent.keyDown(getByRole("tablist"), {
+                key: "ArrowRight",
+                code: "ArrowRight",
+            });
+        });
+        expect(getSelectedTab(container)?.textContent).toEqual(newActive.text);
+
+        act(() => {
+            fireEvent.keyDown(getByRole("tablist"), {
+                key: "ArrowLeft",
+                code: "ArrowLeft",
+            });
+        });
+        expect(getSelectedTab(container)?.textContent).toEqual(defaultActive.text);
+
+        act(() => {
+            fireEvent.keyDown(getByRole("tablist"), {
+                key: "ArrowLeft",
+                code: "ArrowLeft",
+            });
+        });
+        expect(getSelectedTab(container)?.textContent).toEqual(defaultActive.text);
     });
 });

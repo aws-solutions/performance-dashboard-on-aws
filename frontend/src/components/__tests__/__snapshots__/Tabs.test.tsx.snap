@@ -1,8 +1,9 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Tabs tests renders the Tabs component 1`] = `
+exports[`Tabs tests renders the Tabs component with default tab 2 selected 1`] = `
 <div>
   <div
+    aria-labelledbyid="tab2test"
     class="tabs"
     role="tablist"
   >
@@ -10,67 +11,84 @@ exports[`Tabs tests renders the Tabs component 1`] = `
       class="react-horizontal-scrolling-menu--wrapper border-base-lighter border-bottom margin-top-1"
     >
       <div
-        class="react-horizontal-scrolling-menu--scroll-container "
+        class="react-horizontal-scrolling-menu--header"
+      />
+      <div
+        class="react-horizontal-scrolling-menu--inner-wrapper"
       >
         <div
-          class="react-horizontal-scrolling-menu--item "
-          data-index="0"
-          data-key="tab1"
-        >
-          <div
-            aria-controls="tab1-panel"
-            aria-selected="true"
-            class="tab display-inline-block padding-x-2 padding-y-105 text-bold font-sans-md"
-            id="tab1-tab"
-            role="tab"
-            tabindex="0"
-          >
-            Tab 1
-          </div>
-        </div>
-        <div
-          class="react-horizontal-scrolling-menu--separator "
-          data-index="0.1"
-          data-key="tab1-separator"
+          class="react-horizontal-scrolling-menu--arrow-left"
         />
         <div
-          class="react-horizontal-scrolling-menu--item "
-          data-index="1"
-          data-key="tab2"
+          class="react-horizontal-scrolling-menu--scroll-container "
         >
           <div
-            aria-controls="tab2-panel"
-            aria-selected="false"
-            class="tab display-inline-block padding-x-2 padding-y-105 text-bold font-sans-md"
-            id="tab2-tab"
-            role="tab"
-            tabindex="-1"
+            class="react-horizontal-scrolling-menu--item "
+            data-index="0"
+            data-key="tab1"
           >
-            Tab 2
+            <div
+              aria-controls="tab1-panel"
+              aria-selected="false"
+              class="tab display-inline-block padding-x-2 padding-y-105 text-bold font-sans-md"
+              id="tab1-tab"
+              role="tab"
+              tabindex="-1"
+            >
+              Tab 1
+            </div>
+          </div>
+          <div
+            class="react-horizontal-scrolling-menu--separator "
+            data-index="0.1"
+            data-key="tab1-separator"
+          />
+          <div
+            class="react-horizontal-scrolling-menu--item "
+            data-index="1"
+            data-key="tab2"
+          >
+            <div
+              aria-controls="tab2-panel"
+              aria-selected="true"
+              class="tab display-inline-block padding-x-2 padding-y-105 text-bold font-sans-md"
+              id="tab2-tab"
+              role="tab"
+              tabindex="0"
+            >
+              Tab 2
+            </div>
           </div>
         </div>
+        <div
+          class="react-horizontal-scrolling-menu--arrow-right"
+        />
       </div>
+      <div
+        class="react-horizontal-scrolling-menu--footer"
+      />
     </div>
     <div
-      aria-labelledbyid="tab1-tab"
-      class="tab-content"
       id="tab1-panel"
+      role="tabpanel"
+    />
+    <div
+      aria-labelledbyid="tab2-tab"
+      class="tab-content"
+      id="tab2-panel"
       role="tabpanel"
       tabindex="0"
     >
-      Tab 1
+      Tab 2
     </div>
-    <div
-      id="tab2-panel"
-      role="tabpanel"
-    />
   </div>
 </div>
 `;
 
-exports[`Tabs tests renders the Tabs component with default tab 2 selected 1`] = `
+exports[`Tabs tests renders the tabs 1`] = `
 <div>
   <div
+    aria-labelledbyid="tab2test"
     class="tabs"
     role="tablist"
   >
@@ -78,46 +96,62 @@ exports[`Tabs tests renders the Tabs component with default tab 2 selected 1`] =
       class="react-horizontal-scrolling-menu--wrapper border-base-lighter border-bottom margin-top-1"
     >
       <div
-        class="react-horizontal-scrolling-menu--scroll-container "
+        class="react-horizontal-scrolling-menu--header"
+      />
+      <div
+        class="react-horizontal-scrolling-menu--inner-wrapper"
       >
         <div
-          class="react-horizontal-scrolling-menu--item "
-          data-index="0"
-          data-key="tab1"
-        >
-          <div
-            aria-controls="tab1-panel"
-            aria-selected="false"
-            class="tab display-inline-block padding-x-2 padding-y-105 text-bold font-sans-md"
-            id="tab1-tab"
-            role="tab"
-            tabindex="-1"
-          >
-            Tab 1
-          </div>
-        </div>
-        <div
-          class="react-horizontal-scrolling-menu--separator "
-          data-index="0.1"
-          data-key="tab1-separator"
+          class="react-horizontal-scrolling-menu--arrow-left"
         />
         <div
-          class="react-horizontal-scrolling-menu--item "
-          data-index="1"
-          data-key="tab2"
+          class="react-horizontal-scrolling-menu--scroll-container "
         >
           <div
-            aria-controls="tab2-panel"
-            aria-selected="true"
-            class="tab display-inline-block padding-x-2 padding-y-105 text-bold font-sans-md"
-            id="tab2-tab"
-            role="tab"
-            tabindex="0"
+            class="react-horizontal-scrolling-menu--item "
+            data-index="0"
+            data-key="tab1"
           >
-            Tab 2
+            <div
+              aria-controls="tab1-panel"
+              aria-selected="false"
+              class="tab display-inline-block padding-x-2 padding-y-105 text-bold font-sans-md"
+              id="tab1-tab"
+              role="tab"
+              tabindex="-1"
+            >
+              Tab 1
+            </div>
+          </div>
+          <div
+            class="react-horizontal-scrolling-menu--separator "
+            data-index="0.1"
+            data-key="tab1-separator"
+          />
+          <div
+            class="react-horizontal-scrolling-menu--item "
+            data-index="1"
+            data-key="tab2"
+          >
+            <div
+              aria-controls="tab2-panel"
+              aria-selected="true"
+              class="tab display-inline-block padding-x-2 padding-y-105 text-bold font-sans-md"
+              id="tab2-tab"
+              role="tab"
+              tabindex="0"
+            >
+              Tab 2
+            </div>
           </div>
         </div>
+        <div
+          class="react-horizontal-scrolling-menu--arrow-right"
+        />
       </div>
+      <div
+        class="react-horizontal-scrolling-menu--footer"
+      />
     </div>
     <div
       id="tab1-panel"

@@ -1,6 +1,6 @@
 {
     "name": "performance-dashboard-cdk",
-    "version": "1.9.1",
+    "version": "1.9.2",
     "description": "Performance Dashboard on AWS CDK",
     "license": "Apache-2.0",
     "author": {
@@ -28,7 +28,6 @@
         ]
     },
     "devDependencies": {
-        "@types/aws-sdk": "^2.7.0",
         "@types/node": "^16.11.7",
         "@typescript-eslint/eslint-plugin": "^5.45.1",
         "aws-cdk": "^2.86.0",
@@ -46,8 +45,8 @@
     },
     "dependencies": {
         "@aws-cdk/aws-servicecatalogappregistry-alpha": "^2.60.0-alpha.0",
+        "@aws-sdk/client-s3": "^3.485.0",
         "aws-cdk-lib": "^2.86.0",
-        "aws-sdk": "^2.1270.0",
         "cdk-nag": "^2.21.43",
         "constructs": "^10.1.196",
         "source-map-support": "^0.5.21"

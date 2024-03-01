@@ -3,7 +3,17 @@
  *  SPDX-License-Identifier: Apache-2.0
  */
 
-import CognitoIdentityServiceProvider from "aws-sdk/clients/cognitoidentityserviceprovider";
+import {
+    AdminCreateUserCommand,
+    AdminCreateUserRequest,
+    AdminDeleteUserCommand,
+    AdminDeleteUserRequest,
+    AdminUpdateUserAttributesCommand,
+    AdminUpdateUserAttributesRequest,
+    CognitoIdentityProviderClient,
+    ListUsersCommand,
+    ListUsersRequest,
+} from "@aws-sdk/client-cognito-identity-provider";
 import logger from "./logger";
 import packagejson from "../../../package.json";
 
@@ -14,9 +24,9 @@ import packagejson from "../../../package.json";
  * is a pain because of the promise() response structure.
  */
 class CognitoService {
-    private cognitoIdentityServiceProvider: CognitoIdentityServiceProvider;
+    private readonly cognitoClient: CognitoIdentityProviderClient;
     private static instance: CognitoService;
-    private options = {
+    private readonly options = {
         customUserAgent: packagejson.awssdkUserAgent + packagejson.version,
     };
 
@@ -25,7 +35,9 @@ class CognitoService {
      * to prevent direct constructions calls with new operator.
      */
     private constructor() {
-        this.cognitoIdentityServiceProvider = new CognitoIdentityServiceProvider(this.options);
+        this.cognitoClient = new CognitoIdentityProviderClient({
+            ...this.options,
+        });
     }
 
     /**
@@ -39,26 +51,28 @@ class CognitoService {
         return CognitoService.instance;
     }
 
-    async listUsers(input: CognitoIdentityServiceProvider.ListUsersRequest) {
+    async listUsers(input: ListUsersRequest) {
         logger.debug("Cognito ListUsers %o", input);
-        return this.cognitoIdentityServiceProvider.listUsers(input).promise();
+        const command = new ListUsersCommand(input);
+        return await this.cognitoClient.send(command);
     }
 
-    async addUser(input: CognitoIdentityServiceProvider.AdminCreateUserRequest) {
+    async addUser(input: AdminCreateUserRequest) {
         logger.debug("Cognito AdminCreateUser %o", input);
-        return this.cognitoIdentityServiceProvider.adminCreateUser(input).promise();
+        const command = new AdminCreateUserCommand(input);
+        return await this.cognitoClient.send(command);
     }
 
-    async removeUser(input: CognitoIdentityServiceProvider.AdminDeleteUserRequest) {
+    async removeUser(input: AdminDeleteUserRequest) {
         logger.debug("Cognito AdminDeleteUser %o", input);
-        return this.cognitoIdentityServiceProvider.adminDeleteUser(input).promise();
+        const command = new AdminDeleteUserCommand(input);
+        return await this.cognitoClient.send(command);
     }
 
-    async updateUserAttributes(
-        input: CognitoIdentityServiceProvider.AdminUpdateUserAttributesRequest,
-    ) {
+    async updateUserAttributes(input: AdminUpdateUserAttributesRequest) {
         logger.debug("Cognito AdminUpdateUserAttributes %o", input);
-        return this.cognitoIdentityServiceProvider.adminUpdateUserAttributes(input).promise();
+        const command = new AdminUpdateUserAttributesCommand(input);
+        return await this.cognitoClient.send(command);
     }
 }
 

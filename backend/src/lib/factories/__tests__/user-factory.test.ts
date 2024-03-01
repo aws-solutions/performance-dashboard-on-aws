@@ -3,7 +3,7 @@
  *  SPDX-License-Identifier: Apache-2.0
  */
 
-import { UserType } from "aws-sdk/clients/cognitoidentityserviceprovider";
+import { UserType } from "@aws-sdk/client-cognito-identity-provider";
 import { Role } from "../../models/user";
 import UserFactory from "../user-factory";
 

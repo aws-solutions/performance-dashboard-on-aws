@@ -1,6 +1,6 @@
 {
     "name": "performance-dashboard-backend",
-    "version": "1.9.1",
+    "version": "1.9.2",
     "description": "Performance Dashboard on AWS Backend",
     "license": "Apache-2.0",
     "author": {
@@ -27,8 +27,6 @@
         ]
     },
     "devDependencies": {
-        "@types/aws-lambda": "^8.10.57",
-        "@types/aws-sdk": "^2.7.0",
         "@types/aws-serverless-express": "^3.3.3",
         "@types/cookie-parser": "^1.4.3",
         "@types/cors": "^2.8.6",
@@ -40,6 +38,7 @@
         "@types/pino": "^6.3.4",
         "@types/uuid": "^8.0.0",
         "@typescript-eslint/eslint-plugin": "^5.45.1",
+        "aws-sdk-client-mock": "^3.0.1",
         "eslint": "^8.29.0",
         "eslint-config-airbnb-base": "^15.0.0",
         "eslint-config-prettier": "^8.5.0",
@@ -55,9 +54,15 @@
         "typescript": "4.8.4"
     },
     "dependencies": {
-        "aws-sdk": "^2.1354.0",
+        "@aws-sdk/client-cognito-identity-provider": "^3.485.0",
+        "@aws-sdk/client-dynamodb": "^3.485.0",
+        "@aws-sdk/client-dynamodb-streams": "^3.485.0",
+        "@aws-sdk/client-s3": "^3.485.0",
+        "@aws-sdk/lib-dynamodb": "^3.485.0",
+        "@aws-sdk/util-dynamodb": "^3.485.0",
+        "@types/aws-lambda": "^8.10.131",
         "aws-serverless-express": "^3.3.8",
-        "aws-xray-sdk": "^3.1.0",
+        "aws-xray-sdk": "^3.5.3",
         "cookie-parser": "^1.4.6",
         "cors": "^2.8.5",
         "csrf-csrf": "^2.2.4",

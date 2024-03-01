@@ -4,18 +4,23 @@
  */
 
 import AWSXRay from "aws-xray-sdk";
-import S3 from "aws-sdk/clients/s3";
+import {
+    DeleteObjectCommand,
+    HeadObjectCommand,
+    PutObjectCommand,
+    S3Client,
+    ServerSideEncryption,
+} from "@aws-sdk/client-s3";
 
 class S3Service {
-    private client: S3;
+    private readonly client: S3Client;
     private static instance: S3Service;
 
-    private serverSideEncryption = "aws:kms";
+    private readonly serverSideEncryption = ServerSideEncryption.aws_kms;
 
     private constructor() {
-        this.client = new S3();
         AWSXRay.setContextMissingStrategy(() => {});
-        AWSXRay.captureAWSClient(this.client);
+        this.client = AWSXRay.captureAWSv3Client(new S3Client({}));
     }
 
     static getInstance() {
@@ -26,24 +31,23 @@ class S3Service {
     }
 
     async putObject(bucketName: string, jsonS3Key: string, jsonFile: string) {
-        const params = {
+        const command = new PutObjectCommand({
             Key: jsonS3Key,
             Body: jsonFile,
             Bucket: bucketName,
             ServerSideEncryption: this.serverSideEncryption,
             ContentType: "application/json",
-        };
-        return this.client.putObject(params).promise();
+        });
+        return await this.client.send(command);
     }
 
     async objectExists(bucketName: string, key: string): Promise<boolean> {
         try {
-            await this.client
-                .headObject({
-                    Bucket: bucketName,
-                    Key: key,
-                })
-                .promise();
+            const command = new HeadObjectCommand({
+                Bucket: bucketName,
+                Key: key,
+            });
+            await this.client.send(command);
             return true;
         } catch (err) {
             return false;
@@ -51,11 +55,11 @@ class S3Service {
     }
 
     async deleteObject(bucketName: string, jsonS3Key: string) {
-        const params = {
+        const command = new DeleteObjectCommand({
             Key: jsonS3Key,
             Bucket: bucketName,
-        };
-        return this.client.deleteObject(params).promise();
+        });
+        return await this.client.send(command);
     }
 }
 

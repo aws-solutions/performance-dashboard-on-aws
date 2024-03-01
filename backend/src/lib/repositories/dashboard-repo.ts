@@ -4,7 +4,7 @@
  */
 
 import { User } from "../models/user";
-import { DocumentClient } from "aws-sdk/clients/dynamodb";
+import { TransactWriteCommandInput } from "@aws-sdk/lib-dynamodb";
 import DashboardFactory from "../factories/dashboard-factory";
 import TopicAreaFactory from "../factories/topicarea-factory";
 import WidgetFactory from "../factories/widget-factory";
@@ -198,7 +198,7 @@ class DashboardRepository extends BaseRepository {
         friendlyURL: string,
     ) {
         try {
-            const transactions: DocumentClient.TransactWriteItemList = [];
+            const transactions: TransactWriteCommandInput["TransactItems"] = [];
 
             // If a published or archived version exists, move it to Inactive state
             const versions = await this.getDashboardVersions(parentDashboardId);
@@ -452,7 +452,7 @@ class DashboardRepository extends BaseRepository {
      * by the params `ids`.
      */
     public async deleteDashboardsAndWidgets(dashboardIds: string[], user: User) {
-        let transactions: DocumentClient.TransactWriteItemList = [];
+        const updates: TransactWriteCommandInput["TransactItems"] = [];
 
         const dashboards: DashboardList = [];
         for (const dashboardId of dashboardIds) {
@@ -462,7 +462,7 @@ class DashboardRepository extends BaseRepository {
                 throw new InvalidState("Dashboard must be Draft to delete");
             }
 
-            transactions.push({
+            updates.push({
                 Update: {
                     TableName: this.tableName,
                     Key: {
@@ -482,12 +482,12 @@ class DashboardRepository extends BaseRepository {
         }
 
         await this.dynamodb.transactWrite({
-            TransactItems: transactions,
+            TransactItems: updates,
         });
 
-        transactions = [];
+        const deletes: TransactWriteCommandInput["TransactItems"] = [];
         for (const dashboard of dashboards) {
-            transactions.push({
+            deletes.push({
                 Delete: {
                     TableName: this.tableName,
                     Key: {
@@ -499,7 +499,7 @@ class DashboardRepository extends BaseRepository {
 
             if (dashboard.widgets) {
                 dashboard.widgets.forEach((widget) => {
-                    transactions.push({
+                    deletes.push({
                         Delete: {
                             TableName: this.tableName,
                             Key: {
@@ -513,7 +513,7 @@ class DashboardRepository extends BaseRepository {
         }
 
         await this.dynamodb.transactWrite({
-            TransactItems: transactions,
+            TransactItems: deletes,
         });
     }
 
@@ -588,7 +588,7 @@ class DashboardRepository extends BaseRepository {
     }
 
     public async saveDashboardAndWidgets(dashboard: Dashboard) {
-        const transactions: DocumentClient.TransactWriteItemList = [];
+        const transactions: TransactWriteCommandInput["TransactItems"] = [];
 
         // Add the dashboard item to the transactions
         transactions.push({
@@ -621,7 +621,7 @@ class DashboardRepository extends BaseRepository {
      * a topic area is renamed.
      */
     public async updateTopicAreaName(dashboards: Dashboard[], topicAreaName: string, user: User) {
-        const updates: DocumentClient.TransactWriteItem[] = dashboards.map((dashboard) => ({
+        const updates: TransactWriteCommandInput["TransactItems"] = dashboards.map((dashboard) => ({
             Update: {
                 TableName: this.tableName,
                 Key: {

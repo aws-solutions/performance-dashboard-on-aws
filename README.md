@@ -59,3 +59,8 @@ This project is licensed under the Apache-2.0 License.
 ## Feedback
 
 We're currently collecting feedback on Performance Dashboard on AWS to ensure the product meets your needs. If you would like to share your thoughts, we'd love to hear from you. Reach out to us at wwps-performance-dashboard@amazon.com.
+
+## Collection of Anonymous Operational Metrics
+
+This solution collects anonymous operational metrics to help AWS improve the quality of features of the solution. For more information, including how to disable
+this capability, please see the [implementation guide](https://docs.aws.amazon.com/solutions/latest/performance-dashboard-on-aws/overview.html).

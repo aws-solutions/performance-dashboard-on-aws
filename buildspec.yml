@@ -11,8 +11,8 @@ phases:
   pre_build:
     commands:
       - echo "Installing dependencies and executing unit tests - `pwd`"
-      - echo "node use 16"
-      - n 16
+      - echo "node use 18"
+      - n 18
       - chmod +x ./install.sh && ./install.sh
       - chmod +x ./check-license.sh && ./check-license.sh
       - chmod +x ./test.sh && ./test.sh

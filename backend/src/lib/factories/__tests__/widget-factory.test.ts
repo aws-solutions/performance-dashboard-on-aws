@@ -18,7 +18,7 @@ import {
     SectionWidget,
 } from "../../models/widget";
 import { ItemNotFound } from "../../../lib/errors";
-import { GetItemOutput } from "aws-sdk/clients/dynamodb";
+import { GetItemOutput } from "@aws-sdk/client-dynamodb";
 
 const dummyWidgetName = "Some widget";
 const dashboardId = "123";

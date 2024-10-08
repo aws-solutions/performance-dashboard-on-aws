@@ -62,7 +62,7 @@
         "@aws-sdk/util-dynamodb": "^3.485.0",
         "@types/aws-lambda": "^8.10.131",
         "aws-serverless-express": "^3.3.8",
-        "aws-xray-sdk": "^3.5.3",
+        "aws-xray-sdk": "^3.10.1",
         "cookie-parser": "^1.4.6",
         "cors": "^2.8.5",
         "csrf-csrf": "^2.2.4",
@@ -73,6 +73,7 @@
     },
     "overrides": {
         "semver": "7.5.2",
-        "word-wrap": "npm:@aashutoshrathi/word-wrap@1.2.5"
+        "word-wrap": "npm:@aashutoshrathi/word-wrap@1.2.5",
+        "@smithy/types": "3.5.0"
     }
 }

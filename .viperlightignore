@@ -18,6 +18,10 @@ frontend/public/env.*:*
 
 frontend/src/containers/__tests__/PublishingGuidanceSettings.test.tsx:28
 
+.nightswatch/functional/__test__version-latest.js:42
+.nightswatch/functional/performance_dashboard_on_aws_helper.js:36
+SECURITY.md:6
+
 frontend/src/locales/en/translation.json:536
 
 node_modules/*
@@ -44,7 +48,3 @@ typescript=4.8.4
 fs-extra=10.1.0
 @types/fs-extra=9.0.13
 prettier=2.8.0
-
-
-
-

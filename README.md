@@ -1,3 +1,7 @@
+# Deprecation Warning
+### This solution will be deprecated as of 11/30/2024.
+---
+
 # Performance Dashboard on AWS
 
 ![Version](https://img.shields.io/github/v/release/aws-solutions/performance-dashboard-on-aws)

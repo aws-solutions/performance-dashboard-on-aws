@@ -140,10 +140,6 @@ function moveWidget(
     sourceIndex: number,
     destinationIndex: number,
 ): Widget[] | undefined {
-    if (sourceIndex === destinationIndex) {
-        return undefined;
-    }
-
     const nodes = tree.nodes.flatMap((node) => {
         const list = [node];
         if (node.widget?.widgetType === WidgetType.Section) {
@@ -154,10 +150,86 @@ function moveWidget(
         return list;
     });
 
-    let source = nodes[sourceIndex];
-    if (destinationIndex > sourceIndex && destinationIndex < sourceIndex + source.children.length) {
-        // only true for sections, invalid case you can't drag a section inside itself
+    // If sourceIndex or destinationIndex are out of bounds, don't move anything.
+    if (
+        sourceIndex < 0 ||
+        sourceIndex >= nodes.length ||
+        destinationIndex < 0 ||
+        destinationIndex >= nodes.length
+    )
         return undefined;
+
+    if (sourceIndex === destinationIndex) {
+        return undefined;
+    }
+
+    let source = nodes[sourceIndex];
+    let destination = nodes[destinationIndex];
+
+    // If moving down
+    if (sourceIndex < destinationIndex) {
+        // And source is a Section and destination is a nested item.
+        if (
+            source &&
+            source.widget?.widgetType === WidgetType.Section &&
+            destination &&
+            !!destination.section
+        ) {
+            const sectionWidget = nodes.find((node) => node.id === destination.section);
+            if (source.id === sectionWidget?.id) {
+                // And the nested item belongs to the Source Section.
+                // Then move the Sectiom to the position of the next item that is not a nested item.
+                destinationIndex =
+                    (sectionWidget?.dragIndex ?? 0) + (sectionWidget?.children?.length ?? 0) + 1;
+            } else {
+                // And the nested item does not belong to the Source Section.
+                // Then move the Section to the position of the destination item.
+                destinationIndex = destinationIndex + 1 - source.children.length;
+            }
+
+            // If the destinationIndex is out of bounds, we don't move anything.
+            if (destinationIndex >= nodes.length) return undefined;
+
+            destination = nodes[destinationIndex];
+        }
+        // And source is not a Section
+        if (source && source.widget?.widgetType !== WidgetType.Section) {
+            // And destination is a Section.
+            if (destination && destination.widget?.widgetType === WidgetType.Section) {
+                // Then move the widget to inside of the Section
+                // assign the new section to the widget.
+                source.section = nodes[destinationIndex + 1].section;
+            } else if (destination && destination.section) {
+                // And destination is a nested item.
+                // Then move the widget to inside of the Section
+                // assign the new section to the widget.
+                source.section = destination.section;
+                if (destination.id.startsWith("end-")) {
+                    // And destination is the last item of the Section.
+                    // Then move widget to outside of the Section
+                    source.section = "";
+                }
+            }
+        }
+    } else {
+        // If moving up.
+        // And source is a section and destination is a nested item.
+        if (
+            source &&
+            source.widget?.widgetType === WidgetType.Section &&
+            destination &&
+            !!destination.section
+        ) {
+            const sectionWidget = nodes.find((node) => node.id === destination.section);
+            // Then move the Section to the position of the previous item that is not a nested item.
+            destinationIndex = sectionWidget?.dragIndex ?? 0;
+            destination = nodes[destinationIndex];
+        }
+        if (source && source.widget?.widgetType !== WidgetType.Section) {
+            // And source is not a Section
+            // Then assign the parent element if of the destination if any.
+            source.section = destination.section;
+        }
     }
 
     // move items and it's children
@@ -165,25 +237,6 @@ function moveWidget(
     if (destinationIndex > sourceIndex) {
         destinationIndex -= source.children.length;
     }
-
-    let destination = nodes[destinationIndex];
-    if (destination) {
-        // insert before the destination
-        if (!!destination.section) {
-            // if destination is a section, invalid movement
-            if (source.widget?.widgetType === WidgetType.Section) {
-                return undefined;
-            } else {
-                // assign the new section to the widget
-                source.section = destination.section;
-            }
-        } else {
-            source.section = "";
-        }
-    } else {
-        source.section = "";
-    }
-
     // insert the items in the given position
     nodes.splice(destinationIndex, 0, ...items);
 

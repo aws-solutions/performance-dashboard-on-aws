@@ -106,7 +106,7 @@ describe("OrderingService", () => {
             {
                 id: "pear",
                 name: "Pear",
-                order: 5,
+                order: 8,
                 widgetType: "Text",
                 updatedAt: new Date("2020-09-17T21:01:00.780Z"),
                 content: {},
@@ -1018,13 +1018,69 @@ describe("OrderingService", () => {
         ]);
     });
 
-    it("when moving a section inside another should return undefined", () => {
-        const result = OrderingService.moveWidget(tree, indexes["mango"], indexes["orange"] + 1);
-        expect(result).toBeUndefined();
+    it("section should move upward one position", () => {
+        const result = OrderingService.moveWidget(tree, indexes["mango"], indexes["mango"] - 1);
+        expect(result?.map(getIdAndSection)).toEqual([
+            {
+                id: "banana",
+            },
+            {
+                id: "strawberry",
+            },
+            {
+                id: "mango",
+            },
+            {
+                id: "mango-juice",
+                section: "mango",
+            },
+            { id: "apple" },
+            {
+                id: "tomato",
+            },
+            {
+                id: "orange",
+            },
+            {
+                id: "orange-juice",
+                section: "orange",
+            },
+            {
+                id: "pear",
+            },
+        ]);
     });
 
-    it("when moving a section inside itself should return undefined", () => {
+    it("section should move downward one position", () => {
         const result = OrderingService.moveWidget(tree, indexes["mango"], indexes["mango"] + 1);
-        expect(result).toBeUndefined();
+        expect(result?.map(getIdAndSection)).toEqual([
+            {
+                id: "banana",
+            },
+            {
+                id: "strawberry",
+            },
+            { id: "apple" },
+            {
+                id: "tomato",
+            },
+            {
+                id: "mango",
+            },
+            {
+                id: "mango-juice",
+                section: "mango",
+            },
+            {
+                id: "orange",
+            },
+            {
+                id: "orange-juice",
+                section: "orange",
+            },
+            {
+                id: "pear",
+            },
+        ]);
     });
 });

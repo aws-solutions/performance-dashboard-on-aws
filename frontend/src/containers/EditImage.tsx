@@ -270,7 +270,7 @@ function EditImage() {
                                                 accept={supportedImageFileTypes.toString()}
                                                 loading={imageUploading}
                                                 register={register}
-                                                required
+                                                required={!widget.content.fileName}
                                                 hint={<span>{t("EditImageScreen.FileHint")}</span>}
                                                 fileName={
                                                     newImageFile?.name

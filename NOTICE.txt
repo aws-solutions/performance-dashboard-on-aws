@@ -129,7 +129,7 @@ lint-staged@13.1.0 under the MIT
 lint-staged@13.3.0 under the MIT
 mutationobserver-shim@0.3.7 under the MIT
 papaparse@5.4.1 under the MIT
-performance-dashboard-backend@1.9.3 under the Apache-2.0
+performance-dashboard-backend@1.9.4 under the Apache-2.0
 pino@6.14.0 under the MIT
 prettier@2.8.0 under the MIT
 prettier@2.8.1 under the MIT
